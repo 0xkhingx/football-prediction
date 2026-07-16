@@ -10,25 +10,99 @@ ELO_INIT = 1500
 
 
 def verify_no_leakage(df):
-    df = df.sort_values("Date").reset_index(drop=True)
+    df_check = df.sort_values("Date").reset_index(drop=True)
     team_last_elo = {}
+    team_history = {}
+    result_map = {"H": 1, "D": 0, "A": -1}
     errors = 0
-    for i, row in df.iterrows():
+    for i, row in df_check.iterrows():
         home, away = row["HomeTeam"], row["AwayTeam"]
-        expected_home = team_last_elo.get(home, ELO_INIT)
-        expected_away = team_last_elo.get(away, ELO_INIT)
-        if not np.isclose(row["EloHome"], expected_home, atol=1e-6):
-            print(f"LEAK home {home}: row {i} date {row['Date']} has {row['EloHome']} expected {expected_home}")
-            errors += 1
-        if not np.isclose(row["EloAway"], expected_away, atol=1e-6):
-            print(f"LEAK away {away}: row {i} date {row['Date']} has {row['EloAway']} expected {expected_away}")
-            errors += 1
+        date = row["Date"]
         ftr = row["FTR"]
-        new_home, new_away = elo_update(expected_home, expected_away, ftr)
-        team_last_elo[home] = new_home
-        team_last_elo[away] = new_away
+        fthg = row["FTHG"]
+        ftag = row["FTAG"]
+
+        expected_home_elo = team_last_elo.get(home, ELO_INIT)
+        expected_away_elo = team_last_elo.get(away, ELO_INIT)
+
+        if not np.isclose(row["EloHome"], expected_home_elo, atol=1e-6):
+            print(f"ELO-LEAK home {home}: row {i} date {date} has {row['EloHome']} expected {expected_home_elo}")
+            errors += 1
+        if not np.isclose(row["EloAway"], expected_away_elo, atol=1e-6):
+            print(f"ELO-LEAK away {away}: row {i} date {date} has {row['EloAway']} expected {expected_away_elo}")
+            errors += 1
+
+        home_hist = team_history.get(home, [])
+        away_hist = team_history.get(away, [])
+
+        def form(hist, n):
+            if len(hist) == 0:
+                return np.nan
+            recent = hist[-n:] if n < len(hist) else hist
+            return np.mean([r["result"] for r in recent])
+
+        def goals_avg(hist, n):
+            if len(hist) == 0:
+                return np.nan
+            recent = hist[-n:] if n < len(hist) else hist
+            return np.mean([r["gf"] for r in recent])
+
+        def goals_conceded_avg(hist, n):
+            if len(hist) == 0:
+                return np.nan
+            recent = hist[-n:] if n < len(hist) else hist
+            return np.mean([r["ga"] for r in recent])
+
+        checks = [
+            ("HomeForm5", form(home_hist, 5)),
+            ("HomeForm10", form(home_hist, 10)),
+            ("AwayForm5", form(away_hist, 5)),
+            ("AwayForm10", form(away_hist, 10)),
+            ("HomeGoalsAvg5", goals_avg(home_hist, 5)),
+            ("AwayGoalsAvg5", goals_avg(away_hist, 5)),
+            ("HomeGoalsConcededAvg5", goals_conceded_avg(home_hist, 5)),
+            ("AwayGoalsConcededAvg5", goals_conceded_avg(away_hist, 5)),
+        ]
+        for feat_name, expected_val in checks:
+            actual = row[feat_name]
+            if np.isnan(expected_val) and not np.isnan(actual):
+                print(f"FORM-LEAK {feat_name}: row {i} expected NaN, got {actual}")
+                errors += 1
+            elif not np.isnan(expected_val) and not np.isclose(actual, expected_val, atol=1e-6):
+                print(f"FORM-LEAK {feat_name}: row {i} date {date} has {actual} expected {expected_val}")
+                errors += 1
+
+        last_h2h = next((r for r in reversed(home_hist) if r["opponent"] == away), None)
+        expected_h2h = last_h2h["result"] if last_h2h is not None else 0
+        if row["H2HStreak"] != expected_h2h:
+            print(f"H2H-LEAK: row {i} date {date} has {row['H2HStreak']} expected {expected_h2h}")
+            errors += 1
+
+        expected_home_rest = (date - home_hist[-1]["date"]).days if home_hist else np.nan
+        expected_away_rest = (date - away_hist[-1]["date"]).days if away_hist else np.nan
+        if not (np.isnan(expected_home_rest) and np.isnan(row["HomeRest"])) and \
+           not np.isclose(row["HomeRest"], expected_home_rest, atol=1e-6):
+            print(f"REST-LEAK home: row {i} has {row['HomeRest']} expected {expected_home_rest}")
+            errors += 1
+        if not (np.isnan(expected_away_rest) and np.isnan(row["AwayRest"])) and \
+           not np.isclose(row["AwayRest"], expected_away_rest, atol=1e-6):
+            print(f"REST-LEAK away: row {i} has {row['AwayRest']} expected {expected_away_rest}")
+            errors += 1
+
+        new_home_elo, new_away_elo = elo_update(expected_home_elo, expected_away_elo, ftr)
+        team_last_elo[home] = new_home_elo
+        team_last_elo[away] = new_away_elo
+
+        match_result = result_map[ftr]
+        team_history.setdefault(home, []).append(
+            {"date": date, "result": match_result, "opponent": away, "gf": fthg, "ga": ftag}
+        )
+        team_history.setdefault(away, []).append(
+            {"date": date, "result": -match_result, "opponent": home, "gf": ftag, "ga": fthg}
+        )
+
     assert errors == 0, f"{errors} leakage violations detected"
-    print("Leakage check PASSED: all features computed from past data only")
+    print("Leakage check PASSED: all features (Elo, form, goals, H2H, rest) computed from past data only")
 
 def expected_score(rating_a, rating_b):
     return 1 / (1 + 10 ** ((rating_b - rating_a) / 400))

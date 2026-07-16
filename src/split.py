@@ -21,7 +21,6 @@ TARGET_MAP = {"H": 0, "D": 1, "A": 2}
 def main():
     df = pd.read_csv(FEATURIZED_FILE, low_memory=False)
     df["Date"] = pd.to_datetime(df["Date"])
-    df = df.sort_values("Date").reset_index(drop=True)
 
     df["target"] = df[TARGET].map(TARGET_MAP)
 
