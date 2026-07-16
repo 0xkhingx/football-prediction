@@ -1,0 +1,19 @@
+{
+  "logistic_regression": {
+    "val_log_loss": 0.9769520444828824,
+    "test_log_loss": 0.9887897147748496
+  },
+  "xgboost": {
+    "val_log_loss": 0.9826755523681641,
+    "test_log_loss": 0.9932155609130859,
+    "best_iteration": 89
+  },
+  "naive_prior": {
+    "test_log_loss": 1.0781993191677732,
+    "priors": {
+      "H": 0.4444750809953815,
+      "D": 0.2490521817053836,
+      "A": 0.30647273729923485
+    }
+  }
+}
