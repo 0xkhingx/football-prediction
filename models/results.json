@@ -1,11 +1,11 @@
 {
   "logistic_regression": {
-    "val_log_loss": 0.9769520444828823,
-    "test_log_loss": 0.9887897147748503
+    "val_log_loss": 0.9750838599634027,
+    "test_log_loss": 0.987451090310911
   },
   "xgboost": {
-    "val_log_loss": 0.9820943474769592,
-    "test_log_loss": 0.995330810546875,
+    "val_log_loss": 0.9789122343063354,
+    "test_log_loss": 0.9983314871788025,
     "best_iteration": 74
   },
   "naive_prior": {

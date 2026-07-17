@@ -13,14 +13,6 @@ META_FILE = Path("data/processed/split_meta.json")
 MODEL_DIR = Path("models")
 MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
-FEATURE_COLS = [
-    "EloHome", "EloAway", "EloDiff",
-    "HomeForm5", "HomeForm10", "AwayForm5", "AwayForm10",
-    "H2HStreak", "HomeRest", "AwayRest",
-    "HomeGoalsAvg5", "AwayGoalsAvg5",
-    "HomeGoalsConcededAvg5", "AwayGoalsConcededAvg5",
-]
-
 TARGET_MAP = {"H": 0, "D": 1, "A": 2}
 
 def log_loss(y_true, y_pred_proba, eps=1e-15):

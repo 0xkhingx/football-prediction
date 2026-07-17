@@ -9,6 +9,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 FEATURE_COLS = [
     "EloHome", "EloAway", "EloDiff",
+    "EloHomeMargin", "EloAwayMargin", "EloDiffMargin",
     "HomeForm5", "HomeForm10", "AwayForm5", "AwayForm10",
     "H2HStreak", "HomeRest", "AwayRest",
     "HomeGoalsAvg5", "AwayGoalsAvg5",
