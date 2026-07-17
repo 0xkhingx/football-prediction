@@ -4,6 +4,7 @@ from pathlib import Path
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
+from sklearn.isotonic import IsotonicRegression
 import xgboost as xgb
 import joblib
 
@@ -19,6 +20,34 @@ def log_loss(y_true, y_pred_proba, eps=1e-15):
     for i in range(n):
         loss -= np.log(y_pred_proba[i, y_true[i]])
     return loss / n
+
+
+def calibrate_platt(y_val, val_probs, test_probs):
+    n_classes = val_probs.shape[1]
+    cal = {}
+    cal_probs = np.zeros_like(test_probs)
+    for i in range(n_classes):
+        lr = LogisticRegression(max_iter=5000)
+        lr.fit(val_probs[:, i].reshape(-1, 1), (y_val == i).astype(int))
+        cal[i] = lr
+        cal_probs[:, i] = lr.predict_proba(test_probs[:, i].reshape(-1, 1))[:, 1]
+    cal_probs = np.clip(cal_probs, 1e-15, 1 - 1e-15)
+    cal_probs /= cal_probs.sum(axis=1, keepdims=True)
+    return cal_probs, cal
+
+
+def calibrate_isotonic(y_val, val_probs, test_probs):
+    n_classes = val_probs.shape[1]
+    cal = {}
+    cal_probs = np.zeros_like(test_probs)
+    for i in range(n_classes):
+        iso = IsotonicRegression(out_of_bounds="clip")
+        iso.fit(val_probs[:, i], (y_val == i).astype(float))
+        cal[i] = iso
+        cal_probs[:, i] = iso.transform(test_probs[:, i])
+    cal_probs = np.clip(cal_probs, 1e-15, 1 - 1e-15)
+    cal_probs /= cal_probs.sum(axis=1, keepdims=True)
+    return cal_probs, cal
 
 def train_model(X_train, y_train, X_val, y_val, X_test, y_test, label, prefix):
     imputer = SimpleImputer(strategy="median")
@@ -40,6 +69,15 @@ def train_model(X_train, y_train, X_val, y_val, X_test, y_test, label, prefix):
     lr_val_ll = log_loss(y_val, lr.predict_proba(X_val_scaled))
     lr_test_ll = log_loss(y_test, lr.predict_proba(X_test_scaled))
 
+    lr_val_probs = lr.predict_proba(X_val_scaled)
+    lr_test_probs = lr.predict_proba(X_test_scaled)
+    _, lr_calibrators = calibrate_platt(y_val, lr_val_probs, lr_val_probs)
+    joblib.dump(lr_calibrators, MODEL_DIR / f"{prefix}_lr_calibrators.joblib")
+    cal_lr_test_probs, _ = calibrate_platt(y_val, lr_val_probs, lr_test_probs)
+    cal_lr_val_probs, _ = calibrate_platt(y_val, lr_val_probs, lr_val_probs)
+    lr_cal_val_ll = log_loss(y_val, cal_lr_val_probs)
+    lr_cal_test_ll = log_loss(y_test, cal_lr_test_probs)
+
     xgb_model = xgb.XGBClassifier(
         objective="multi:softprob", num_class=3, eval_metric="mlogloss",
         n_estimators=500, max_depth=6, learning_rate=0.05,
@@ -54,21 +92,33 @@ def train_model(X_train, y_train, X_val, y_val, X_test, y_test, label, prefix):
     )
     joblib.dump(xgb_model, MODEL_DIR / f"{prefix}_xgboost.joblib")
 
-    xgb_val_ll = log_loss(y_val, xgb_model.predict_proba(X_val_imp))
-    xgb_test_ll = log_loss(y_test, xgb_model.predict_proba(X_test_imp))
+    xgb_val_probs = xgb_model.predict_proba(X_val_imp)
+    xgb_test_probs = xgb_model.predict_proba(X_test_imp)
+    xgb_val_ll = log_loss(y_val, xgb_val_probs)
+    xgb_test_ll = log_loss(y_test, xgb_test_probs)
+    _, xgb_calibrators = calibrate_isotonic(y_val, xgb_val_probs, xgb_val_probs)
+    joblib.dump(xgb_calibrators, MODEL_DIR / f"{prefix}_xgb_calibrators.joblib")
+    cal_xgb_test_probs, _ = calibrate_isotonic(y_val, xgb_val_probs, xgb_test_probs)
+    cal_xgb_val_probs, _ = calibrate_isotonic(y_val, xgb_val_probs, xgb_val_probs)
+    xgb_cal_val_ll = log_loss(y_val, cal_xgb_val_probs)
+    xgb_cal_test_ll = log_loss(y_test, cal_xgb_test_probs)
 
     print(f"\n{label}:")
     print(f"  Train: {X_train.shape}, Val: {X_val.shape}, Test: {X_test.shape}")
-    print(f"  {'':>20} {'Val LL':<10} {'Test LL':<10}")
-    print(f"  {'Logistic Regression':>20} {lr_val_ll:<10.4f} {lr_test_ll:<10.4f}")
-    print(f"  {'XGBoost':>20} {xgb_val_ll:<10.4f} {xgb_test_ll:<10.4f}")
+    print(f"  {'':>25} {'Val LL':<10} {'Test LL':<10}")
+    print(f"  {'LR (uncalibrated)':>25} {lr_val_ll:<10.4f} {lr_test_ll:<10.4f}")
+    print(f"  {'LR (calibrated)':>25} {lr_cal_val_ll:<10.4f} {lr_cal_test_ll:<10.4f}")
+    print(f"  {'XGB (uncalibrated)':>25} {xgb_val_ll:<10.4f} {xgb_test_ll:<10.4f}")
+    print(f"  {'XGB (calibrated)':>25} {xgb_cal_val_ll:<10.4f} {xgb_cal_test_ll:<10.4f}")
 
     return {
         "label": label,
         "n_features": X_train.shape[1],
         "logistic_regression": {"val_log_loss": float(lr_val_ll), "test_log_loss": float(lr_test_ll)},
+        "lr_calibrated": {"val_log_loss": float(lr_cal_val_ll), "test_log_loss": float(lr_cal_test_ll)},
         "xgboost": {"val_log_loss": float(xgb_val_ll), "test_log_loss": float(xgb_test_ll),
                      "best_iteration": int(xgb_model.best_iteration)},
+        "xgb_calibrated": {"val_log_loss": float(xgb_cal_val_ll), "test_log_loss": float(xgb_cal_test_ll)},
     }
 
 def main():
@@ -110,14 +160,18 @@ def main():
         "priors": {"H": float(naive_prior), "D": float(naive_draw), "A": float(naive_away)},
     }
 
-    print(f"\n{'':>25} {'Test Log-Loss':>15}")
-    print("-" * 42)
-    print(f"{'Naive (prior)':>25} {naive_ll:>15.4f}")
-    print(f"{'LR (no odds)':>25} {results['no_odds']['logistic_regression']['test_log_loss']:>15.4f}")
-    print(f"{'XGB (no odds)':>25} {results['no_odds']['xgboost']['test_log_loss']:>15.4f}")
+    print(f"\n{'':>30} {'Test Log-Loss':>15}")
+    print("-" * 47)
+    print(f"{'Naive (prior)':>30} {naive_ll:>15.4f}")
+    print(f"{'LR (no odds, uncal)':>30} {results['no_odds']['logistic_regression']['test_log_loss']:>15.4f}")
+    print(f"{'LR (no odds, cal)':>30} {results['no_odds']['lr_calibrated']['test_log_loss']:>15.4f}")
+    print(f"{'XGB (no odds, uncal)':>30} {results['no_odds']['xgboost']['test_log_loss']:>15.4f}")
+    print(f"{'XGB (no odds, cal)':>30} {results['no_odds']['xgb_calibrated']['test_log_loss']:>15.4f}")
     if has_odds:
-        print(f"{'LR (with odds)':>25} {results['with_odds']['logistic_regression']['test_log_loss']:>15.4f}")
-        print(f"{'XGB (with odds)':>25} {results['with_odds']['xgboost']['test_log_loss']:>15.4f}")
+        print(f"{'LR (with odds, uncal)':>30} {results['with_odds']['logistic_regression']['test_log_loss']:>15.4f}")
+        print(f"{'LR (with odds, cal)':>30} {results['with_odds']['lr_calibrated']['test_log_loss']:>15.4f}")
+        print(f"{'XGB (with odds, uncal)':>30} {results['with_odds']['xgboost']['test_log_loss']:>15.4f}")
+        print(f"{'XGB (with odds, cal)':>30} {results['with_odds']['xgb_calibrated']['test_log_loss']:>15.4f}")
 
     with open(MODEL_DIR / "results.json", "w") as f:
         json.dump(results, f, indent=2)

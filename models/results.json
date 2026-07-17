@@ -6,10 +6,18 @@
       "val_log_loss": 0.9767010655164964,
       "test_log_loss": 0.9863124894396373
     },
+    "lr_calibrated": {
+      "val_log_loss": 0.9768299427960868,
+      "test_log_loss": 0.9867206803760734
+    },
     "xgboost": {
       "val_log_loss": 0.9789571762084961,
       "test_log_loss": 0.9920162558555603,
       "best_iteration": 100
+    },
+    "xgb_calibrated": {
+      "val_log_loss": 0.9600761532783508,
+      "test_log_loss": 1.0082248449325562
     }
   },
   "with_odds": {
@@ -19,10 +27,18 @@
       "val_log_loss": 0.9551017951010371,
       "test_log_loss": 0.967314606982242
     },
+    "lr_calibrated": {
+      "val_log_loss": 0.9543041754184641,
+      "test_log_loss": 0.9700797784385762
+    },
     "xgboost": {
       "val_log_loss": 0.9631955623626709,
       "test_log_loss": 0.971534788608551,
       "best_iteration": 89
+    },
+    "xgb_calibrated": {
+      "val_log_loss": 0.9408928155899048,
+      "test_log_loss": 0.9771698713302612
     }
   },
   "naive_prior": {
