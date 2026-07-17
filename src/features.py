@@ -357,6 +357,20 @@ def main():
     df["HomeCornersAvg5"] = home_corners_avg5
     df["AwayCornersAvg5"] = away_corners_avg5
 
+    # Normalized B365 implied probabilities
+    odds_cols = ["B365H", "B365D", "B365A"]
+    if all(c in df.columns for c in odds_cols):
+        raw = np.column_stack([df[c].values for c in odds_cols]).astype(np.float64)
+        inv = 1.0 / raw
+        total = inv.sum(axis=1, keepdims=True)
+        normed = inv / total
+        df["ProbB365H"] = normed[:, 0]
+        df["ProbB365D"] = normed[:, 1]
+        df["ProbB365A"] = normed[:, 2]
+        n_missing = np.isnan(raw).any(axis=1).sum()
+        if n_missing:
+            print(f"Warning: {n_missing} rows have missing B365 odds (ProbB365 will be NaN)")
+
     verify_no_leakage(df)
 
     df.to_csv(OUTPUT, index=False)

@@ -1,12 +1,29 @@
 {
-  "logistic_regression": {
-    "val_log_loss": 0.9767010655164964,
-    "test_log_loss": 0.9863124894396373
+  "no_odds": {
+    "label": "Model without odds",
+    "n_features": 23,
+    "logistic_regression": {
+      "val_log_loss": 0.9767010655164964,
+      "test_log_loss": 0.9863124894396373
+    },
+    "xgboost": {
+      "val_log_loss": 0.9789571762084961,
+      "test_log_loss": 0.9920162558555603,
+      "best_iteration": 100
+    }
   },
-  "xgboost": {
-    "val_log_loss": 0.9789571762084961,
-    "test_log_loss": 0.9920162558555603,
-    "best_iteration": 100
+  "with_odds": {
+    "label": "Model with odds",
+    "n_features": 26,
+    "logistic_regression": {
+      "val_log_loss": 0.9551017951010371,
+      "test_log_loss": 0.967314606982242
+    },
+    "xgboost": {
+      "val_log_loss": 0.9631955623626709,
+      "test_log_loss": 0.971534788608551,
+      "best_iteration": 89
+    }
   },
   "naive_prior": {
     "test_log_loss": 1.0781993191677732,
