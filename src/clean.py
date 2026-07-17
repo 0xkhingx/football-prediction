@@ -33,6 +33,7 @@ TEAM_NAME_MAP = {
 
 CORE_COLS = ["Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "FTR"]
 ODDS_COLS = ["B365H", "B365D", "B365A"]
+SHOT_COLS = ["HS", "AS", "HST", "AST", "HC", "AC"]
 
 def parse_mixed_date(d):
     if pd.isna(d):
@@ -77,6 +78,9 @@ def main():
 
     keep_cols = CORE_COLS + ["Season", "League", "HomePoints", "AwayPoints"]
     for c in ODDS_COLS:
+        if c in df.columns:
+            keep_cols.append(c)
+    for c in SHOT_COLS:
         if c in df.columns:
             keep_cols.append(c)
     df = df[keep_cols]

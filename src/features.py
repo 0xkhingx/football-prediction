@@ -62,6 +62,12 @@ def verify_no_leakage(df):
             recent = hist[-n:] if n < len(hist) else hist
             return np.mean([r["ga"] for r in recent])
 
+        def rolling_stat_verify(hist, n, key):
+            if len(hist) == 0:
+                return np.nan
+            recent = hist[-n:] if n < len(hist) else hist
+            return np.mean([r[key] for r in recent])
+
         checks = [
             ("HomeForm5", form(home_hist, 5)),
             ("HomeForm10", form(home_hist, 10)),
@@ -71,6 +77,12 @@ def verify_no_leakage(df):
             ("AwayGoalsAvg5", goals_avg(away_hist, 5)),
             ("HomeGoalsConcededAvg5", goals_conceded_avg(home_hist, 5)),
             ("AwayGoalsConcededAvg5", goals_conceded_avg(away_hist, 5)),
+            ("HomeShotsAvg5", rolling_stat_verify(home_hist, 5, "hs")),
+            ("AwayShotsAvg5", rolling_stat_verify(away_hist, 5, "as")),
+            ("HomeShotsOnTargetAvg5", rolling_stat_verify(home_hist, 5, "hst")),
+            ("AwayShotsOnTargetAvg5", rolling_stat_verify(away_hist, 5, "ast")),
+            ("HomeCornersAvg5", rolling_stat_verify(home_hist, 5, "hc")),
+            ("AwayCornersAvg5", rolling_stat_verify(away_hist, 5, "ac")),
         ]
         for feat_name, expected_val in checks:
             actual = row[feat_name]
@@ -111,10 +123,18 @@ def verify_no_leakage(df):
 
         match_result = result_map[ftr]
         team_history.setdefault(home, []).append(
-            {"date": date, "result": match_result, "opponent": away, "gf": fthg, "ga": ftag}
+            {"date": date, "result": match_result, "opponent": away,
+             "gf": fthg, "ga": ftag,
+             "hs": row.get("HS", np.nan), "as": row.get("AS", np.nan),
+             "hst": row.get("HST", np.nan), "ast": row.get("AST", np.nan),
+             "hc": row.get("HC", np.nan), "ac": row.get("AC", np.nan)}
         )
         team_history.setdefault(away, []).append(
-            {"date": date, "result": -match_result, "opponent": home, "gf": ftag, "ga": fthg}
+            {"date": date, "result": -match_result, "opponent": home,
+             "gf": ftag, "ga": fthg,
+             "hs": row.get("AS", np.nan), "as": row.get("HS", np.nan),
+             "hst": row.get("AST", np.nan), "ast": row.get("HST", np.nan),
+             "hc": row.get("AC", np.nan), "ac": row.get("HC", np.nan)}
         )
 
     assert errors == 0, f"{errors} leakage violations detected"
@@ -180,6 +200,12 @@ def main():
     away_goals_avg5 = np.empty(len(df), dtype=np.float64)
     home_goals_conceded_avg5 = np.empty(len(df), dtype=np.float64)
     away_goals_conceded_avg5 = np.empty(len(df), dtype=np.float64)
+    home_shots_avg5 = np.empty(len(df), dtype=np.float64)
+    away_shots_avg5 = np.empty(len(df), dtype=np.float64)
+    home_sot_avg5 = np.empty(len(df), dtype=np.float64)
+    away_sot_avg5 = np.empty(len(df), dtype=np.float64)
+    home_corners_avg5 = np.empty(len(df), dtype=np.float64)
+    away_corners_avg5 = np.empty(len(df), dtype=np.float64)
 
     for i, row in df.iterrows():
         home = row["HomeTeam"]
@@ -230,6 +256,19 @@ def main():
         home_goals_conceded_avg5[i] = goals_conceded_avg(home_hist, 5)
         away_goals_conceded_avg5[i] = goals_conceded_avg(away_hist, 5)
 
+        def rolling_stat(hist, n, key):
+            if len(hist) == 0:
+                return np.nan
+            recent = hist[-n:] if n < len(hist) else hist
+            return np.mean([r[key] for r in recent])
+
+        home_shots_avg5[i] = rolling_stat(home_hist, 5, "hs")
+        away_shots_avg5[i] = rolling_stat(away_hist, 5, "as")
+        home_sot_avg5[i] = rolling_stat(home_hist, 5, "hst")
+        away_sot_avg5[i] = rolling_stat(away_hist, 5, "ast")
+        home_corners_avg5[i] = rolling_stat(home_hist, 5, "hc")
+        away_corners_avg5[i] = rolling_stat(away_hist, 5, "ac")
+
         last_h2h = next(
             (
                 r
@@ -270,8 +309,13 @@ def main():
                 "date": date,
                 "result": match_result,
                 "opponent": away,
-                "gf": fthg,
-                "ga": ftag,
+                "gf": fthg, "ga": ftag,
+                "hs": row.get("HS", np.nan),
+                "as": row.get("AS", np.nan),
+                "hst": row.get("HST", np.nan),
+                "ast": row.get("AST", np.nan),
+                "hc": row.get("HC", np.nan),
+                "ac": row.get("AC", np.nan),
             }
         )
         team_history.setdefault(away, []).append(
@@ -279,8 +323,13 @@ def main():
                 "date": date,
                 "result": -match_result,
                 "opponent": home,
-                "gf": ftag,
-                "ga": fthg,
+                "gf": ftag, "ga": fthg,
+                "hs": row.get("AS", np.nan),
+                "as": row.get("HS", np.nan),
+                "hst": row.get("AST", np.nan),
+                "ast": row.get("HST", np.nan),
+                "hc": row.get("AC", np.nan),
+                "ac": row.get("HC", np.nan),
             }
         )
 
@@ -301,6 +350,12 @@ def main():
     df["AwayGoalsAvg5"] = away_goals_avg5
     df["HomeGoalsConcededAvg5"] = home_goals_conceded_avg5
     df["AwayGoalsConcededAvg5"] = away_goals_conceded_avg5
+    df["HomeShotsAvg5"] = home_shots_avg5
+    df["AwayShotsAvg5"] = away_shots_avg5
+    df["HomeShotsOnTargetAvg5"] = home_sot_avg5
+    df["AwayShotsOnTargetAvg5"] = away_sot_avg5
+    df["HomeCornersAvg5"] = home_corners_avg5
+    df["AwayCornersAvg5"] = away_corners_avg5
 
     verify_no_leakage(df)
 

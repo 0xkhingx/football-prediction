@@ -14,6 +14,9 @@ FEATURE_COLS = [
     "H2HStreak", "HomeRest", "AwayRest",
     "HomeGoalsAvg5", "AwayGoalsAvg5",
     "HomeGoalsConcededAvg5", "AwayGoalsConcededAvg5",
+    "HomeShotsAvg5", "AwayShotsAvg5",
+    "HomeShotsOnTargetAvg5", "AwayShotsOnTargetAvg5",
+    "HomeCornersAvg5", "AwayCornersAvg5",
 ]
 
 TARGET = "FTR"
