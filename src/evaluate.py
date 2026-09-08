@@ -65,6 +65,12 @@ def main():
     lr_no_probs = lr_no_odds.predict_proba(X_test_scaled)
     xgb_no_probs = xgb_no_odds.predict_proba(X_test_imp)
 
+    tuned_path = MODEL_DIR / "no_odds_xgb_tuned.joblib"
+    xgb_tuned_probs = None
+    if tuned_path.exists():
+        xgb_tuned = joblib.load(tuned_path)
+        xgb_tuned_probs = xgb_tuned.predict_proba(X_test_imp)
+
     has_odds = "X_test_odds" in data
     if has_odds:
         X_test_odds = data["X_test_odds"]
@@ -80,14 +86,15 @@ def main():
     has_odds_in_df = df_test["B365H"].notna() & df_test["B365D"].notna() & df_test["B365A"].notna()
     odds_count = int(has_odds_in_df.sum())
     print(f"\nTest set: {len(y_test)} matches, B365 odds coverage: {odds_count}/{len(y_test)}")
+    use_odds = has_odds and odds_count > 0
 
     print("\n" + "=" * 70)
-    print("TEST SET RESULTS — all models on the SAME 1752 matches")
+    print(f"TEST SET RESULTS — all models on the SAME {len(y_test)} matches")
     print("=" * 70)
     print(f"{'Model':<30} {'Log-Loss':<12} {'Brier':<12}")
     print("-" * 54)
 
-    naive_prior = np.array([np.mean(y_test == 0), np.mean(y_test == 1), np.mean(y_test == 2)])
+    naive_prior = np.array([np.mean(data["y_train"] == 0), np.mean(data["y_train"] == 1), np.mean(data["y_train"] == 2)])
     naive_probs = np.tile(naive_prior, (len(y_test), 1))
     naive_ll = log_loss(y_test, naive_probs)
     naive_brier = brier_score(y_test, naive_probs)
@@ -95,20 +102,27 @@ def main():
 
     print(f"{'LR (no odds)':<30} {log_loss(y_test, lr_no_probs):<12.4f} {brier_score(y_test, lr_no_probs):<12.4f}")
     print(f"{'XGB (no odds)':<30} {log_loss(y_test, xgb_no_probs):<12.4f} {brier_score(y_test, xgb_no_probs):<12.4f}")
+    if xgb_tuned_probs is not None:
+        print(f"{'XGB-tuned (no odds, PROD)':<30} {log_loss(y_test, xgb_tuned_probs):<12.4f} {brier_score(y_test, xgb_tuned_probs):<12.4f}")
 
-    if has_odds:
+    if has_odds and use_odds:
         print(f"{'LR (with B365 odds)':<30} {log_loss(y_test, lr_with_probs):<12.4f} {brier_score(y_test, lr_with_probs):<12.4f}")
         print(f"{'XGB (with B365 odds)':<30} {log_loss(y_test, xgb_with_probs):<12.4f} {brier_score(y_test, xgb_with_probs):<12.4f}")
 
-    book_raw = np.column_stack([1 / df_test[c].values for c in ["B365H", "B365D", "B365A"]])
-    book_probs = book_raw / book_raw.sum(axis=1, keepdims=True)
-    book_ll = log_loss(y_test, book_probs)
-    book_brier = brier_score(y_test, book_probs)
-    print(f"{'Bookmaker (B365, normalized)':<30} {book_ll:<12.4f} {book_brier:<12.4f}")
+    if use_odds:
+        book_raw = np.column_stack([1 / df_test[c].values for c in ["B365H", "B365D", "B365A"]])
+        book_probs = book_raw / book_raw.sum(axis=1, keepdims=True)
+        book_ll = log_loss(y_test, book_probs)
+        book_brier = brier_score(y_test, book_probs)
+        print(f"{'Bookmaker (B365, normalized)':<30} {book_ll:<12.4f} {book_brier:<12.4f}")
+    else:
+        book_probs = book_ll = book_brier = None
+        print(f"{'Bookmaker (B365, normalized)':<30} {'n/a (no odds coverage)'}")
 
     print("\n" + "=" * 70)
-    print("PER-LEAGUE BREAKDOWN — XGBoost with odds")
+    print("PER-LEAGUE BREAKDOWN — prod tuned (no odds)")
     print("=" * 70)
+    headline_probs = xgb_tuned_probs if xgb_tuned_probs is not None else xgb_no_probs
     rows = []
     for code, name in LEAGUE_MAP.items():
         mask = df_test["League"] == code
@@ -116,25 +130,25 @@ def main():
             continue
         idx = mask.values
         y_league = y_test[idx]
-        probs_league = (xgb_with_probs if has_odds else xgb_no_probs)[idx]
+        probs_league = headline_probs[idx]
         ll = log_loss(y_league, probs_league)
         brier = brier_score(y_league, probs_league)
         acc = np.mean(probs_league.argmax(axis=1) == y_league)
         rows.append({"League": f"{name} ({code})", "Matches": int(len(y_league)),
                       "Log-Loss": float(ll), "Brier": float(brier), "Acc": float(acc)})
-        ll_no = log_loss(y_league, xgb_no_probs[idx])
-        print(f"  {name} ({code}): {len(y_league):>4} matches, LL={ll:.4f} (no odds: {ll_no:.4f}), Acc={acc:.3f}")
+        print(f"  {name} ({code}): {len(y_league):>4} matches, LL={ll:.4f}, Acc={acc:.3f}")
 
     print("\n" + "=" * 70)
-    print("CALIBRATION ANALYSIS — XGBoost with odds")
+    print("CALIBRATION ANALYSIS — prod tuned (no odds)")
     print("=" * 70)
-    probs = xgb_with_probs if has_odds else xgb_no_probs
+    probs = headline_probs
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
     for idx, outcome in enumerate(["Home Win", "Draw", "Away Win"]):
         prob_true, prob_pred = calibration_curve(y_test == idx, probs[:, idx], n_bins=10)
-        axes[idx].plot(prob_pred, prob_true, marker="o", label="XGBoost (with odds)" if has_odds else "XGBoost (no odds)")
-        prob_true_b, prob_pred_b = calibration_curve(y_test == idx, book_probs[:, idx], n_bins=10)
-        axes[idx].plot(prob_pred_b, prob_true_b, marker="s", label="Bookmaker", alpha=0.7)
+        axes[idx].plot(prob_pred, prob_true, marker="o", label="XGB-tuned (no odds)")
+        if book_probs is not None:
+            prob_true_b, prob_pred_b = calibration_curve(y_test == idx, book_probs[:, idx], n_bins=10)
+            axes[idx].plot(prob_pred_b, prob_true_b, marker="s", label="Bookmaker", alpha=0.7)
         axes[idx].plot([0, 1], [0, 1], "k--", label="Perfect")
         axes[idx].set_xlabel("Predicted Probability")
         axes[idx].set_ylabel("Observed Frequency")
@@ -156,10 +170,18 @@ def main():
             "logistic_regression": {"log_loss": float(log_loss(y_test, lr_no_probs)), "brier": float(brier_score(y_test, lr_no_probs))},
             "xgboost": {"log_loss": float(log_loss(y_test, xgb_no_probs)), "brier": float(brier_score(y_test, xgb_no_probs))},
         },
-        "bookmaker": {"log_loss": float(book_ll), "brier": float(book_brier)},
+        "prod_tuned": None,
+        "bookmaker": None,
         "per_league": rows,
     }
-    if has_odds:
+    if book_ll is not None:
+        results["bookmaker"] = {"log_loss": float(book_ll), "brier": float(book_brier)}
+    if xgb_tuned_probs is not None:
+        results["prod_tuned"] = {
+            "model": "no_odds_xgb_tuned",
+            "xgboost_tuned": {"log_loss": float(log_loss(y_test, xgb_tuned_probs)), "brier": float(brier_score(y_test, xgb_tuned_probs))},
+        }
+    if has_odds and use_odds:
         results["with_odds"] = {
             "logistic_regression": {"log_loss": float(log_loss(y_test, lr_with_probs)), "brier": float(brier_score(y_test, lr_with_probs))},
             "xgboost": {"log_loss": float(log_loss(y_test, xgb_with_probs)), "brier": float(brier_score(y_test, xgb_with_probs))},

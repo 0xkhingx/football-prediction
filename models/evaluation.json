@@ -1,71 +1,65 @@
 {
   "alignment_check": true,
-  "test_set_size": 1752,
-  "test_season": 2425,
-  "odds_coverage": "1752/1752",
+  "test_set_size": 97,
+  "test_season": 2627,
+  "odds_coverage": "0/97",
   "naive": {
-    "log_loss": 1.076600995151573,
-    "brier": 0.6520916734430059
+    "log_loss": 1.0480204395731605,
+    "brier": 0.6321409867309065
   },
   "no_odds": {
     "logistic_regression": {
-      "log_loss": 0.9863124894396373,
-      "brier": 0.5885547398320731
+      "log_loss": 0.9866957903825031,
+      "brier": 0.5836852028457392
     },
     "xgboost": {
-      "log_loss": 0.9920162558555603,
-      "brier": 0.5916889309883118
+      "log_loss": 0.9385102391242981,
+      "brier": 0.5529029965400696
     }
   },
-  "bookmaker": {
-    "log_loss": 0.9647237829167193,
-    "brier": 0.5733658993390883
+  "prod_tuned": {
+    "model": "no_odds_xgb_tuned",
+    "xgboost_tuned": {
+      "log_loss": 0.9458822011947632,
+      "brier": 0.5566574931144714
+    }
   },
+  "bookmaker": null,
   "per_league": [
     {
       "League": "England (E0)",
-      "Matches": 380,
-      "Log-Loss": 0.972505509853363,
-      "Brier": 0.5783736109733582,
-      "Acc": 0.55
+      "Matches": 20,
+      "Log-Loss": 1.0057148933410645,
+      "Brier": 0.5980077981948853,
+      "Acc": 0.5
     },
     {
       "League": "Spain (SP1)",
-      "Matches": 380,
-      "Log-Loss": 0.9666550755500793,
-      "Brier": 0.5731375813484192,
-      "Acc": 0.5447368421052632
+      "Matches": 30,
+      "Log-Loss": 0.9493059515953064,
+      "Brier": 0.5598423480987549,
+      "Acc": 0.5333333333333333
     },
     {
       "League": "Italy (I1)",
-      "Matches": 380,
-      "Log-Loss": 0.9641588926315308,
-      "Brier": 0.5748825669288635,
-      "Acc": 0.5421052631578948
+      "Matches": 20,
+      "Log-Loss": 0.7754369974136353,
+      "Brier": 0.43169885873794556,
+      "Acc": 0.7
     },
     {
       "League": "Germany (D1)",
-      "Matches": 306,
-      "Log-Loss": 0.9944258332252502,
-      "Brier": 0.5936877727508545,
-      "Acc": 0.5228758169934641
+      "Matches": 9,
+      "Log-Loss": 0.9148985743522644,
+      "Brier": 0.5403015613555908,
+      "Acc": 0.5555555555555556
     },
     {
       "League": "France (F1)",
-      "Matches": 306,
-      "Log-Loss": 0.9626570343971252,
-      "Brier": 0.5687841176986694,
-      "Acc": 0.545751633986928
+      "Matches": 18,
+      "Log-Loss": 1.0785703659057617,
+      "Brier": 0.6524255871772766,
+      "Acc": 0.4444444444444444
     }
-  ],
-  "with_odds": {
-    "logistic_regression": {
-      "log_loss": 0.967314606982242,
-      "brier": 0.5749727365167779
-    },
-    "xgboost": {
-      "log_loss": 0.971534788608551,
-      "brier": 0.5774805545806885
-    }
-  }
+  ]
 }

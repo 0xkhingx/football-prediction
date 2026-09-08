@@ -3,22 +3,23 @@ import numpy as np
 from pathlib import Path
 import json
 
+try:
+    from .config import FEATURE_COLS_NO_ODDS
+except ImportError:  # run as script: python src/split.py
+    from config import FEATURE_COLS_NO_ODDS
+
 FEATURIZED_FILE = Path("data/processed/matches_featurized.csv")
 OUTPUT_DIR = Path("data/processed")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-FEATURE_COLS_NO_ODDS = [
-    "EloHome", "EloAway", "EloDiff",
-    "EloHomeMargin", "EloAwayMargin", "EloDiffMargin",
-    "HomeForm5", "HomeForm10", "AwayForm5", "AwayForm10",
-    "H2HStreak", "HomeRest", "AwayRest",
-    "HomeGoalsAvg5", "AwayGoalsAvg5",
-    "HomeGoalsConcededAvg5", "AwayGoalsConcededAvg5",
-    "HomeShotsAvg5", "AwayShotsAvg5",
-    "HomeShotsOnTargetAvg5", "AwayShotsOnTargetAvg5",
-    "HomeCornersAvg5", "AwayCornersAvg5",
-]
 FEATURE_COLS_WITH_ODDS = FEATURE_COLS_NO_ODDS + ["ProbB365H", "ProbB365D", "ProbB365A"]
+
+# Pinned windows: a refresh that introduces new seasons must consciously
+# re-pin here. Never silently redefine val/test (it orphans registry metrics
+# and tuned hyperparams).
+PINNED_TRAIN_MAX = 2425
+PINNED_VAL = 2526
+PINNED_TEST = 2627
 
 TARGET = "FTR"
 TARGET_MAP = {"H": 0, "D": 1, "A": 2}
@@ -32,9 +33,20 @@ def main():
     seasons = sorted(df["Season"].unique())
     print(f"Seasons: {seasons}")
 
-    test_season = seasons[-1]
-    val_season = seasons[-2]
-    train_seasons = seasons[:-2]
+    known = set(seasons)
+    unknown = [s for s in seasons if s > PINNED_TEST]
+    if unknown:
+        raise ValueError(
+            f"unpinned seasons in data: {unknown}. Consciously re-pin "
+            f"PINNED_TRAIN_MAX/PINNED_VAL/PINNED_TEST in src/split.py first."
+        )
+    missing = [s for s in (PINNED_VAL, PINNED_TEST) if s not in known]
+    if missing:
+        raise ValueError(f"pinned seasons missing from data: {missing}")
+
+    test_season = PINNED_TEST
+    val_season = PINNED_VAL
+    train_seasons = [s for s in seasons if s <= PINNED_TRAIN_MAX]
 
     train_mask = df["Season"].isin(train_seasons)
     val_mask = df["Season"] == val_season

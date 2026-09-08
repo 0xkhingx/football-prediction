@@ -39,6 +39,11 @@ def parse_mixed_date(d):
     if pd.isna(d):
         return pd.NaT
     d = str(d).strip()
+    if re.match(r"\d{4}-\d{2}-\d{2}$", d):
+        # ISO from openfootball adapter — parse EXACTLY. Never use dayfirst
+        # here: it swaps ambiguous dates (2025-11-01 -> Jan 11) and silently
+        # corrupts chronology for the entire season.
+        return pd.to_datetime(d, format="%Y-%m-%d", errors="coerce")
     if re.match(r"\d{2}/\d{2}/\d{4}$", d):
         return pd.to_datetime(d, format="%d/%m/%Y", errors="coerce")
     if re.match(r"\d{2}/\d{2}/\d{2}$", d):

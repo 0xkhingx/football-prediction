@@ -2,6 +2,11 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
+try:
+    from .config import DERBY_PAIRS
+except ImportError:  # run as script: python src/features.py
+    from config import DERBY_PAIRS
+
 CLEAN_FILE = Path("data/processed/matches_clean.csv")
 OUTPUT = Path("data/processed/matches_featurized.csv")
 
@@ -10,12 +15,34 @@ ELO_INIT = 1500
 
 
 def verify_no_leakage(df):
-    df_check = df.sort_values("Date").reset_index(drop=True)
+    # MUST replay in the exact order the featurizer used. sort_values defaults
+    # to quicksort (unstable on same-day ties); the 3-key sort is fully
+    # deterministic, so use it here too — anything else manufactures phantom
+    # "leaks" out of same-day ordering noise.
+    df_check = df.sort_values(["Date", "League", "HomeTeam"]).reset_index(drop=True)
     team_last_elo = {}
     team_last_margin_elo = {}
     team_history = {}
+    season_apps_v = {}
+    season_pts_v = {}
     result_map = {"H": 1, "D": 0, "A": -1}
     errors = 0
+
+    def _cong(hist, date):
+        n = 0
+        for r in reversed(hist):
+            if (date - r["date"]).days > 14:
+                break
+            n += 1
+        return float(n)
+
+    def _close_or_nan(actual, expected, tag, i, date):
+        if pd.isna(expected) and pd.isna(actual):
+            return 0
+        if pd.isna(expected) != pd.isna(actual) or not np.isclose(actual, expected, atol=1e-6):
+            print(f"CANDIDATE-LEAK {tag}: row {i} date {date} has {actual} expected {expected}")
+            return 1
+        return 0
     for i, row in df_check.iterrows():
         home, away = row["HomeTeam"], row["AwayTeam"]
         date = row["Date"]
@@ -122,6 +149,31 @@ def verify_no_leakage(df):
         team_last_margin_elo[away] = new_away_margin
 
         match_result = result_map[ftr]
+
+        # Step-2 candidate verification (past data only, mirrors main loop).
+        # NOTE: runs BEFORE the history appends — home_hist/away_hist are live
+        # references and congestion counts pre-match history only.
+        season = row["Season"]
+        errors += _close_or_nan(row["HomeCongestion14"], _cong(home_hist, date), "HomeCongestion14", i, date)
+        errors += _close_or_nan(row["AwayCongestion14"], _cong(away_hist, date), "AwayCongestion14", i, date)
+        errors += _close_or_nan(row["HomeGameNo"], season_apps_v.get((home, season), 0) + 1, "HomeGameNo", i, date)
+        errors += _close_or_nan(row["AwayGameNo"], season_apps_v.get((away, season), 0) + 1, "AwayGameNo", i, date)
+        errors += _close_or_nan(row["Derby"], 1 if frozenset({home, away}) in DERBY_PAIRS else 0, "Derby", i, date)
+        hsum, hn = season_pts_v.get((home, season), (0.0, 0))
+        asum, an = season_pts_v.get((away, season), (0.0, 0))
+        exp_ppg = (hsum / hn if hn else np.nan) - (asum / an if an else np.nan)
+        errors += _close_or_nan(row["PPGDiff"], exp_ppg, "PPGDiff", i, date)
+        exp_rd = row["HomeRest"] - row["AwayRest"]
+        errors += _close_or_nan(row["RestDiff"], exp_rd, "RestDiff", i, date)
+        season_apps_v[(home, season)] = season_apps_v.get((home, season), 0) + 1
+        season_apps_v[(away, season)] = season_apps_v.get((away, season), 0) + 1
+        vhp = 3.0 if ftr == "H" else (1.0 if ftr == "D" else 0.0)
+        vap = 3.0 if ftr == "A" else (1.0 if ftr == "D" else 0.0)
+        s, n = season_pts_v.get((home, season), (0.0, 0))
+        season_pts_v[(home, season)] = (s + vhp, n + 1)
+        s, n = season_pts_v.get((away, season), (0.0, 0))
+        season_pts_v[(away, season)] = (s + vap, n + 1)
+
         team_history.setdefault(home, []).append(
             {"date": date, "result": match_result, "opponent": away,
              "gf": fthg, "ga": ftag,
@@ -183,7 +235,18 @@ def main():
     elo_dict = {}
     margin_elo_dict = {}
     team_history = {}
+    season_apps: dict = {}
+    season_pts: dict = {}
     result_map = {"H": 1, "D": 0, "A": -1}
+
+    def congestion(hist, date):
+        # matches in the 14 days strictly before this one (past only)
+        n = 0
+        for r in reversed(hist):
+            if (date - r["date"]).days > 14:
+                break
+            n += 1
+        return float(n)
 
     home_elo_vals = np.empty(len(df), dtype=np.float64)
     away_elo_vals = np.empty(len(df), dtype=np.float64)
@@ -206,6 +269,13 @@ def main():
     away_sot_avg5 = np.empty(len(df), dtype=np.float64)
     home_corners_avg5 = np.empty(len(df), dtype=np.float64)
     away_corners_avg5 = np.empty(len(df), dtype=np.float64)
+    # Step-2 experiment candidates (appended after prod cols; prod order untouched)
+    home_congestion14 = np.empty(len(df), dtype=np.float64)
+    away_congestion14 = np.empty(len(df), dtype=np.float64)
+    home_gameno = np.empty(len(df), dtype=np.float64)
+    away_gameno = np.empty(len(df), dtype=np.float64)
+    derby_flag = np.empty(len(df), dtype=np.int64)
+    ppg_diff = np.empty(len(df), dtype=np.float64)
 
     for i, row in df.iterrows():
         home = row["HomeTeam"]
@@ -268,6 +338,19 @@ def main():
         away_sot_avg5[i] = rolling_stat(away_hist, 5, "ast")
         home_corners_avg5[i] = rolling_stat(home_hist, 5, "hc")
         away_corners_avg5[i] = rolling_stat(away_hist, 5, "ac")
+
+        # --- Step-2 candidates (past data only) ---
+        season = row["Season"]
+        home_congestion14[i] = congestion(home_hist, date)
+        away_congestion14[i] = congestion(away_hist, date)
+        home_gameno[i] = season_apps.get((home, season), 0) + 1
+        away_gameno[i] = season_apps.get((away, season), 0) + 1
+        derby_flag[i] = 1 if frozenset({home, away}) in DERBY_PAIRS else 0
+        hsum, hn = season_pts.get((home, season), (0.0, 0))
+        asum, an = season_pts.get((away, season), (0.0, 0))
+        hppg = hsum / hn if hn else np.nan
+        appg = asum / an if an else np.nan
+        ppg_diff[i] = hppg - appg
 
         last_h2h = next(
             (
@@ -333,6 +416,16 @@ def main():
             }
         )
 
+        season_apps[(home, season)] = season_apps.get((home, season), 0) + 1
+        season_apps[(away, season)] = season_apps.get((away, season), 0) + 1
+        # Points derived from the result itself — works for every source.
+        hp = 3.0 if ftr == "H" else (1.0 if ftr == "D" else 0.0)
+        ap = 3.0 if ftr == "A" else (1.0 if ftr == "D" else 0.0)
+        s, n = season_pts.get((home, season), (0.0, 0))
+        season_pts[(home, season)] = (s + hp, n + 1)
+        s, n = season_pts.get((away, season), (0.0, 0))
+        season_pts[(away, season)] = (s + ap, n + 1)
+
     df["EloHome"] = home_elo_vals
     df["EloAway"] = away_elo_vals
     df["EloDiff"] = df["EloHome"] - df["EloAway"]
@@ -356,6 +449,14 @@ def main():
     df["AwayShotsOnTargetAvg5"] = away_sot_avg5
     df["HomeCornersAvg5"] = home_corners_avg5
     df["AwayCornersAvg5"] = away_corners_avg5
+    # Step-2 candidates (appended after prod cols; prod order untouched)
+    df["RestDiff"] = df["HomeRest"] - df["AwayRest"]
+    df["HomeCongestion14"] = home_congestion14
+    df["AwayCongestion14"] = away_congestion14
+    df["HomeGameNo"] = home_gameno
+    df["AwayGameNo"] = away_gameno
+    df["Derby"] = derby_flag
+    df["PPGDiff"] = ppg_diff
 
     # Normalized B365 implied probabilities
     odds_cols = ["B365H", "B365D", "B365A"]

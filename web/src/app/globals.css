@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #e85a24;
+  font-feature-settings: "tnum";
+}
+
+::selection {
+  background: #e7ef45;
+  color: #161412;
+}
+
+/* Diagonal pinstripe accents, like the reference corners */
+.pinstripes::before,
+.pinstripes::after {
+  content: "";
+  position: fixed;
+  width: 140vmax;
+  height: 10px;
+  background: rgba(250, 245, 236, 0.9);
+  z-index: 0;
+  pointer-events: none;
+}
+.pinstripes::before {
+  top: -4vh;
+  left: -20vmax;
+  transform: rotate(38deg);
+  transform-origin: left center;
+}
+.pinstripes::after {
+  bottom: 6vh;
+  right: -20vmax;
+  transform: rotate(38deg);
+  transform-origin: right center;
+}

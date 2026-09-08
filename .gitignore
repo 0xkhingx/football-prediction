@@ -10,5 +10,6 @@ data/processed/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 models/*.joblib
+models/*.ubj
 notebooks/*.png
 data/predictions_log.csv

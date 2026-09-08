@@ -1,0 +1,1656 @@
+Date,League,Home,Away
+2026-09-04,E0,Ipswich,Liverpool
+2026-09-05,E0,Newcastle United,Bournemouth
+2026-09-05,E0,Nottingham Forest,Tottenham Hotspur
+2026-09-05,E0,Manchester City,Coventry
+2026-09-05,E0,Brighton,Leeds
+2026-09-05,E0,Brentford,Sunderland
+2026-09-05,E0,Fulham,Crystal Palace
+2026-09-05,E0,Hull,Aston Villa
+2026-09-06,E0,Everton,Manchester United
+2026-09-06,E0,Arsenal,Chelsea
+2026-09-12,E0,Crystal Palace,Ipswich
+2026-09-12,E0,Liverpool,Fulham
+2026-09-12,E0,Aston Villa,Nottingham Forest
+2026-09-12,E0,Bournemouth,Brentford
+2026-09-12,E0,Chelsea,Hull
+2026-09-12,E0,Tottenham Hotspur,Everton
+2026-09-12,E0,Sunderland,Arsenal
+2026-09-13,E0,Coventry,Brighton
+2026-09-13,E0,Manchester United,Manchester City
+2026-09-14,E0,Leeds,Newcastle United
+2026-09-18,E0,Brentford,Chelsea
+2026-09-19,E0,Tottenham Hotspur,Aston Villa
+2026-09-19,E0,Everton,Ipswich
+2026-09-19,E0,Leeds,Crystal Palace
+2026-09-19,E0,Brighton,Arsenal
+2026-09-19,E0,Newcastle United,Hull
+2026-09-19,E0,Nottingham Forest,Coventry
+2026-09-20,E0,Bournemouth,Liverpool
+2026-09-20,E0,Manchester City,Sunderland
+2026-09-20,E0,Fulham,Manchester United
+2026-10-10,E0,Arsenal,Leeds
+2026-10-10,E0,Sunderland,Brighton
+2026-10-10,E0,Chelsea,Bournemouth
+2026-10-10,E0,Ipswich,Fulham
+2026-10-10,E0,Aston Villa,Brentford
+2026-10-10,E0,Manchester United,Tottenham Hotspur
+2026-10-11,E0,Hull,Everton
+2026-10-11,E0,Crystal Palace,Nottingham Forest
+2026-10-11,E0,Liverpool,Manchester City
+2026-10-12,E0,Coventry,Newcastle United
+2026-10-17,E0,Everton,Chelsea
+2026-10-17,E0,Fulham,Hull
+2026-10-17,E0,Manchester City,Ipswich
+2026-10-17,E0,Brentford,Liverpool
+2026-10-17,E0,Newcastle United,Aston Villa
+2026-10-18,E0,Bournemouth,Sunderland
+2026-10-18,E0,Leeds,Manchester United
+2026-10-18,E0,Brighton,Crystal Palace
+2026-10-18,E0,Nottingham Forest,Arsenal
+2026-10-19,E0,Tottenham Hotspur,Coventry
+2026-10-23,E0,Ipswich,Nottingham Forest
+2026-10-24,E0,Aston Villa,Manchester City
+2026-10-24,E0,Liverpool,Brighton
+2026-10-24,E0,Arsenal,Everton
+2026-10-24,E0,Coventry,Fulham
+2026-10-24,E0,Chelsea,Tottenham Hotspur
+2026-10-25,E0,Crystal Palace,Newcastle United
+2026-10-25,E0,Manchester United,Bournemouth
+2026-10-25,E0,Hull,Brentford
+2026-10-25,E0,Sunderland,Leeds
+2026-10-31,E0,Chelsea,Manchester United
+2026-10-31,E0,Manchester City,Brighton
+2026-10-31,E0,Bournemouth,Leeds
+2026-10-31,E0,Coventry,Sunderland
+2026-10-31,E0,Hull,Ipswich
+2026-10-31,E0,Brentford,Nottingham Forest
+2026-10-31,E0,Tottenham Hotspur,Crystal Palace
+2026-11-01,E0,Aston Villa,Fulham
+2026-11-01,E0,Liverpool,Arsenal
+2026-11-02,E0,Newcastle United,Everton
+2026-11-07,E0,Arsenal,Hull
+2026-11-07,E0,Nottingham Forest,Manchester City
+2026-11-07,E0,Leeds,Tottenham Hotspur
+2026-11-07,E0,Fulham,Newcastle United
+2026-11-07,E0,Everton,Coventry
+2026-11-07,E0,Crystal Palace,Liverpool
+2026-11-07,E0,Sunderland,Chelsea
+2026-11-07,E0,Ipswich,Bournemouth
+2026-11-07,E0,Brighton,Brentford
+2026-11-07,E0,Manchester United,Aston Villa
+2026-11-21,E0,Chelsea,Leeds
+2026-11-21,E0,Manchester City,Fulham
+2026-11-21,E0,Aston Villa,Sunderland
+2026-11-21,E0,Liverpool,Manchester United
+2026-11-21,E0,Hull,Brighton
+2026-11-21,E0,Bournemouth,Nottingham Forest
+2026-11-21,E0,Tottenham Hotspur,Ipswich
+2026-11-21,E0,Brentford,Everton
+2026-11-21,E0,Coventry,Crystal Palace
+2026-11-21,E0,Newcastle United,Arsenal
+2026-11-28,E0,Leeds,Coventry
+2026-11-28,E0,Ipswich,Aston Villa
+2026-11-28,E0,Arsenal,Manchester City
+2026-11-28,E0,Manchester United,Brentford
+2026-11-28,E0,Everton,Liverpool
+2026-11-28,E0,Fulham,Bournemouth
+2026-11-28,E0,Nottingham Forest,Chelsea
+2026-11-28,E0,Brighton,Newcastle United
+2026-11-28,E0,Sunderland,Tottenham Hotspur
+2026-11-28,E0,Crystal Palace,Hull
+2026-12-02,E0,Tottenham Hotspur,Fulham
+2026-12-02,E0,Liverpool,Sunderland
+2026-12-02,E0,Hull,Nottingham Forest
+2026-12-02,E0,Chelsea,Crystal Palace
+2026-12-02,E0,Aston Villa,Everton
+2026-12-02,E0,Brentford,Arsenal
+2026-12-02,E0,Coventry,Ipswich
+2026-12-02,E0,Manchester City,Leeds
+2026-12-02,E0,Newcastle United,Manchester United
+2026-12-02,E0,Bournemouth,Brighton
+2026-12-05,E0,Tottenham Hotspur,Arsenal
+2026-12-05,E0,Manchester United,Coventry
+2026-12-05,E0,Leeds,Ipswich
+2026-12-05,E0,Newcastle United,Sunderland
+2026-12-05,E0,Chelsea,Liverpool
+2026-12-05,E0,Brentford,Manchester City
+2026-12-05,E0,Bournemouth,Hull
+2026-12-05,E0,Aston Villa,Crystal Palace
+2026-12-05,E0,Nottingham Forest,Brighton
+2026-12-05,E0,Everton,Fulham
+2026-12-12,E0,Sunderland,Nottingham Forest
+2026-12-12,E0,Crystal Palace,Manchester United
+2026-12-12,E0,Hull,Tottenham Hotspur
+2026-12-12,E0,Brighton,Everton
+2026-12-12,E0,Ipswich,Newcastle United
+2026-12-12,E0,Coventry,Aston Villa
+2026-12-12,E0,Arsenal,Bournemouth
+2026-12-12,E0,Manchester City,Chelsea
+2026-12-12,E0,Liverpool,Leeds
+2026-12-12,E0,Fulham,Brentford
+2026-12-19,E0,Leeds,Fulham
+2026-12-19,E0,Brighton,Ipswich
+2026-12-19,E0,Nottingham Forest,Everton
+2026-12-19,E0,Brentford,Newcastle United
+2026-12-19,E0,Manchester City,Hull
+2026-12-19,E0,Sunderland,Crystal Palace
+2026-12-19,E0,Bournemouth,Coventry
+2026-12-19,E0,Arsenal,Manchester United
+2026-12-19,E0,Liverpool,Tottenham Hotspur
+2026-12-19,E0,Chelsea,Aston Villa
+2026-12-26,E0,Aston Villa,Leeds
+2026-12-26,E0,Manchester United,Nottingham Forest
+2026-12-26,E0,Crystal Palace,Arsenal
+2026-12-26,E0,Everton,Sunderland
+2026-12-26,E0,Coventry,Chelsea
+2026-12-26,E0,Newcastle United,Manchester City
+2026-12-26,E0,Fulham,Brighton
+2026-12-26,E0,Tottenham Hotspur,Bournemouth
+2026-12-26,E0,Hull,Liverpool
+2026-12-26,E0,Ipswich,Brentford
+2026-12-30,E0,Fulham,Arsenal
+2026-12-30,E0,Coventry,Brentford
+2026-12-30,E0,Aston Villa,Liverpool
+2026-12-30,E0,Newcastle United,Nottingham Forest
+2026-12-30,E0,Hull,Leeds
+2026-12-30,E0,Manchester United,Sunderland
+2026-12-30,E0,Ipswich,Chelsea
+2026-12-30,E0,Tottenham Hotspur,Brighton
+2026-12-30,E0,Everton,Manchester City
+2026-12-30,E0,Crystal Palace,Bournemouth
+2027-01-02,E0,Bournemouth,Aston Villa
+2027-01-02,E0,Brentford,Crystal Palace
+2027-01-02,E0,Leeds,Everton
+2027-01-02,E0,Arsenal,Ipswich
+2027-01-02,E0,Sunderland,Hull
+2027-01-02,E0,Liverpool,Coventry
+2027-01-02,E0,Chelsea,Newcastle United
+2027-01-02,E0,Nottingham Forest,Fulham
+2027-01-02,E0,Brighton,Manchester United
+2027-01-02,E0,Manchester City,Tottenham Hotspur
+2027-01-06,E0,Arsenal,Brentford
+2027-01-06,E0,Leeds,Manchester City
+2027-01-06,E0,Manchester United,Newcastle United
+2027-01-06,E0,Brighton,Bournemouth
+2027-01-06,E0,Nottingham Forest,Hull
+2027-01-06,E0,Fulham,Tottenham Hotspur
+2027-01-06,E0,Everton,Aston Villa
+2027-01-06,E0,Sunderland,Liverpool
+2027-01-06,E0,Crystal Palace,Chelsea
+2027-01-06,E0,Ipswich,Coventry
+2027-01-16,E0,Bournemouth,Ipswich
+2027-01-16,E0,Manchester City,Nottingham Forest
+2027-01-16,E0,Chelsea,Sunderland
+2027-01-16,E0,Brentford,Brighton
+2027-01-16,E0,Aston Villa,Manchester United
+2027-01-16,E0,Tottenham Hotspur,Leeds
+2027-01-16,E0,Coventry,Everton
+2027-01-16,E0,Liverpool,Crystal Palace
+2027-01-16,E0,Hull,Arsenal
+2027-01-16,E0,Newcastle United,Fulham
+2027-01-23,E0,Ipswich,Hull
+2027-01-23,E0,Everton,Brentford
+2027-01-23,E0,Sunderland,Coventry
+2027-01-23,E0,Nottingham Forest,Bournemouth
+2027-01-23,E0,Arsenal,Newcastle United
+2027-01-23,E0,Leeds,Chelsea
+2027-01-23,E0,Fulham,Aston Villa
+2027-01-23,E0,Manchester United,Liverpool
+2027-01-23,E0,Brighton,Manchester City
+2027-01-23,E0,Crystal Palace,Tottenham Hotspur
+2027-01-30,E0,Tottenham Hotspur,Sunderland
+2027-01-30,E0,Brentford,Manchester United
+2027-01-30,E0,Newcastle United,Brighton
+2027-01-30,E0,Hull,Crystal Palace
+2027-01-30,E0,Coventry,Leeds
+2027-01-30,E0,Bournemouth,Fulham
+2027-01-30,E0,Chelsea,Nottingham Forest
+2027-01-30,E0,Liverpool,Everton
+2027-01-30,E0,Manchester City,Arsenal
+2027-01-30,E0,Aston Villa,Ipswich
+2027-02-06,E0,Arsenal,Liverpool
+2027-02-06,E0,Brighton,Hull
+2027-02-06,E0,Sunderland,Aston Villa
+2027-02-06,E0,Crystal Palace,Coventry
+2027-02-06,E0,Ipswich,Tottenham Hotspur
+2027-02-06,E0,Everton,Newcastle United
+2027-02-06,E0,Fulham,Manchester City
+2027-02-06,E0,Leeds,Bournemouth
+2027-02-06,E0,Manchester United,Chelsea
+2027-02-06,E0,Nottingham Forest,Brentford
+2027-02-10,E0,Everton,Leeds
+2027-02-10,E0,Coventry,Liverpool
+2027-02-10,E0,Hull,Sunderland
+2027-02-10,E0,Aston Villa,Bournemouth
+2027-02-10,E0,Crystal Palace,Brentford
+2027-02-10,E0,Newcastle United,Chelsea
+2027-02-10,E0,Fulham,Nottingham Forest
+2027-02-10,E0,Tottenham Hotspur,Manchester City
+2027-02-10,E0,Manchester United,Brighton
+2027-02-10,E0,Ipswich,Arsenal
+2027-02-20,E0,Manchester City,Newcastle United
+2027-02-20,E0,Bournemouth,Crystal Palace
+2027-02-20,E0,Brentford,Coventry
+2027-02-20,E0,Chelsea,Ipswich
+2027-02-20,E0,Liverpool,Hull
+2027-02-20,E0,Arsenal,Fulham
+2027-02-20,E0,Nottingham Forest,Manchester United
+2027-02-20,E0,Brighton,Tottenham Hotspur
+2027-02-20,E0,Sunderland,Everton
+2027-02-20,E0,Leeds,Aston Villa
+2027-02-27,E0,Crystal Palace,Sunderland
+2027-02-27,E0,Manchester United,Arsenal
+2027-02-27,E0,Ipswich,Brighton
+2027-02-27,E0,Coventry,Bournemouth
+2027-02-27,E0,Everton,Nottingham Forest
+2027-02-27,E0,Fulham,Leeds
+2027-02-27,E0,Aston Villa,Chelsea
+2027-02-27,E0,Tottenham Hotspur,Liverpool
+2027-02-27,E0,Newcastle United,Brentford
+2027-02-27,E0,Hull,Manchester City
+2027-03-03,E0,Nottingham Forest,Newcastle United
+2027-03-03,E0,Bournemouth,Tottenham Hotspur
+2027-03-03,E0,Manchester City,Everton
+2027-03-03,E0,Arsenal,Crystal Palace
+2027-03-03,E0,Leeds,Hull
+2027-03-03,E0,Sunderland,Manchester United
+2027-03-03,E0,Liverpool,Aston Villa
+2027-03-03,E0,Brighton,Fulham
+2027-03-03,E0,Brentford,Ipswich
+2027-03-03,E0,Chelsea,Coventry
+2027-03-13,E0,Leeds,Brighton
+2027-03-13,E0,Tottenham Hotspur,Nottingham Forest
+2027-03-13,E0,Crystal Palace,Fulham
+2027-03-13,E0,Liverpool,Ipswich
+2027-03-13,E0,Coventry,Manchester City
+2027-03-13,E0,Bournemouth,Newcastle United
+2027-03-13,E0,Chelsea,Arsenal
+2027-03-13,E0,Aston Villa,Hull
+2027-03-13,E0,Manchester United,Everton
+2027-03-13,E0,Sunderland,Brentford
+2027-03-20,E0,Brentford,Bournemouth
+2027-03-20,E0,Brighton,Coventry
+2027-03-20,E0,Manchester City,Manchester United
+2027-03-20,E0,Ipswich,Crystal Palace
+2027-03-20,E0,Arsenal,Sunderland
+2027-03-20,E0,Fulham,Liverpool
+2027-03-20,E0,Hull,Chelsea
+2027-03-20,E0,Nottingham Forest,Aston Villa
+2027-03-20,E0,Everton,Tottenham Hotspur
+2027-03-20,E0,Newcastle United,Leeds
+2027-04-10,E0,Sunderland,Ipswich
+2027-04-10,E0,Leeds,Nottingham Forest
+2027-04-10,E0,Manchester United,Hull
+2027-04-10,E0,Chelsea,Fulham
+2027-04-10,E0,Liverpool,Newcastle United
+2027-04-10,E0,Coventry,Arsenal
+2027-04-10,E0,Bournemouth,Manchester City
+2027-04-10,E0,Crystal Palace,Everton
+2027-04-10,E0,Tottenham Hotspur,Brentford
+2027-04-10,E0,Aston Villa,Brighton
+2027-04-17,E0,Brighton,Chelsea
+2027-04-17,E0,Fulham,Sunderland
+2027-04-17,E0,Brentford,Leeds
+2027-04-17,E0,Nottingham Forest,Liverpool
+2027-04-17,E0,Hull,Coventry
+2027-04-17,E0,Arsenal,Aston Villa
+2027-04-17,E0,Ipswich,Manchester United
+2027-04-17,E0,Manchester City,Crystal Palace
+2027-04-17,E0,Newcastle United,Tottenham Hotspur
+2027-04-17,E0,Everton,Bournemouth
+2027-04-24,E0,Chelsea,Manchester City
+2027-04-24,E0,Bournemouth,Arsenal
+2027-04-24,E0,Tottenham Hotspur,Hull
+2027-04-24,E0,Manchester United,Crystal Palace
+2027-04-24,E0,Everton,Brighton
+2027-04-24,E0,Nottingham Forest,Sunderland
+2027-04-24,E0,Newcastle United,Ipswich
+2027-04-24,E0,Aston Villa,Coventry
+2027-04-24,E0,Brentford,Fulham
+2027-04-24,E0,Leeds,Liverpool
+2027-05-01,E0,Sunderland,Newcastle United
+2027-05-01,E0,Brighton,Nottingham Forest
+2027-05-01,E0,Coventry,Manchester United
+2027-05-01,E0,Hull,Bournemouth
+2027-05-01,E0,Manchester City,Brentford
+2027-05-01,E0,Fulham,Everton
+2027-05-01,E0,Liverpool,Chelsea
+2027-05-01,E0,Arsenal,Tottenham Hotspur
+2027-05-01,E0,Crystal Palace,Aston Villa
+2027-05-01,E0,Ipswich,Leeds
+2027-05-08,E0,Manchester City,Liverpool
+2027-05-08,E0,Leeds,Arsenal
+2027-05-08,E0,Fulham,Ipswich
+2027-05-08,E0,Nottingham Forest,Crystal Palace
+2027-05-08,E0,Brentford,Aston Villa
+2027-05-08,E0,Newcastle United,Coventry
+2027-05-08,E0,Brighton,Sunderland
+2027-05-08,E0,Tottenham Hotspur,Chelsea
+2027-05-08,E0,Everton,Hull
+2027-05-08,E0,Bournemouth,Manchester United
+2027-05-15,E0,Hull,Fulham
+2027-05-15,E0,Manchester United,Leeds
+2027-05-15,E0,Crystal Palace,Brighton
+2027-05-15,E0,Aston Villa,Newcastle United
+2027-05-15,E0,Chelsea,Everton
+2027-05-15,E0,Coventry,Tottenham Hotspur
+2027-05-15,E0,Sunderland,Bournemouth
+2027-05-15,E0,Liverpool,Brentford
+2027-05-15,E0,Ipswich,Manchester City
+2027-05-15,E0,Arsenal,Nottingham Forest
+2027-05-23,E0,Brentford,Hull
+2027-05-23,E0,Newcastle United,Crystal Palace
+2027-05-23,E0,Tottenham Hotspur,Manchester United
+2027-05-23,E0,Leeds,Sunderland
+2027-05-23,E0,Brighton,Liverpool
+2027-05-23,E0,Nottingham Forest,Ipswich
+2027-05-23,E0,Bournemouth,Chelsea
+2027-05-23,E0,Fulham,Coventry
+2027-05-23,E0,Everton,Arsenal
+2027-05-23,E0,Manchester City,Aston Villa
+2027-05-30,E0,Ipswich,Everton
+2027-05-30,E0,Arsenal,Brighton
+2027-05-30,E0,Liverpool,Bournemouth
+2027-05-30,E0,Coventry,Nottingham Forest
+2027-05-30,E0,Aston Villa,Tottenham Hotspur
+2027-05-30,E0,Hull,Newcastle United
+2027-05-30,E0,Manchester United,Fulham
+2027-05-30,E0,Sunderland,Manchester City
+2027-05-30,E0,Chelsea,Brentford
+2027-05-30,E0,Crystal Palace,Leeds
+2026-09-03,SP1,Real Sociedad,Celta
+2026-09-04,SP1,Betis,Real Madrid
+2026-09-05,SP1,Athletic Bilbao,Atletico Madrid
+2026-09-05,SP1,Rayo Vallecano,Racing
+2026-09-05,SP1,Villarreal,La Coruna
+2026-09-06,SP1,Valencia,Barcelona
+2026-09-06,SP1,Alaves,Osasuna
+2026-09-06,SP1,Malaga,Levante
+2026-09-06,SP1,Espanol,Sevilla
+2026-09-07,SP1,Getafe,Celta
+2026-09-07,SP1,Elche,Real Sociedad
+2026-09-11,SP1,Sevilla,Valencia
+2026-09-12,SP1,Racing,Alaves
+2026-09-12,SP1,Osasuna,Espanol
+2026-09-12,SP1,Athletic Bilbao,Elche
+2026-09-12,SP1,Real Madrid,Rayo Vallecano
+2026-09-13,SP1,Celta,Malaga
+2026-09-13,SP1,Levante,Barcelona
+2026-09-13,SP1,Getafe,La Coruna
+2026-09-13,SP1,Real Sociedad,Atletico Madrid
+2026-09-14,SP1,Villarreal,Betis
+2026-09-15,SP1,Rayo Vallecano,Espanol
+2026-09-15,SP1,Alaves,Valencia
+2026-09-15,SP1,Elche,Real Madrid
+2026-09-16,SP1,La Coruna,Sevilla
+2026-09-16,SP1,Atletico Madrid,Osasuna
+2026-09-16,SP1,Levante,Athletic Bilbao
+2026-09-16,SP1,Barcelona,Racing
+2026-09-17,SP1,Betis,Getafe
+2026-09-17,SP1,Malaga,Villarreal
+2026-09-19,SP1,Osasuna,Rayo Vallecano
+2026-09-19,SP1,Athletic Bilbao,Alaves
+2026-09-19,SP1,Celta,Racing
+2026-09-19,SP1,Sevilla,Barcelona
+2026-09-20,SP1,Valencia,Real Sociedad
+2026-09-20,SP1,Espanol,Elche
+2026-09-20,SP1,Getafe,Malaga
+2026-09-20,SP1,Atletico Madrid,Real Madrid
+2026-09-20,SP1,La Coruna,Betis
+2026-09-20,SP1,Villarreal,Levante
+2026-10-11,SP1,Rayo Vallecano,Athletic Bilbao
+2026-10-11,SP1,Alaves,Atletico Madrid
+2026-10-11,SP1,Barcelona,Getafe
+2026-10-11,SP1,Betis,Osasuna
+2026-10-11,SP1,Real Madrid,Villarreal
+2026-10-11,SP1,Elche,Celta
+2026-10-11,SP1,Levante,Sevilla
+2026-10-11,SP1,Racing,Valencia
+2026-10-11,SP1,Malaga,Espanol
+2026-10-11,SP1,Real Sociedad,La Coruna
+2026-10-18,SP1,Villarreal,Elche
+2026-10-18,SP1,Real Madrid,Sevilla
+2026-10-18,SP1,Espanol,Atletico Madrid
+2026-10-18,SP1,Valencia,Athletic Bilbao
+2026-10-18,SP1,Celta,Alaves
+2026-10-18,SP1,Betis,Barcelona
+2026-10-18,SP1,Malaga,Real Sociedad
+2026-10-18,SP1,Osasuna,Racing
+2026-10-18,SP1,La Coruna,Levante
+2026-10-18,SP1,Getafe,Rayo Vallecano
+2026-10-25,SP1,Rayo Vallecano,Elche
+2026-10-25,SP1,Alaves,Malaga
+2026-10-25,SP1,Athletic Bilbao,Getafe
+2026-10-25,SP1,Sevilla,Osasuna
+2026-10-25,SP1,Valencia,Villarreal
+2026-10-25,SP1,Barcelona,Real Madrid
+2026-10-25,SP1,Atletico Madrid,La Coruna
+2026-10-25,SP1,Celta,Betis
+2026-10-25,SP1,Real Sociedad,Levante
+2026-10-25,SP1,Racing,Espanol
+2026-11-01,SP1,Betis,Malaga
+2026-11-01,SP1,Villarreal,Espanol
+2026-11-01,SP1,Elche,Valencia
+2026-11-01,SP1,Athletic Bilbao,Real Sociedad
+2026-11-01,SP1,Levante,Atletico Madrid
+2026-11-01,SP1,La Coruna,Osasuna
+2026-11-01,SP1,Barcelona,Alaves
+2026-11-01,SP1,Getafe,Sevilla
+2026-11-01,SP1,Racing,Real Madrid
+2026-11-01,SP1,Rayo Vallecano,Celta
+2026-11-08,SP1,Elche,Betis
+2026-11-08,SP1,Osasuna,Athletic Bilbao
+2026-11-08,SP1,Sevilla,Alaves
+2026-11-08,SP1,Valencia,Real Madrid
+2026-11-08,SP1,Celta,Levante
+2026-11-08,SP1,Real Sociedad,Rayo Vallecano
+2026-11-08,SP1,Malaga,Racing
+2026-11-08,SP1,Espanol,La Coruna
+2026-11-08,SP1,Atletico Madrid,Barcelona
+2026-11-08,SP1,Villarreal,Getafe
+2026-11-22,SP1,Athletic Bilbao,Espanol
+2026-11-22,SP1,Barcelona,Villarreal
+2026-11-22,SP1,Racing,Real Sociedad
+2026-11-22,SP1,Rayo Vallecano,Valencia
+2026-11-22,SP1,Osasuna,Malaga
+2026-11-22,SP1,Getafe,Atletico Madrid
+2026-11-22,SP1,Real Madrid,Celta
+2026-11-22,SP1,Alaves,La Coruna
+2026-11-22,SP1,Sevilla,Betis
+2026-11-22,SP1,Levante,Elche
+2026-11-29,SP1,Celta,Villarreal
+2026-11-29,SP1,Elche,Atletico Madrid
+2026-11-29,SP1,Betis,Rayo Vallecano
+2026-11-29,SP1,Valencia,Osasuna
+2026-11-29,SP1,Real Madrid,Alaves
+2026-11-29,SP1,Espanol,Getafe
+2026-11-29,SP1,Real Sociedad,Sevilla
+2026-11-29,SP1,Levante,Racing
+2026-11-29,SP1,La Coruna,Barcelona
+2026-11-29,SP1,Malaga,Athletic Bilbao
+2026-12-06,SP1,Osasuna,Elche
+2026-12-06,SP1,Sevilla,Malaga
+2026-12-06,SP1,Alaves,Espanol
+2026-12-06,SP1,Atletico Madrid,Betis
+2026-12-06,SP1,Racing,La Coruna
+2026-12-06,SP1,Barcelona,Celta
+2026-12-06,SP1,Getafe,Valencia
+2026-12-06,SP1,Athletic Bilbao,Real Madrid
+2026-12-06,SP1,Villarreal,Real Sociedad
+2026-12-06,SP1,Rayo Vallecano,Levante
+2026-12-13,SP1,Espanol,Celta
+2026-12-13,SP1,Malaga,Barcelona
+2026-12-13,SP1,Real Madrid,Osasuna
+2026-12-13,SP1,La Coruna,Athletic Bilbao
+2026-12-13,SP1,Levante,Alaves
+2026-12-13,SP1,Elche,Sevilla
+2026-12-13,SP1,Villarreal,Rayo Vallecano
+2026-12-13,SP1,Betis,Racing
+2026-12-13,SP1,Real Sociedad,Getafe
+2026-12-13,SP1,Atletico Madrid,Valencia
+2026-12-20,SP1,Athletic Bilbao,Betis
+2026-12-20,SP1,Getafe,Levante
+2026-12-20,SP1,Alaves,Elche
+2026-12-20,SP1,Valencia,Espanol
+2026-12-20,SP1,Osasuna,Villarreal
+2026-12-20,SP1,Barcelona,Real Sociedad
+2026-12-20,SP1,Celta,Atletico Madrid
+2026-12-20,SP1,Rayo Vallecano,Malaga
+2026-12-20,SP1,La Coruna,Real Madrid
+2026-12-20,SP1,Sevilla,Racing
+2027-01-03,SP1,Real Madrid,Getafe
+2027-01-03,SP1,Real Sociedad,Osasuna
+2027-01-03,SP1,Levante,Valencia
+2027-01-03,SP1,Racing,Athletic Bilbao
+2027-01-03,SP1,Malaga,Elche
+2027-01-03,SP1,Betis,Alaves
+2027-01-03,SP1,Celta,La Coruna
+2027-01-03,SP1,Espanol,Barcelona
+2027-01-03,SP1,Villarreal,Sevilla
+2027-01-03,SP1,Rayo Vallecano,Atletico Madrid
+2027-01-10,SP1,Athletic Bilbao,Villarreal
+2027-01-10,SP1,Elche,Getafe
+2027-01-10,SP1,Real Madrid,Levante
+2027-01-10,SP1,Osasuna,Barcelona
+2027-01-10,SP1,La Coruna,Rayo Vallecano
+2027-01-10,SP1,Atletico Madrid,Racing
+2027-01-10,SP1,Alaves,Real Sociedad
+2027-01-10,SP1,Sevilla,Celta
+2027-01-10,SP1,Espanol,Betis
+2027-01-10,SP1,Valencia,Malaga
+2027-01-17,SP1,Malaga,Real Madrid
+2027-01-17,SP1,Barcelona,Elche
+2027-01-17,SP1,Villarreal,Alaves
+2027-01-17,SP1,Racing,Osasuna
+2027-01-17,SP1,Levante,Espanol
+2027-01-17,SP1,Celta,Valencia
+2027-01-17,SP1,Getafe,Athletic Bilbao
+2027-01-17,SP1,Rayo Vallecano,Sevilla
+2027-01-17,SP1,Betis,La Coruna
+2027-01-17,SP1,Atletico Madrid,Real Sociedad
+2027-01-24,SP1,Real Madrid,Betis
+2027-01-24,SP1,Getafe,Osasuna
+2027-01-24,SP1,Valencia,Sevilla
+2027-01-24,SP1,Elche,Rayo Vallecano
+2027-01-24,SP1,Alaves,Barcelona
+2027-01-24,SP1,Real Sociedad,Malaga
+2027-01-24,SP1,Racing,Celta
+2027-01-24,SP1,Athletic Bilbao,Levante
+2027-01-24,SP1,Espanol,Villarreal
+2027-01-24,SP1,La Coruna,Atletico Madrid
+2027-01-31,SP1,Betis,Elche
+2027-01-31,SP1,Rayo Vallecano,Real Madrid
+2027-01-31,SP1,Atletico Madrid,Espanol
+2027-01-31,SP1,Celta,Getafe
+2027-01-31,SP1,Villarreal,Racing
+2027-01-31,SP1,Levante,Real Sociedad
+2027-01-31,SP1,Barcelona,Valencia
+2027-01-31,SP1,Sevilla,Athletic Bilbao
+2027-01-31,SP1,Osasuna,La Coruna
+2027-01-31,SP1,Malaga,Alaves
+2027-02-07,SP1,Athletic Bilbao,Osasuna
+2027-02-07,SP1,Alaves,Celta
+2027-02-07,SP1,Betis,Sevilla
+2027-02-07,SP1,Elche,Levante
+2027-02-07,SP1,Espanol,Rayo Vallecano
+2027-02-07,SP1,Getafe,Villarreal
+2027-02-07,SP1,La Coruna,Malaga
+2027-02-07,SP1,Real Sociedad,Real Madrid
+2027-02-07,SP1,Valencia,Racing
+2027-02-07,SP1,Barcelona,Atletico Madrid
+2027-02-14,SP1,Sevilla,Espanol
+2027-02-14,SP1,Osasuna,Atletico Madrid
+2027-02-14,SP1,Celta,Rayo Vallecano
+2027-02-14,SP1,Villarreal,Barcelona
+2027-02-14,SP1,Real Sociedad,Betis
+2027-02-14,SP1,Elche,La Coruna
+2027-02-14,SP1,Valencia,Alaves
+2027-02-14,SP1,Levante,Malaga
+2027-02-14,SP1,Racing,Getafe
+2027-02-14,SP1,Real Madrid,Athletic Bilbao
+2027-02-21,SP1,Alaves,Racing
+2027-02-21,SP1,Malaga,Betis
+2027-02-21,SP1,Villarreal,Valencia
+2027-02-21,SP1,Barcelona,Levante
+2027-02-21,SP1,Athletic Bilbao,Celta
+2027-02-21,SP1,Espanol,Osasuna
+2027-02-21,SP1,Sevilla,Real Madrid
+2027-02-21,SP1,Atletico Madrid,Elche
+2027-02-21,SP1,La Coruna,Real Sociedad
+2027-02-21,SP1,Rayo Vallecano,Getafe
+2027-02-28,SP1,Celta,Espanol
+2027-02-28,SP1,Levante,La Coruna
+2027-02-28,SP1,Malaga,Atletico Madrid
+2027-02-28,SP1,Osasuna,Sevilla
+2027-02-28,SP1,Real Madrid,Valencia
+2027-02-28,SP1,Getafe,Alaves
+2027-02-28,SP1,Athletic Bilbao,Barcelona
+2027-02-28,SP1,Racing,Rayo Vallecano
+2027-02-28,SP1,Betis,Villarreal
+2027-02-28,SP1,Real Sociedad,Elche
+2027-03-07,SP1,Barcelona,Betis
+2027-03-07,SP1,Elche,Malaga
+2027-03-07,SP1,Alaves,Athletic Bilbao
+2027-03-07,SP1,Rayo Vallecano,Osasuna
+2027-03-07,SP1,Sevilla,Real Sociedad
+2027-03-07,SP1,Atletico Madrid,Celta
+2027-03-07,SP1,Villarreal,Real Madrid
+2027-03-07,SP1,Valencia,Levante
+2027-03-07,SP1,La Coruna,Getafe
+2027-03-07,SP1,Espanol,Racing
+2027-03-14,SP1,Osasuna,Celta
+2027-03-14,SP1,Elche,Villarreal
+2027-03-14,SP1,Alaves,Sevilla
+2027-03-14,SP1,Athletic Bilbao,Valencia
+2027-03-14,SP1,Betis,Levante
+2027-03-14,SP1,Racing,Atletico Madrid
+2027-03-14,SP1,Malaga,Rayo Vallecano
+2027-03-14,SP1,Getafe,Real Sociedad
+2027-03-14,SP1,Barcelona,La Coruna
+2027-03-14,SP1,Real Madrid,Espanol
+2027-03-21,SP1,Villarreal,Malaga
+2027-03-21,SP1,Sevilla,Elche
+2027-03-21,SP1,Levante,Osasuna
+2027-03-21,SP1,Celta,Real Madrid
+2027-03-21,SP1,Rayo Vallecano,Barcelona
+2027-03-21,SP1,Real Sociedad,Alaves
+2027-03-21,SP1,Espanol,Athletic Bilbao
+2027-03-21,SP1,Racing,Betis
+2027-03-21,SP1,Valencia,La Coruna
+2027-03-21,SP1,Atletico Madrid,Getafe
+2027-04-04,SP1,Levante,Rayo Vallecano
+2027-04-04,SP1,Barcelona,Sevilla
+2027-04-04,SP1,Malaga,Osasuna
+2027-04-04,SP1,Athletic Bilbao,Racing
+2027-04-04,SP1,La Coruna,Villarreal
+2027-04-04,SP1,Real Sociedad,Valencia
+2027-04-04,SP1,Elche,Alaves
+2027-04-04,SP1,Real Madrid,Atletico Madrid
+2027-04-04,SP1,Getafe,Espanol
+2027-04-04,SP1,Betis,Celta
+2027-04-11,SP1,Rayo Vallecano,Real Sociedad
+2027-04-11,SP1,Espanol,Malaga
+2027-04-11,SP1,Villarreal,Athletic Bilbao
+2027-04-11,SP1,Alaves,Betis
+2027-04-11,SP1,Valencia,Getafe
+2027-04-11,SP1,Sevilla,La Coruna
+2027-04-11,SP1,Celta,Elche
+2027-04-11,SP1,Racing,Barcelona
+2027-04-11,SP1,Osasuna,Real Madrid
+2027-04-11,SP1,Atletico Madrid,Levante
+2027-04-18,SP1,Atletico Madrid,Sevilla
+2027-04-18,SP1,Barcelona,Espanol
+2027-04-18,SP1,Levante,Villarreal
+2027-04-18,SP1,Real Sociedad,Racing
+2027-04-18,SP1,Malaga,Valencia
+2027-04-18,SP1,La Coruna,Celta
+2027-04-18,SP1,Elche,Osasuna
+2027-04-18,SP1,Alaves,Rayo Vallecano
+2027-04-18,SP1,Betis,Athletic Bilbao
+2027-04-18,SP1,Getafe,Real Madrid
+2027-04-21,SP1,Getafe,Betis
+2027-04-21,SP1,Valencia,Rayo Vallecano
+2027-04-21,SP1,Celta,Barcelona
+2027-04-21,SP1,Osasuna,Alaves
+2027-04-21,SP1,Real Madrid,Elche
+2027-04-21,SP1,Athletic Bilbao,La Coruna
+2027-04-21,SP1,Racing,Malaga
+2027-04-21,SP1,Villarreal,Atletico Madrid
+2027-04-21,SP1,Sevilla,Levante
+2027-04-21,SP1,Espanol,Real Sociedad
+2027-05-02,SP1,La Coruna,Racing
+2027-05-02,SP1,Celta,Sevilla
+2027-05-02,SP1,Real Sociedad,Athletic Bilbao
+2027-05-02,SP1,Barcelona,Osasuna
+2027-05-02,SP1,Rayo Vallecano,Villarreal
+2027-05-02,SP1,Malaga,Getafe
+2027-05-02,SP1,Betis,Valencia
+2027-05-02,SP1,Elche,Espanol
+2027-05-02,SP1,Levante,Real Madrid
+2027-05-02,SP1,Atletico Madrid,Alaves
+2027-05-09,SP1,Valencia,Atletico Madrid
+2027-05-09,SP1,Osasuna,Real Sociedad
+2027-05-09,SP1,Alaves,Levante
+2027-05-09,SP1,Athletic Bilbao,Malaga
+2027-05-09,SP1,Racing,Sevilla
+2027-05-09,SP1,Rayo Vallecano,La Coruna
+2027-05-09,SP1,Betis,Espanol
+2027-05-09,SP1,Real Madrid,Barcelona
+2027-05-09,SP1,Getafe,Elche
+2027-05-09,SP1,Villarreal,Celta
+2027-05-16,SP1,Atletico Madrid,Rayo Vallecano
+2027-05-16,SP1,Sevilla,Villarreal
+2027-05-16,SP1,Real Sociedad,Barcelona
+2027-05-16,SP1,Elche,Athletic Bilbao
+2027-05-16,SP1,Malaga,Celta
+2027-05-16,SP1,La Coruna,Alaves
+2027-05-16,SP1,Levante,Getafe
+2027-05-16,SP1,Espanol,Valencia
+2027-05-16,SP1,Real Madrid,Racing
+2027-05-16,SP1,Osasuna,Betis
+2027-05-23,SP1,Atletico Madrid,Athletic Bilbao
+2027-05-23,SP1,Alaves,Real Madrid
+2027-05-23,SP1,Sevilla,Getafe
+2027-05-23,SP1,Villarreal,Osasuna
+2027-05-23,SP1,Racing,Levante
+2027-05-23,SP1,La Coruna,Espanol
+2027-05-23,SP1,Rayo Vallecano,Betis
+2027-05-23,SP1,Barcelona,Malaga
+2027-05-23,SP1,Valencia,Elche
+2027-05-23,SP1,Celta,Real Sociedad
+2027-05-30,SP1,Levante,Celta
+2027-05-30,SP1,Real Madrid,La Coruna
+2027-05-30,SP1,Betis,Atletico Madrid
+2027-05-30,SP1,Real Sociedad,Villarreal
+2027-05-30,SP1,Malaga,Sevilla
+2027-05-30,SP1,Elche,Racing
+2027-05-30,SP1,Athletic Bilbao,Rayo Vallecano
+2027-05-30,SP1,Espanol,Alaves
+2027-05-30,SP1,Getafe,Barcelona
+2027-05-30,SP1,Osasuna,Valencia
+2026-09-04,I1,Genoa,Como
+2026-09-05,I1,Fiorentina,Torino
+2026-09-05,I1,Inter,Napoli
+2026-09-05,I1,Roma,Atalanta
+2026-09-06,I1,Parma,Monza
+2026-09-06,I1,Frosinone,Venezia
+2026-09-06,I1,Bologna,Sassuolo
+2026-09-06,I1,Juventus,Milan
+2026-09-07,I1,Cagliari,Lecce
+2026-09-07,I1,Udinese,Lazio
+2026-09-11,I1,Venezia,Fiorentina
+2026-09-12,I1,Genoa,Frosinone
+2026-09-12,I1,Lazio,Milan
+2026-09-12,I1,Atalanta,Cagliari
+2026-09-13,I1,Lecce,Monza
+2026-09-13,I1,Napoli,Bologna
+2026-09-13,I1,Sassuolo,Juventus
+2026-09-14,I1,Como,Parma
+2026-09-14,I1,Torino,Roma
+2026-09-14,I1,Inter,Udinese
+2026-09-18,I1,Monza,Sassuolo
+2026-09-19,I1,Bologna,Torino
+2026-09-19,I1,Udinese,Cagliari
+2026-09-19,I1,Roma,Inter
+2026-09-19,I1,Venezia,Lazio
+2026-09-20,I1,Fiorentina,Napoli
+2026-09-20,I1,Frosinone,Como
+2026-09-20,I1,Parma,Genoa
+2026-09-20,I1,Juventus,Atalanta
+2026-09-20,I1,Milan,Lecce
+2026-10-11,I1,Atalanta,Venezia
+2026-10-11,I1,Sassuolo,Milan
+2026-10-11,I1,Lecce,Bologna
+2026-10-11,I1,Inter,Parma
+2026-10-11,I1,Lazio,Monza
+2026-10-11,I1,Cagliari,Juventus
+2026-10-11,I1,Como,Roma
+2026-10-11,I1,Napoli,Frosinone
+2026-10-11,I1,Torino,Udinese
+2026-10-11,I1,Genoa,Fiorentina
+2026-10-18,I1,Milan,Atalanta
+2026-10-18,I1,Juventus,Lazio
+2026-10-18,I1,Bologna,Inter
+2026-10-18,I1,Roma,Genoa
+2026-10-18,I1,Frosinone,Sassuolo
+2026-10-18,I1,Udinese,Lecce
+2026-10-18,I1,Venezia,Napoli
+2026-10-18,I1,Monza,Cagliari
+2026-10-18,I1,Fiorentina,Como
+2026-10-18,I1,Parma,Torino
+2026-10-25,I1,Udinese,Milan
+2026-10-25,I1,Cagliari,Bologna
+2026-10-25,I1,Como,Sassuolo
+2026-10-25,I1,Atalanta,Frosinone
+2026-10-25,I1,Inter,Fiorentina
+2026-10-25,I1,Napoli,Roma
+2026-10-25,I1,Lazio,Parma
+2026-10-25,I1,Lecce,Juventus
+2026-10-25,I1,Torino,Monza
+2026-10-25,I1,Genoa,Venezia
+2026-10-28,I1,Milan,Bologna
+2026-10-28,I1,Venezia,Inter
+2026-10-28,I1,Fiorentina,Atalanta
+2026-10-28,I1,Genoa,Juventus
+2026-10-28,I1,Parma,Udinese
+2026-10-28,I1,Monza,Napoli
+2026-10-28,I1,Roma,Cagliari
+2026-10-28,I1,Sassuolo,Lazio
+2026-10-28,I1,Torino,Como
+2026-10-28,I1,Frosinone,Lecce
+2026-11-01,I1,Bologna,Monza
+2026-11-01,I1,Lecce,Genoa
+2026-11-01,I1,Sassuolo,Fiorentina
+2026-11-01,I1,Udinese,Roma
+2026-11-01,I1,Como,Venezia
+2026-11-01,I1,Frosinone,Torino
+2026-11-01,I1,Atalanta,Parma
+2026-11-01,I1,Lazio,Cagliari
+2026-11-01,I1,Juventus,Napoli
+2026-11-01,I1,Milan,Inter
+2026-11-08,I1,Fiorentina,Juventus
+2026-11-08,I1,Inter,Como
+2026-11-08,I1,Roma,Sassuolo
+2026-11-08,I1,Torino,Lecce
+2026-11-08,I1,Napoli,Lazio
+2026-11-08,I1,Cagliari,Frosinone
+2026-11-08,I1,Parma,Bologna
+2026-11-08,I1,Genoa,Milan
+2026-11-08,I1,Venezia,Udinese
+2026-11-08,I1,Monza,Atalanta
+2026-11-22,I1,Monza,Fiorentina
+2026-11-22,I1,Atalanta,Inter
+2026-11-22,I1,Juventus,Venezia
+2026-11-22,I1,Bologna,Udinese
+2026-11-22,I1,Milan,Frosinone
+2026-11-22,I1,Sassuolo,Genoa
+2026-11-22,I1,Como,Cagliari
+2026-11-22,I1,Parma,Roma
+2026-11-22,I1,Napoli,Torino
+2026-11-22,I1,Lazio,Lecce
+2026-11-29,I1,Sassuolo,Napoli
+2026-11-29,I1,Cagliari,Milan
+2026-11-29,I1,Como,Juventus
+2026-11-29,I1,Roma,Monza
+2026-11-29,I1,Frosinone,Parma
+2026-11-29,I1,Torino,Lazio
+2026-11-29,I1,Venezia,Bologna
+2026-11-29,I1,Lecce,Atalanta
+2026-11-29,I1,Udinese,Fiorentina
+2026-11-29,I1,Inter,Genoa
+2026-12-06,I1,Genoa,Torino
+2026-12-06,I1,Juventus,Udinese
+2026-12-06,I1,Frosinone,Inter
+2026-12-06,I1,Bologna,Roma
+2026-12-06,I1,Fiorentina,Cagliari
+2026-12-06,I1,Lazio,Atalanta
+2026-12-06,I1,Milan,Parma
+2026-12-06,I1,Venezia,Sassuolo
+2026-12-06,I1,Monza,Como
+2026-12-06,I1,Napoli,Lecce
+2026-12-13,I1,Napoli,Milan
+2026-12-13,I1,Como,Bologna
+2026-12-13,I1,Udinese,Frosinone
+2026-12-13,I1,Lecce,Sassuolo
+2026-12-13,I1,Parma,Fiorentina
+2026-12-13,I1,Cagliari,Venezia
+2026-12-13,I1,Inter,Torino
+2026-12-13,I1,Juventus,Monza
+2026-12-13,I1,Atalanta,Genoa
+2026-12-13,I1,Lazio,Roma
+2026-12-20,I1,Milan,Como
+2026-12-20,I1,Sassuolo,Parma
+2026-12-20,I1,Roma,Juventus
+2026-12-20,I1,Frosinone,Lazio
+2026-12-20,I1,Atalanta,Napoli
+2026-12-20,I1,Fiorentina,Bologna
+2026-12-20,I1,Genoa,Udinese
+2026-12-20,I1,Lecce,Inter
+2026-12-20,I1,Torino,Cagliari
+2026-12-20,I1,Venezia,Monza
+2027-01-03,I1,Udinese,Atalanta
+2027-01-03,I1,Como,Lecce
+2027-01-03,I1,Roma,Frosinone
+2027-01-03,I1,Parma,Napoli
+2027-01-03,I1,Cagliari,Genoa
+2027-01-03,I1,Torino,Venezia
+2027-01-03,I1,Monza,Milan
+2027-01-03,I1,Inter,Sassuolo
+2027-01-03,I1,Bologna,Juventus
+2027-01-03,I1,Fiorentina,Lazio
+2027-01-06,I1,Frosinone,Bologna
+2027-01-06,I1,Sassuolo,Udinese
+2027-01-06,I1,Genoa,Monza
+2027-01-06,I1,Venezia,Roma
+2027-01-06,I1,Napoli,Cagliari
+2027-01-06,I1,Milan,Fiorentina
+2027-01-06,I1,Juventus,Torino
+2027-01-06,I1,Atalanta,Como
+2027-01-06,I1,Lazio,Inter
+2027-01-06,I1,Lecce,Parma
+2027-01-10,I1,Fiorentina,Lecce
+2027-01-10,I1,Udinese,Napoli
+2027-01-10,I1,Torino,Atalanta
+2027-01-10,I1,Monza,Frosinone
+2027-01-10,I1,Inter,Juventus
+2027-01-10,I1,Parma,Venezia
+2027-01-10,I1,Bologna,Genoa
+2027-01-10,I1,Cagliari,Sassuolo
+2027-01-10,I1,Como,Lazio
+2027-01-10,I1,Roma,Milan
+2027-01-17,I1,Milan,Torino
+2027-01-17,I1,Parma,Inter
+2027-01-17,I1,Juventus,Genoa
+2027-01-17,I1,Lecce,Udinese
+2027-01-17,I1,Cagliari,Como
+2027-01-17,I1,Sassuolo,Monza
+2027-01-17,I1,Napoli,Fiorentina
+2027-01-17,I1,Lazio,Bologna
+2027-01-17,I1,Venezia,Frosinone
+2027-01-17,I1,Atalanta,Roma
+2027-01-24,I1,Lecce,Torino
+2027-01-24,I1,Juventus,Cagliari
+2027-01-24,I1,Inter,Venezia
+2027-01-24,I1,Fiorentina,Sassuolo
+2027-01-24,I1,Frosinone,Milan
+2027-01-24,I1,Roma,Udinese
+2027-01-24,I1,Bologna,Atalanta
+2027-01-24,I1,Genoa,Parma
+2027-01-24,I1,Como,Napoli
+2027-01-24,I1,Monza,Lazio
+2027-01-31,I1,Milan,Juventus
+2027-01-31,I1,Monza,Roma
+2027-01-31,I1,Torino,Frosinone
+2027-01-31,I1,Udinese,Bologna
+2027-01-31,I1,Sassuolo,Como
+2027-01-31,I1,Genoa,Lecce
+2027-01-31,I1,Cagliari,Parma
+2027-01-31,I1,Atalanta,Fiorentina
+2027-01-31,I1,Lazio,Venezia
+2027-01-31,I1,Napoli,Inter
+2027-02-07,I1,Juventus,Sassuolo
+2027-02-07,I1,Inter,Cagliari
+2027-02-07,I1,Como,Monza
+2027-02-07,I1,Lecce,Napoli
+2027-02-07,I1,Venezia,Genoa
+2027-02-07,I1,Roma,Torino
+2027-02-07,I1,Atalanta,Lazio
+2027-02-07,I1,Parma,Frosinone
+2027-02-07,I1,Bologna,Milan
+2027-02-07,I1,Fiorentina,Udinese
+2027-02-14,I1,Napoli,Juventus
+2027-02-14,I1,Monza,Lecce
+2027-02-14,I1,Torino,Sassuolo
+2027-02-14,I1,Frosinone,Fiorentina
+2027-02-14,I1,Bologna,Como
+2027-02-14,I1,Roma,Parma
+2027-02-14,I1,Udinese,Venezia
+2027-02-14,I1,Genoa,Atalanta
+2027-02-14,I1,Cagliari,Lazio
+2027-02-14,I1,Inter,Milan
+2027-02-21,I1,Como,Torino
+2027-02-21,I1,Atalanta,Monza
+2027-02-21,I1,Udinese,Parma
+2027-02-21,I1,Juventus,Bologna
+2027-02-21,I1,Fiorentina,Inter
+2027-02-21,I1,Sassuolo,Roma
+2027-02-21,I1,Milan,Genoa
+2027-02-21,I1,Venezia,Cagliari
+2027-02-21,I1,Lecce,Frosinone
+2027-02-21,I1,Lazio,Napoli
+2027-02-28,I1,Inter,Atalanta
+2027-02-28,I1,Cagliari,Udinese
+2027-02-28,I1,Parma,Sassuolo
+2027-02-28,I1,Genoa,Lazio
+2027-02-28,I1,Roma,Venezia
+2027-02-28,I1,Como,Milan
+2027-02-28,I1,Torino,Fiorentina
+2027-02-28,I1,Bologna,Lecce
+2027-02-28,I1,Monza,Juventus
+2027-02-28,I1,Frosinone,Napoli
+2027-03-07,I1,Udinese,Inter
+2027-03-07,I1,Atalanta,Torino
+2027-03-07,I1,Napoli,Parma
+2027-03-07,I1,Lecce,Como
+2027-03-07,I1,Lazio,Frosinone
+2027-03-07,I1,Sassuolo,Bologna
+2027-03-07,I1,Monza,Genoa
+2027-03-07,I1,Fiorentina,Venezia
+2027-03-07,I1,Milan,Cagliari
+2027-03-07,I1,Juventus,Roma
+2027-03-14,I1,Bologna,Napoli
+2027-03-14,I1,Cagliari,Fiorentina
+2027-03-14,I1,Milan,Sassuolo
+2027-03-14,I1,Genoa,Roma
+2027-03-14,I1,Parma,Lecce
+2027-03-14,I1,Torino,Inter
+2027-03-14,I1,Frosinone,Monza
+2027-03-14,I1,Como,Udinese
+2027-03-14,I1,Lazio,Juventus
+2027-03-14,I1,Venezia,Atalanta
+2027-03-21,I1,Napoli,Venezia
+2027-03-21,I1,Udinese,Torino
+2027-03-21,I1,Juventus,Como
+2027-03-21,I1,Fiorentina,Genoa
+2027-03-21,I1,Parma,Lazio
+2027-03-21,I1,Sassuolo,Cagliari
+2027-03-21,I1,Monza,Bologna
+2027-03-21,I1,Inter,Frosinone
+2027-03-21,I1,Roma,Lecce
+2027-03-21,I1,Atalanta,Milan
+2027-04-04,I1,Lecce,Lazio
+2027-04-04,I1,Cagliari,Napoli
+2027-04-04,I1,Como,Fiorentina
+2027-04-04,I1,Sassuolo,Atalanta
+2027-04-04,I1,Roma,Bologna
+2027-04-04,I1,Milan,Monza
+2027-04-04,I1,Genoa,Inter
+2027-04-04,I1,Torino,Juventus
+2027-04-04,I1,Venezia,Parma
+2027-04-04,I1,Frosinone,Udinese
+2027-04-11,I1,Juventus,Lecce
+2027-04-11,I1,Napoli,Sassuolo
+2027-04-11,I1,Fiorentina,Milan
+2027-04-11,I1,Lazio,Torino
+2027-04-11,I1,Cagliari,Atalanta
+2027-04-11,I1,Parma,Como
+2027-04-11,I1,Bologna,Venezia
+2027-04-11,I1,Frosinone,Genoa
+2027-04-11,I1,Inter,Roma
+2027-04-11,I1,Udinese,Monza
+2027-04-18,I1,Monza,Inter
+2027-04-18,I1,Fiorentina,Parma
+2027-04-18,I1,Roma,Lazio
+2027-04-18,I1,Como,Frosinone
+2027-04-18,I1,Sassuolo,Lecce
+2027-04-18,I1,Bologna,Cagliari
+2027-04-18,I1,Atalanta,Udinese
+2027-04-18,I1,Venezia,Juventus
+2027-04-18,I1,Milan,Napoli
+2027-04-18,I1,Torino,Genoa
+2027-04-25,I1,Frosinone,Roma
+2027-04-25,I1,Cagliari,Monza
+2027-04-25,I1,Napoli,Udinese
+2027-04-25,I1,Parma,Atalanta
+2027-04-25,I1,Lazio,Como
+2027-04-25,I1,Juventus,Fiorentina
+2027-04-25,I1,Genoa,Sassuolo
+2027-04-25,I1,Lecce,Milan
+2027-04-25,I1,Venezia,Torino
+2027-04-25,I1,Inter,Bologna
+2027-05-02,I1,Atalanta,Juventus
+2027-05-02,I1,Torino,Parma
+2027-05-02,I1,Milan,Lazio
+2027-05-02,I1,Udinese,Genoa
+2027-05-02,I1,Sassuolo,Frosinone
+2027-05-02,I1,Bologna,Fiorentina
+2027-05-02,I1,Como,Inter
+2027-05-02,I1,Monza,Venezia
+2027-05-02,I1,Lecce,Cagliari
+2027-05-02,I1,Roma,Napoli
+2027-05-09,I1,Parma,Milan
+2027-05-09,I1,Genoa,Cagliari
+2027-05-09,I1,Lazio,Sassuolo
+2027-05-09,I1,Napoli,Monza
+2027-05-09,I1,Inter,Lecce
+2027-05-09,I1,Venezia,Como
+2027-05-09,I1,Udinese,Juventus
+2027-05-09,I1,Torino,Bologna
+2027-05-09,I1,Frosinone,Atalanta
+2027-05-09,I1,Fiorentina,Roma
+2027-05-16,I1,Napoli,Genoa
+2027-05-16,I1,Lecce,Fiorentina
+2027-05-16,I1,Lazio,Udinese
+2027-05-16,I1,Bologna,Frosinone
+2027-05-16,I1,Como,Atalanta
+2027-05-16,I1,Juventus,Inter
+2027-05-16,I1,Sassuolo,Venezia
+2027-05-16,I1,Monza,Parma
+2027-05-16,I1,Milan,Roma
+2027-05-16,I1,Cagliari,Torino
+2027-05-23,I1,Roma,Como
+2027-05-23,I1,Parma,Juventus
+2027-05-23,I1,Torino,Napoli
+2027-05-23,I1,Atalanta,Lecce
+2027-05-23,I1,Inter,Lazio
+2027-05-23,I1,Udinese,Sassuolo
+2027-05-23,I1,Frosinone,Cagliari
+2027-05-23,I1,Fiorentina,Monza
+2027-05-23,I1,Venezia,Milan
+2027-05-23,I1,Genoa,Bologna
+2027-05-30,I1,Milan,Udinese
+2027-05-30,I1,Juventus,Frosinone
+2027-05-30,I1,Monza,Torino
+2027-05-30,I1,Sassuolo,Inter
+2027-05-30,I1,Cagliari,Roma
+2027-05-30,I1,Lazio,Fiorentina
+2027-05-30,I1,Como,Genoa
+2027-05-30,I1,Napoli,Atalanta
+2027-05-30,I1,Lecce,Venezia
+2027-05-30,I1,Bologna,Parma
+2026-09-04,D1,Stuttgart,FC Cologne
+2026-09-05,D1,Werder Bremen,RB Leipzig
+2026-09-05,D1,Hoffenheim,Dortmund
+2026-09-05,D1,Leverkusen,Union Berlin
+2026-09-05,D1,Borussia Monchengladbach,Elversberg
+2026-09-05,D1,Paderborn,Freiburg
+2026-09-05,D1,Schalke 04,Bayern Munich
+2026-09-06,D1,Hamburg,Mainz 05
+2026-09-06,D1,Eintracht Frankfurt,Augsburg
+2026-09-11,D1,Union Berlin,Schalke 04
+2026-09-12,D1,Hoffenheim,Stuttgart
+2026-09-12,D1,Dortmund,Paderborn
+2026-09-12,D1,Augsburg,Leverkusen
+2026-09-12,D1,Mainz 05,Eintracht Frankfurt
+2026-09-12,D1,Freiburg,Borussia Monchengladbach
+2026-09-12,D1,FC Cologne,Werder Bremen
+2026-09-13,D1,RB Leipzig,Hamburg
+2026-09-13,D1,Elversberg,Bayern Munich
+2026-09-18,D1,Bayern Munich,Union Berlin
+2026-09-19,D1,Hamburg,FC Cologne
+2026-09-19,D1,Borussia Monchengladbach,Mainz 05
+2026-09-19,D1,Werder Bremen,Augsburg
+2026-09-19,D1,Eintracht Frankfurt,Freiburg
+2026-09-19,D1,Stuttgart,Dortmund
+2026-09-20,D1,Leverkusen,RB Leipzig
+2026-09-20,D1,Schalke 04,Elversberg
+2026-09-20,D1,Paderborn,Hoffenheim
+2026-10-10,D1,Mainz 05,Leverkusen
+2026-10-10,D1,Paderborn,Stuttgart
+2026-10-10,D1,FC Cologne,Borussia Monchengladbach
+2026-10-10,D1,RB Leipzig,Eintracht Frankfurt
+2026-10-10,D1,Freiburg,Schalke 04
+2026-10-10,D1,Union Berlin,Elversberg
+2026-10-10,D1,Hoffenheim,Hamburg
+2026-10-10,D1,Augsburg,Bayern Munich
+2026-10-10,D1,Dortmund,Werder Bremen
+2026-10-17,D1,Union Berlin,Dortmund
+2026-10-17,D1,Hamburg,Stuttgart
+2026-10-17,D1,Werder Bremen,Paderborn
+2026-10-17,D1,Elversberg,Augsburg
+2026-10-17,D1,Bayern Munich,RB Leipzig
+2026-10-17,D1,Borussia Monchengladbach,Hoffenheim
+2026-10-17,D1,Leverkusen,Freiburg
+2026-10-17,D1,Eintracht Frankfurt,FC Cologne
+2026-10-17,D1,Schalke 04,Mainz 05
+2026-10-24,D1,Mainz 05,Werder Bremen
+2026-10-24,D1,FC Cologne,Schalke 04
+2026-10-24,D1,RB Leipzig,Elversberg
+2026-10-24,D1,Stuttgart,Borussia Monchengladbach
+2026-10-24,D1,Paderborn,Hamburg
+2026-10-24,D1,Hoffenheim,Leverkusen
+2026-10-24,D1,Freiburg,Bayern Munich
+2026-10-24,D1,Dortmund,Eintracht Frankfurt
+2026-10-24,D1,Augsburg,Union Berlin
+2026-10-31,D1,Borussia Monchengladbach,Paderborn
+2026-10-31,D1,Schalke 04,RB Leipzig
+2026-10-31,D1,Union Berlin,FC Cologne
+2026-10-31,D1,Augsburg,Freiburg
+2026-10-31,D1,Werder Bremen,Hoffenheim
+2026-10-31,D1,Eintracht Frankfurt,Hamburg
+2026-10-31,D1,Bayern Munich,Dortmund
+2026-10-31,D1,Elversberg,Mainz 05
+2026-10-31,D1,Leverkusen,Stuttgart
+2026-11-07,D1,RB Leipzig,Augsburg
+2026-11-07,D1,Stuttgart,Werder Bremen
+2026-11-07,D1,Dortmund,Elversberg
+2026-11-07,D1,Mainz 05,Bayern Munich
+2026-11-07,D1,Hamburg,Borussia Monchengladbach
+2026-11-07,D1,Paderborn,Eintracht Frankfurt
+2026-11-07,D1,Freiburg,Union Berlin
+2026-11-07,D1,FC Cologne,Leverkusen
+2026-11-07,D1,Hoffenheim,Schalke 04
+2026-11-21,D1,Leverkusen,Paderborn
+2026-11-21,D1,Union Berlin,RB Leipzig
+2026-11-21,D1,Bayern Munich,FC Cologne
+2026-11-21,D1,Elversberg,Freiburg
+2026-11-21,D1,Schalke 04,Stuttgart
+2026-11-21,D1,Borussia Monchengladbach,Dortmund
+2026-11-21,D1,Werder Bremen,Hamburg
+2026-11-21,D1,Augsburg,Mainz 05
+2026-11-21,D1,Eintracht Frankfurt,Hoffenheim
+2026-11-28,D1,FC Cologne,Elversberg
+2026-11-28,D1,Mainz 05,Union Berlin
+2026-11-28,D1,Paderborn,Schalke 04
+2026-11-28,D1,Werder Bremen,Borussia Monchengladbach
+2026-11-28,D1,Stuttgart,Eintracht Frankfurt
+2026-11-28,D1,Hoffenheim,Augsburg
+2026-11-28,D1,Dortmund,Leverkusen
+2026-11-28,D1,Freiburg,RB Leipzig
+2026-11-28,D1,Hamburg,Bayern Munich
+2026-12-05,D1,Union Berlin,Hamburg
+2026-12-05,D1,Schalke 04,Dortmund
+2026-12-05,D1,Leverkusen,Borussia Monchengladbach
+2026-12-05,D1,Eintracht Frankfurt,Werder Bremen
+2026-12-05,D1,RB Leipzig,Mainz 05
+2026-12-05,D1,Elversberg,Stuttgart
+2026-12-05,D1,Freiburg,Hoffenheim
+2026-12-05,D1,Bayern Munich,Paderborn
+2026-12-05,D1,Augsburg,FC Cologne
+2026-12-12,D1,Paderborn,Elversberg
+2026-12-12,D1,Werder Bremen,Leverkusen
+2026-12-12,D1,Stuttgart,Union Berlin
+2026-12-12,D1,Dortmund,Augsburg
+2026-12-12,D1,Hamburg,Schalke 04
+2026-12-12,D1,Mainz 05,Freiburg
+2026-12-12,D1,FC Cologne,RB Leipzig
+2026-12-12,D1,Hoffenheim,Bayern Munich
+2026-12-12,D1,Borussia Monchengladbach,Eintracht Frankfurt
+2026-12-19,D1,Schalke 04,Borussia Monchengladbach
+2026-12-19,D1,Bayern Munich,Werder Bremen
+2026-12-19,D1,Elversberg,Hamburg
+2026-12-19,D1,Leverkusen,Eintracht Frankfurt
+2026-12-19,D1,Freiburg,Stuttgart
+2026-12-19,D1,RB Leipzig,Dortmund
+2026-12-19,D1,Mainz 05,FC Cologne
+2026-12-19,D1,Union Berlin,Hoffenheim
+2026-12-19,D1,Augsburg,Paderborn
+2027-01-09,D1,Stuttgart,Augsburg
+2027-01-09,D1,Hamburg,Leverkusen
+2027-01-09,D1,FC Cologne,Freiburg
+2027-01-09,D1,Eintracht Frankfurt,Schalke 04
+2027-01-09,D1,Hoffenheim,Elversberg
+2027-01-09,D1,Borussia Monchengladbach,Bayern Munich
+2027-01-09,D1,Dortmund,Mainz 05
+2027-01-09,D1,Werder Bremen,Union Berlin
+2027-01-09,D1,Paderborn,RB Leipzig
+2027-01-13,D1,Mainz 05,Hoffenheim
+2027-01-13,D1,Freiburg,Hamburg
+2027-01-13,D1,Schalke 04,Werder Bremen
+2027-01-13,D1,RB Leipzig,Stuttgart
+2027-01-13,D1,Union Berlin,Paderborn
+2027-01-13,D1,Bayern Munich,Leverkusen
+2027-01-13,D1,Augsburg,Borussia Monchengladbach
+2027-01-13,D1,Elversberg,Eintracht Frankfurt
+2027-01-13,D1,FC Cologne,Dortmund
+2027-01-16,D1,Werder Bremen,Elversberg
+2027-01-16,D1,Eintracht Frankfurt,Bayern Munich
+2027-01-16,D1,Paderborn,FC Cologne
+2027-01-16,D1,Hoffenheim,RB Leipzig
+2027-01-16,D1,Leverkusen,Schalke 04
+2027-01-16,D1,Stuttgart,Mainz 05
+2027-01-16,D1,Hamburg,Augsburg
+2027-01-16,D1,Borussia Monchengladbach,Union Berlin
+2027-01-16,D1,Dortmund,Freiburg
+2027-01-23,D1,Werder Bremen,Freiburg
+2027-01-23,D1,Hamburg,Dortmund
+2027-01-23,D1,Paderborn,Mainz 05
+2027-01-23,D1,Schalke 04,Augsburg
+2027-01-23,D1,Hoffenheim,FC Cologne
+2027-01-23,D1,Stuttgart,Bayern Munich
+2027-01-23,D1,Borussia Monchengladbach,RB Leipzig
+2027-01-23,D1,Eintracht Frankfurt,Union Berlin
+2027-01-23,D1,Leverkusen,Elversberg
+2027-01-30,D1,Elversberg,Borussia Monchengladbach
+2027-01-30,D1,Augsburg,Eintracht Frankfurt
+2027-01-30,D1,Mainz 05,Hamburg
+2027-01-30,D1,RB Leipzig,Werder Bremen
+2027-01-30,D1,FC Cologne,Stuttgart
+2027-01-30,D1,Union Berlin,Leverkusen
+2027-01-30,D1,Freiburg,Paderborn
+2027-01-30,D1,Dortmund,Hoffenheim
+2027-01-30,D1,Bayern Munich,Schalke 04
+2027-02-06,D1,Eintracht Frankfurt,Mainz 05
+2027-02-06,D1,Borussia Monchengladbach,Freiburg
+2027-02-06,D1,Schalke 04,Union Berlin
+2027-02-06,D1,Hamburg,RB Leipzig
+2027-02-06,D1,Leverkusen,Augsburg
+2027-02-06,D1,Werder Bremen,FC Cologne
+2027-02-06,D1,Stuttgart,Hoffenheim
+2027-02-06,D1,Bayern Munich,Elversberg
+2027-02-06,D1,Paderborn,Dortmund
+2027-02-13,D1,FC Cologne,Hamburg
+2027-02-13,D1,Mainz 05,Borussia Monchengladbach
+2027-02-13,D1,Union Berlin,Bayern Munich
+2027-02-13,D1,Elversberg,Schalke 04
+2027-02-13,D1,Dortmund,Stuttgart
+2027-02-13,D1,Hoffenheim,Paderborn
+2027-02-13,D1,Freiburg,Eintracht Frankfurt
+2027-02-13,D1,Augsburg,Werder Bremen
+2027-02-13,D1,RB Leipzig,Leverkusen
+2027-02-20,D1,Schalke 04,Freiburg
+2027-02-20,D1,Stuttgart,Paderborn
+2027-02-20,D1,Borussia Monchengladbach,FC Cologne
+2027-02-20,D1,Werder Bremen,Dortmund
+2027-02-20,D1,Hamburg,Hoffenheim
+2027-02-20,D1,Leverkusen,Mainz 05
+2027-02-20,D1,Eintracht Frankfurt,RB Leipzig
+2027-02-20,D1,Bayern Munich,Augsburg
+2027-02-20,D1,Elversberg,Union Berlin
+2027-02-27,D1,Stuttgart,Hamburg
+2027-02-27,D1,FC Cologne,Eintracht Frankfurt
+2027-02-27,D1,Freiburg,Leverkusen
+2027-02-27,D1,Augsburg,Elversberg
+2027-02-27,D1,Mainz 05,Schalke 04
+2027-02-27,D1,Hoffenheim,Borussia Monchengladbach
+2027-02-27,D1,Paderborn,Werder Bremen
+2027-02-27,D1,RB Leipzig,Bayern Munich
+2027-02-27,D1,Dortmund,Union Berlin
+2027-03-03,D1,Eintracht Frankfurt,Dortmund
+2027-03-03,D1,Schalke 04,FC Cologne
+2027-03-03,D1,Leverkusen,Hoffenheim
+2027-03-03,D1,Bayern Munich,Freiburg
+2027-03-03,D1,Werder Bremen,Mainz 05
+2027-03-03,D1,Union Berlin,Augsburg
+2027-03-03,D1,Elversberg,RB Leipzig
+2027-03-03,D1,Borussia Monchengladbach,Stuttgart
+2027-03-03,D1,Hamburg,Paderborn
+2027-03-06,D1,Dortmund,Bayern Munich
+2027-03-06,D1,Freiburg,Augsburg
+2027-03-06,D1,Mainz 05,Elversberg
+2027-03-06,D1,Hamburg,Eintracht Frankfurt
+2027-03-06,D1,Stuttgart,Leverkusen
+2027-03-06,D1,RB Leipzig,Schalke 04
+2027-03-06,D1,Paderborn,Borussia Monchengladbach
+2027-03-06,D1,FC Cologne,Union Berlin
+2027-03-06,D1,Hoffenheim,Werder Bremen
+2027-03-13,D1,Union Berlin,Freiburg
+2027-03-13,D1,Elversberg,Dortmund
+2027-03-13,D1,Eintracht Frankfurt,Paderborn
+2027-03-13,D1,Augsburg,RB Leipzig
+2027-03-13,D1,Borussia Monchengladbach,Hamburg
+2027-03-13,D1,Werder Bremen,Stuttgart
+2027-03-13,D1,Schalke 04,Hoffenheim
+2027-03-13,D1,Bayern Munich,Mainz 05
+2027-03-13,D1,Leverkusen,FC Cologne
+2027-03-20,D1,FC Cologne,Bayern Munich
+2027-03-20,D1,Hoffenheim,Eintracht Frankfurt
+2027-03-20,D1,Dortmund,Borussia Monchengladbach
+2027-03-20,D1,Mainz 05,Augsburg
+2027-03-20,D1,Stuttgart,Schalke 04
+2027-03-20,D1,RB Leipzig,Union Berlin
+2027-03-20,D1,Freiburg,Elversberg
+2027-03-20,D1,Hamburg,Werder Bremen
+2027-03-20,D1,Paderborn,Leverkusen
+2027-04-03,D1,RB Leipzig,Freiburg
+2027-04-03,D1,Elversberg,FC Cologne
+2027-04-03,D1,Bayern Munich,Hamburg
+2027-04-03,D1,Augsburg,Hoffenheim
+2027-04-03,D1,Borussia Monchengladbach,Werder Bremen
+2027-04-03,D1,Eintracht Frankfurt,Stuttgart
+2027-04-03,D1,Union Berlin,Mainz 05
+2027-04-03,D1,Leverkusen,Dortmund
+2027-04-03,D1,Schalke 04,Paderborn
+2027-04-10,D1,Stuttgart,Elversberg
+2027-04-10,D1,Paderborn,Bayern Munich
+2027-04-10,D1,Hoffenheim,Freiburg
+2027-04-10,D1,Mainz 05,RB Leipzig
+2027-04-10,D1,Werder Bremen,Eintracht Frankfurt
+2027-04-10,D1,Dortmund,Schalke 04
+2027-04-10,D1,Hamburg,Union Berlin
+2027-04-10,D1,Borussia Monchengladbach,Leverkusen
+2027-04-10,D1,FC Cologne,Augsburg
+2027-04-17,D1,Leverkusen,Werder Bremen
+2027-04-17,D1,Eintracht Frankfurt,Borussia Monchengladbach
+2027-04-17,D1,Union Berlin,Stuttgart
+2027-04-17,D1,Bayern Munich,Hoffenheim
+2027-04-17,D1,Schalke 04,Hamburg
+2027-04-17,D1,Elversberg,Paderborn
+2027-04-17,D1,Augsburg,Dortmund
+2027-04-17,D1,Freiburg,Mainz 05
+2027-04-17,D1,RB Leipzig,FC Cologne
+2027-04-24,D1,Werder Bremen,Bayern Munich
+2027-04-24,D1,FC Cologne,Mainz 05
+2027-04-24,D1,Hamburg,Elversberg
+2027-04-24,D1,Dortmund,RB Leipzig
+2027-04-24,D1,Hoffenheim,Union Berlin
+2027-04-24,D1,Paderborn,Augsburg
+2027-04-24,D1,Stuttgart,Freiburg
+2027-04-24,D1,Borussia Monchengladbach,Schalke 04
+2027-04-24,D1,Eintracht Frankfurt,Leverkusen
+2027-05-08,D1,Schalke 04,Eintracht Frankfurt
+2027-05-08,D1,RB Leipzig,Paderborn
+2027-05-08,D1,Freiburg,FC Cologne
+2027-05-08,D1,Mainz 05,Dortmund
+2027-05-08,D1,Augsburg,Stuttgart
+2027-05-08,D1,Union Berlin,Werder Bremen
+2027-05-08,D1,Elversberg,Hoffenheim
+2027-05-08,D1,Leverkusen,Hamburg
+2027-05-08,D1,Bayern Munich,Borussia Monchengladbach
+2027-05-15,D1,Eintracht Frankfurt,Elversberg
+2027-05-15,D1,Paderborn,Union Berlin
+2027-05-15,D1,Stuttgart,RB Leipzig
+2027-05-15,D1,Dortmund,FC Cologne
+2027-05-15,D1,Hamburg,Freiburg
+2027-05-15,D1,Leverkusen,Bayern Munich
+2027-05-15,D1,Werder Bremen,Schalke 04
+2027-05-15,D1,Borussia Monchengladbach,Augsburg
+2027-05-15,D1,Hoffenheim,Mainz 05
+2027-05-22,D1,RB Leipzig,Hoffenheim
+2027-05-22,D1,Union Berlin,Borussia Monchengladbach
+2027-05-22,D1,Mainz 05,Stuttgart
+2027-05-22,D1,Schalke 04,Leverkusen
+2027-05-22,D1,Elversberg,Werder Bremen
+2027-05-22,D1,Bayern Munich,Eintracht Frankfurt
+2027-05-22,D1,Augsburg,Hamburg
+2027-05-22,D1,Freiburg,Dortmund
+2027-05-22,D1,FC Cologne,Paderborn
+2026-09-03,F1,Toulouse,Lille
+2026-09-04,F1,Lyon,Auxerre
+2026-09-04,F1,Paris Saint-Germain,Monaco
+2026-09-05,F1,Lens,Lorient
+2026-09-05,F1,Le Havre,Brest
+2026-09-05,F1,Nice,Le Mans
+2026-09-06,F1,Troyes,Strasbourg
+2026-09-06,F1,Angers,Rennes
+2026-09-06,F1,Marseille,Paris FC
+2026-09-11,F1,Rennes,Marseille
+2026-09-12,F1,Strasbourg,Monaco
+2026-09-12,F1,Lorient,Toulouse
+2026-09-12,F1,Auxerre,Nice
+2026-09-12,F1,Le Havre,Angers
+2026-09-12,F1,Paris FC,Lyon
+2026-09-13,F1,Lille,Troyes
+2026-09-13,F1,Le Mans,Lens
+2026-09-13,F1,Brest,Paris Saint-Germain
+2026-09-18,F1,Monaco,Lens
+2026-09-19,F1,Paris FC,Strasbourg
+2026-09-19,F1,Le Mans,Lorient
+2026-09-19,F1,Toulouse,Le Havre
+2026-09-19,F1,Angers,Troyes
+2026-09-19,F1,Lyon,Rennes
+2026-09-20,F1,Auxerre,Brest
+2026-09-20,F1,Nice,Lille
+2026-09-20,F1,Marseille,Paris Saint-Germain
+2026-10-10,F1,Brest,Angers
+2026-10-10,F1,Rennes,Auxerre
+2026-10-10,F1,Lorient,Paris FC
+2026-10-10,F1,Lens,Lyon
+2026-10-10,F1,Nice,Strasbourg
+2026-10-10,F1,Troyes,Marseille
+2026-10-10,F1,Paris Saint-Germain,Le Mans
+2026-10-10,F1,Monaco,Toulouse
+2026-10-10,F1,Lille,Le Havre
+2026-10-17,F1,Lorient,Monaco
+2026-10-17,F1,Paris FC,Rennes
+2026-10-17,F1,Troyes,Lens
+2026-10-17,F1,Lille,Brest
+2026-10-17,F1,Le Mans,Toulouse
+2026-10-17,F1,Strasbourg,Paris Saint-Germain
+2026-10-17,F1,Le Havre,Auxerre
+2026-10-17,F1,Angers,Marseille
+2026-10-17,F1,Lyon,Nice
+2026-10-24,F1,Marseille,Le Havre
+2026-10-24,F1,Monaco,Lille
+2026-10-24,F1,Rennes,Strasbourg
+2026-10-24,F1,Lens,Paris FC
+2026-10-24,F1,Angers,Lorient
+2026-10-24,F1,Brest,Nice
+2026-10-24,F1,Toulouse,Troyes
+2026-10-24,F1,Auxerre,Le Mans
+2026-10-25,F1,Paris Saint-Germain,Lyon
+2026-10-31,F1,Lille,Lens
+2026-10-31,F1,Lyon,Angers
+2026-10-31,F1,Lorient,Brest
+2026-10-31,F1,Paris FC,Monaco
+2026-10-31,F1,Troyes,Le Mans
+2026-10-31,F1,Le Havre,Paris Saint-Germain
+2026-10-31,F1,Marseille,Toulouse
+2026-10-31,F1,Nice,Rennes
+2026-10-31,F1,Strasbourg,Auxerre
+2026-11-07,F1,Le Mans,Monaco
+2026-11-07,F1,Brest,Lyon
+2026-11-07,F1,Le Havre,Lorient
+2026-11-07,F1,Angers,Nice
+2026-11-07,F1,Paris Saint-Germain,Troyes
+2026-11-07,F1,Rennes,Lille
+2026-11-07,F1,Auxerre,Paris FC
+2026-11-07,F1,Toulouse,Strasbourg
+2026-11-07,F1,Lens,Marseille
+2026-11-21,F1,Monaco,Auxerre
+2026-11-21,F1,Troyes,Le Havre
+2026-11-21,F1,Lens,Toulouse
+2026-11-21,F1,Lille,Lyon
+2026-11-21,F1,Paris FC,Angers
+2026-11-21,F1,Lorient,Rennes
+2026-11-21,F1,Strasbourg,Brest
+2026-11-21,F1,Nice,Paris Saint-Germain
+2026-11-21,F1,Marseille,Le Mans
+2026-11-28,F1,Brest,Paris FC
+2026-11-28,F1,Le Mans,Lille
+2026-11-28,F1,Toulouse,Rennes
+2026-11-28,F1,Auxerre,Marseille
+2026-11-28,F1,Nice,Troyes
+2026-11-28,F1,Angers,Lens
+2026-11-28,F1,Le Havre,Strasbourg
+2026-11-28,F1,Paris Saint-Germain,Lorient
+2026-11-28,F1,Lyon,Monaco
+2026-12-05,F1,Troyes,Lyon
+2026-12-05,F1,Monaco,Angers
+2026-12-05,F1,Lens,Le Havre
+2026-12-05,F1,Lille,Auxerre
+2026-12-05,F1,Marseille,Nice
+2026-12-05,F1,Rennes,Brest
+2026-12-05,F1,Toulouse,Paris Saint-Germain
+2026-12-05,F1,Strasbourg,Lorient
+2026-12-05,F1,Paris FC,Le Mans
+2026-12-12,F1,Nice,Lens
+2026-12-12,F1,Paris Saint-Germain,Paris FC
+2026-12-12,F1,Angers,Strasbourg
+2026-12-12,F1,Brest,Troyes
+2026-12-12,F1,Le Havre,Le Mans
+2026-12-12,F1,Rennes,Monaco
+2026-12-12,F1,Lorient,Lille
+2026-12-12,F1,Auxerre,Toulouse
+2026-12-13,F1,Lyon,Marseille
+2027-01-02,F1,Le Mans,Lyon
+2027-01-02,F1,Brest,Marseille
+2027-01-02,F1,Troyes,Rennes
+2027-01-02,F1,Toulouse,Angers
+2027-01-02,F1,Monaco,Nice
+2027-01-02,F1,Paris FC,Le Havre
+2027-01-02,F1,Lorient,Auxerre
+2027-01-02,F1,Lille,Strasbourg
+2027-01-03,F1,Lens,Paris Saint-Germain
+2027-01-16,F1,Marseille,Lille
+2027-01-16,F1,Lyon,Lorient
+2027-01-16,F1,Paris FC,Toulouse
+2027-01-16,F1,Rennes,Lens
+2027-01-16,F1,Nice,Le Havre
+2027-01-16,F1,Auxerre,Troyes
+2027-01-16,F1,Strasbourg,Le Mans
+2027-01-16,F1,Monaco,Brest
+2027-01-16,F1,Angers,Paris Saint-Germain
+2027-01-23,F1,Le Havre,Rennes
+2027-01-23,F1,Strasbourg,Lyon
+2027-01-23,F1,Lille,Paris FC
+2027-01-23,F1,Lens,Brest
+2027-01-23,F1,Paris Saint-Germain,Auxerre
+2027-01-23,F1,Troyes,Monaco
+2027-01-23,F1,Lorient,Marseille
+2027-01-23,F1,Le Mans,Angers
+2027-01-23,F1,Toulouse,Nice
+2027-01-30,F1,Paris FC,Auxerre
+2027-01-30,F1,Lyon,Lille
+2027-01-30,F1,Rennes,Lorient
+2027-01-30,F1,Le Mans,Nice
+2027-01-30,F1,Marseille,Troyes
+2027-01-30,F1,Angers,Le Havre
+2027-01-30,F1,Brest,Strasbourg
+2027-01-30,F1,Monaco,Paris Saint-Germain
+2027-01-30,F1,Toulouse,Lens
+2027-02-06,F1,Troyes,Lille
+2027-02-06,F1,Lens,Angers
+2027-02-06,F1,Le Havre,Toulouse
+2027-02-06,F1,Lorient,Le Mans
+2027-02-06,F1,Nice,Brest
+2027-02-06,F1,Rennes,Lyon
+2027-02-06,F1,Strasbourg,Paris FC
+2027-02-06,F1,Auxerre,Monaco
+2027-02-07,F1,Paris Saint-Germain,Marseille
+2027-02-13,F1,Brest,Rennes
+2027-02-13,F1,Paris FC,Troyes
+2027-02-13,F1,Le Mans,Paris Saint-Germain
+2027-02-13,F1,Lorient,Le Havre
+2027-02-13,F1,Auxerre,Strasbourg
+2027-02-13,F1,Toulouse,Monaco
+2027-02-13,F1,Marseille,Angers
+2027-02-13,F1,Lille,Nice
+2027-02-13,F1,Lyon,Lens
+2027-02-20,F1,Angers,Paris FC
+2027-02-20,F1,Rennes,Toulouse
+2027-02-20,F1,Paris Saint-Germain,Brest
+2027-02-20,F1,Strasbourg,Marseille
+2027-02-20,F1,Nice,Auxerre
+2027-02-20,F1,Le Havre,Lyon
+2027-02-20,F1,Monaco,Le Mans
+2027-02-20,F1,Lille,Lorient
+2027-02-20,F1,Lens,Troyes
+2027-02-27,F1,Strasbourg,Le Havre
+2027-02-27,F1,Auxerre,Lille
+2027-02-27,F1,Troyes,Nice
+2027-02-27,F1,Brest,Monaco
+2027-02-27,F1,Lorient,Angers
+2027-02-27,F1,Marseille,Rennes
+2027-02-27,F1,Lyon,Toulouse
+2027-02-27,F1,Le Mans,Paris FC
+2027-02-28,F1,Paris Saint-Germain,Lens
+2027-03-06,F1,Le Havre,Nice
+2027-03-06,F1,Paris Saint-Germain,Rennes
+2027-03-06,F1,Lens,Strasbourg
+2027-03-06,F1,Toulouse,Le Mans
+2027-03-06,F1,Troyes,Lorient
+2027-03-06,F1,Angers,Auxerre
+2027-03-06,F1,Monaco,Lyon
+2027-03-06,F1,Paris FC,Brest
+2027-03-06,F1,Lille,Marseille
+2027-03-13,F1,Nice,Toulouse
+2027-03-13,F1,Paris FC,Lorient
+2027-03-13,F1,Strasbourg,Angers
+2027-03-13,F1,Le Mans,Rennes
+2027-03-13,F1,Brest,Lille
+2027-03-13,F1,Le Havre,Lens
+2027-03-13,F1,Marseille,Monaco
+2027-03-13,F1,Auxerre,Paris Saint-Germain
+2027-03-13,F1,Lyon,Troyes
+2027-03-20,F1,Angers,Le Mans
+2027-03-20,F1,Toulouse,Brest
+2027-03-20,F1,Troyes,Auxerre
+2027-03-20,F1,Rennes,Paris FC
+2027-03-20,F1,Monaco,Le Havre
+2027-03-20,F1,Paris Saint-Germain,Strasbourg
+2027-03-20,F1,Lens,Lille
+2027-03-20,F1,Lorient,Nice
+2027-03-21,F1,Marseille,Lyon
+2027-04-03,F1,Le Havre,Troyes
+2027-04-03,F1,Angers,Monaco
+2027-04-03,F1,Le Mans,Marseille
+2027-04-03,F1,Auxerre,Lens
+2027-04-03,F1,Lille,Rennes
+2027-04-03,F1,Brest,Lorient
+2027-04-03,F1,Strasbourg,Toulouse
+2027-04-03,F1,Paris FC,Paris Saint-Germain
+2027-04-03,F1,Nice,Lyon
+2027-04-10,F1,Lorient,Lens
+2027-04-10,F1,Marseille,Brest
+2027-04-10,F1,Monaco,Rennes
+2027-04-10,F1,Troyes,Angers
+2027-04-10,F1,Paris Saint-Germain,Le Havre
+2027-04-10,F1,Lyon,Strasbourg
+2027-04-10,F1,Le Mans,Auxerre
+2027-04-10,F1,Lille,Toulouse
+2027-04-10,F1,Nice,Paris FC
+2027-04-17,F1,Auxerre,Lorient
+2027-04-17,F1,Brest,Le Mans
+2027-04-17,F1,Monaco,Strasbourg
+2027-04-17,F1,Angers,Lyon
+2027-04-17,F1,Lens,Nice
+2027-04-17,F1,Rennes,Troyes
+2027-04-17,F1,Le Havre,Marseille
+2027-04-17,F1,Paris Saint-Germain,Lille
+2027-04-17,F1,Toulouse,Paris FC
+2027-04-24,F1,Paris FC,Lens
+2027-04-24,F1,Marseille,Auxerre
+2027-04-24,F1,Lille,Monaco
+2027-04-24,F1,Lorient,Paris Saint-Germain
+2027-04-24,F1,Troyes,Toulouse
+2027-04-24,F1,Nice,Angers
+2027-04-24,F1,Lyon,Brest
+2027-04-24,F1,Le Mans,Le Havre
+2027-04-24,F1,Strasbourg,Rennes
+2027-05-01,F1,Strasbourg,Lille
+2027-05-01,F1,Monaco,Lorient
+2027-05-01,F1,Troyes,Brest
+2027-05-01,F1,Lens,Le Mans
+2027-05-01,F1,Paris Saint-Germain,Angers
+2027-05-01,F1,Le Havre,Paris FC
+2027-05-01,F1,Auxerre,Lyon
+2027-05-01,F1,Rennes,Nice
+2027-05-01,F1,Toulouse,Marseille
+2027-05-08,F1,Paris FC,Lille
+2027-05-08,F1,Lorient,Strasbourg
+2027-05-08,F1,Brest,Auxerre
+2027-05-08,F1,Le Mans,Troyes
+2027-05-08,F1,Rennes,Le Havre
+2027-05-08,F1,Lens,Monaco
+2027-05-08,F1,Angers,Toulouse
+2027-05-08,F1,Nice,Marseille
+2027-05-09,F1,Lyon,Paris Saint-Germain
+2027-05-16,F1,Monaco,Paris FC
+2027-05-16,F1,Lyon,Le Mans
+2027-05-16,F1,Paris Saint-Germain,Nice
+2027-05-16,F1,Toulouse,Lorient
+2027-05-16,F1,Brest,Le Havre
+2027-05-16,F1,Marseille,Lens
+2027-05-16,F1,Lille,Angers
+2027-05-16,F1,Auxerre,Rennes
+2027-05-16,F1,Strasbourg,Troyes
+2027-05-22,F1,Nice,Monaco
+2027-05-22,F1,Angers,Brest
+2027-05-22,F1,Lorient,Lyon
+2027-05-22,F1,Troyes,Paris Saint-Germain
+2027-05-22,F1,Le Mans,Strasbourg
+2027-05-22,F1,Toulouse,Auxerre
+2027-05-22,F1,Le Havre,Lille
+2027-05-22,F1,Paris FC,Marseille
+2027-05-22,F1,Lens,Rennes
+2027-05-29,F1,Monaco,Troyes
+2027-05-29,F1,Paris Saint-Germain,Toulouse
+2027-05-29,F1,Lille,Le Mans
+2027-05-29,F1,Brest,Lens
+2027-05-29,F1,Marseille,Lorient
+2027-05-29,F1,Rennes,Angers
+2027-05-29,F1,Lyon,Paris FC
+2027-05-29,F1,Auxerre,Le Havre
+2027-05-29,F1,Strasbourg,Nice
