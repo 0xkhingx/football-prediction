@@ -10,6 +10,8 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 import joblib
 
+from .metrics import brier_score, log_loss
+
 FEATURIZED_FILE = Path("data/processed/matches_featurized.csv")
 SPLITS_FILE = Path("data/processed/splits.npz")
 META_FILE = Path("data/processed/split_meta.json")
@@ -18,19 +20,6 @@ OUTPUT_DIR = Path("notebooks")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 LEAGUE_MAP = {"E0": "England", "SP1": "Spain", "I1": "Italy", "D1": "Germany", "F1": "France"}
-
-def log_loss(y_true, y_pred_proba, eps=1e-15):
-    y_pred_proba = np.clip(y_pred_proba, eps, 1 - eps)
-    n = len(y_true)
-    loss = 0.0
-    for i in range(n):
-        loss -= np.log(y_pred_proba[i, y_true[i]])
-    return loss / n
-
-def brier_score(y_true, y_pred_proba):
-    y_onehot = np.zeros_like(y_pred_proba)
-    y_onehot[np.arange(len(y_true)), y_true] = 1
-    return np.mean(np.sum((y_pred_proba - y_onehot) ** 2, axis=1))
 
 def main():
     df = pd.read_csv(FEATURIZED_FILE, low_memory=False)

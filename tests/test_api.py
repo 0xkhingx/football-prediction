@@ -41,6 +41,14 @@ def test_evaluate_disclaimer():
     assert "not betting advice" in body["disclaimer"]
 
 
+def test_reload_clears_state():
+    r = client.post("/reload")
+    assert r.status_code == 200
+    assert r.json() == {"status": "reloaded"}
+    # Serving still works after reload (state rebuilds lazily).
+    assert client.get("/health").status_code == 200
+
+
 def test_fixtures_contract():
     r = client.get("/fixtures")
     # 200 with fixtures, or 502 when upstream is down AND no local cache.

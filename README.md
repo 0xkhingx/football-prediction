@@ -71,13 +71,13 @@ cd web && npm install && npm run dev   # :3000, proxies to API_URL
 ```
 
 Deploy notes: set `API_URL` (web → API base) and `ALLOWED_ORIGINS` (API CORS allowlist,
-comma-separated) in the hosting env. The API holds state in memory — restart it after
-any `make refresh` / retrain so it serves fresh weights and history.
+comma-separated) in the hosting env. The API holds state in memory — after any
+`make refresh` / retrain, either restart it or `POST /reload` so it serves fresh
+weights and history.
 
 ## Metrics
 
-Locked benchmark (2024/25 test, 1752 matches, archived in
-`models/evaluation_2425_locked.json`):
+Locked benchmark (2024/25 test, 1752 matches, archived in `models/evaluation_2425_locked.json`):
 
 | Model | Log-loss |
 |---|---|
@@ -95,9 +95,6 @@ Current model (trained ..2024/25, val 2025/26 n=1751, live test 2026/27-partial 
 Fair-play: no odds features — Elo, form, H2H, rest, goals, shots, corners only.
 Research demo, not betting advice.
 
-## Metrics
-
-- Primary: Log loss (cross-entropy)
-- Secondary: Brier score, accuracy, calibration curve
-- Baseline: "Always predict home win" (prior distribution)
-- Benchmark: Bookmaker implied log loss (B365 odds)
+Metric definitions: primary log loss (cross-entropy); secondary Brier score,
+accuracy, calibration curve; baseline training-prior naive; benchmark bookmaker
+implied log loss (B365 odds, where available).

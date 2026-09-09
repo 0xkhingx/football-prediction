@@ -12,10 +12,9 @@ import numpy as np
 import pandas as pd
 import requests
 
+from .config import FIXTURES_FILE as LOCAL_FIXTURES
 from .config import LEAGUE_NAMES, PREDICTIONS_LOG, TOP_LEAGUE_CODES
 from .inference import build_state_from_historical, load_artifacts, predict_one
-
-LOCAL_FIXTURES = Path("data/fixtures_2627.csv")
 
 
 def current_season_code(today=None) -> str:
@@ -167,6 +166,18 @@ def main() -> None:
         print(f"{str(r['Date']):<14} {league_name:<12} {r['Home']:<22} {r['Away']:<22} {r['Prediction']:<6} {r['Confidence']:<8.3f} {r['P(H)']:<8.3f} {r['P(D)']:<8.3f} {r['P(A)']:<8.3f} {gate}")
 
     PREDICTIONS_LOG.parent.mkdir(parents=True, exist_ok=True)
+    append_predictions(pred_df)
+    print(f"\nPredictions written to {PREDICTIONS_LOG} (deduped)")
+    print(f"Total logged predictions: {len(pd.read_csv(PREDICTIONS_LOG))}")
+
+
+def append_predictions(pred_df: pd.DataFrame) -> pd.DataFrame:
+    """Append new predictions to the log. LOGGED ROWS ARE IMMUTABLE:
+    keep="first" so re-running after matches are played can never rewrite
+    the originally logged call (the scoreboard treats the log as the
+    authoritative real-time record).
+    """
+    PREDICTIONS_LOG.parent.mkdir(parents=True, exist_ok=True)
     if PREDICTIONS_LOG.exists():
         existing = pd.read_csv(PREDICTIONS_LOG)
         # Forward-compatible schema: old logs lack Call columns.
@@ -174,12 +185,11 @@ def main() -> None:
             if col not in existing.columns:
                 existing[col] = default
         combined = pd.concat([existing, pred_df], ignore_index=True)
-        combined = combined.drop_duplicates(subset=["Date", "Home", "Away"], keep="last")
+        combined = combined.drop_duplicates(subset=["Date", "Home", "Away"], keep="first")
     else:
         combined = pred_df.copy()
     combined.to_csv(PREDICTIONS_LOG, index=False)
-    print(f"\nPredictions written to {PREDICTIONS_LOG} (deduped)")
-    print(f"Total logged predictions: {len(combined)}")
+    return combined
 
 
 if __name__ == "__main__":

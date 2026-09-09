@@ -22,12 +22,15 @@ from src.predict_live import fetch_fixtures
 app = FastAPI(title="Football Predictor (fair-play XGB)", version="1.0.0")
 
 ALLOWED_ORIGINS = [o for o in os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",") if o]
+if "ALLOWED_ORIGINS" not in os.environ:
+    print("WARNING: ALLOWED_ORIGINS unset — CORS allows only http://localhost:3000. "
+          "Set it to your web origin in production.")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
 )
 
 
@@ -60,6 +63,20 @@ def _state():
     elo, melo, hist = build_state_from_historical()
     imp, model, name = load_artifacts()
     return elo, melo, hist, imp, model, name
+
+
+@app.post("/reload")
+def reload():
+    """Drop all in-memory state (model, history, goals caches) so the next
+    request rebuilds from disk. Call after make refresh / retrain instead of
+    restarting the process.
+    """
+    from src.goals import cached_matches, team_league_map
+
+    _state.cache_clear()
+    cached_matches.cache_clear()
+    team_league_map.cache_clear()
+    return {"status": "reloaded"}
 
 
 @app.get("/health")
@@ -110,6 +127,16 @@ def fixtures():
 def predict(req: PredictRequest):
     if req.home.strip().lower() == req.away.strip().lower():
         raise HTTPException(status_code=422, detail="home and away must differ")
+    try:
+        as_of = pd.to_datetime(req.date)
+    except (ValueError, TypeError):
+        raise HTTPException(status_code=422, detail="date must be ISO YYYY-MM-DD")
+    today = pd.Timestamp.today().normalize()
+    if not (pd.Timestamp("2015-08-01") <= as_of <= today + pd.Timedelta(days=30)):
+        raise HTTPException(
+            status_code=422,
+            detail="date out of supported range (2015-08-01 to 30 days ahead)",
+        )
     elo, melo, hist, imp, model, name = _state()
     if req.home not in hist or req.away not in hist:
         raise HTTPException(status_code=404, detail="unknown team — check spelling (e.g. 'Arsenal')")
@@ -164,7 +191,7 @@ def simulation(league: str = "E0"):
 
     from src.simulate import OUTPUT_FILE as SIM_FILE
 
-    if league not in ("E0", "SP1", "I1", "D1", "F1"):
+    if league not in TOP_LEAGUE_CODES:
         raise HTTPException(status_code=422, detail="unknown league")
     if not SIM_FILE.exists():
         raise HTTPException(status_code=404, detail="run python -m src.simulate first")

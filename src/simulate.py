@@ -16,11 +16,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from .config import CLEAN_FILE
+from .config import CLEAN_FILE, FIXTURES_FILE, SIMULATION_FILE
 from .inference import build_state_from_historical, load_artifacts, predict_one
 
-FIXTURES_FILE = Path("data/fixtures_2627.csv")
-OUTPUT_FILE = Path("data/simulation_2627.json")
+OUTPUT_FILE = SIMULATION_FILE  # back-compat alias (api.py imports OUTPUT_FILE)
 N_SIMS = 2000
 SEED = 42
 SEASON = 2627

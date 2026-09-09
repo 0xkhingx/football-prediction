@@ -26,6 +26,7 @@ from .config import (
     TARGET_MAP,
     TUNED_PARAMS_FILE,
 )
+from .metrics import log_loss
 
 RESULTS_FILE = Path("experiments/results_batch.json")
 RESULTS_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -33,11 +34,6 @@ RESULTS_FILE.parent.mkdir(parents=True, exist_ok=True)
 FOLDS = [2021, 2122, 2223, 2324, 2425, 2526]
 N_BOOT = 1000
 SEED = 42
-
-
-def log_loss(y_true, proba, eps=1e-15):
-    proba = np.clip(proba, eps, 1 - eps)
-    return float(-np.mean([np.log(proba[i, y_true[i]]) for i in range(len(y_true))]))
 
 
 def load_params():

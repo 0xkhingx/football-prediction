@@ -2,10 +2,7 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-try:
-    from .config import DERBY_PAIRS
-except ImportError:  # run as script: python src/features.py
-    from config import DERBY_PAIRS
+from .config import DERBY_PAIRS
 
 CLEAN_FILE = Path("data/processed/matches_clean.csv")
 OUTPUT = Path("data/processed/matches_featurized.csv")

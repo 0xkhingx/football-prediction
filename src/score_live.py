@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 
-from .config import CLEAN_FILE, INV_TARGET_MAP, PREDICTIONS_LOG
+from .config import CLEAN_FILE, INV_TARGET_MAP, PREDICTIONS_LOG, RECORD_FILE
 from .inference import (
     apply_honesty_gate,
     build_state_from_historical,
@@ -23,8 +23,6 @@ from .inference import (
     load_artifacts,
     vectorize,
 )
-
-RECORD_FILE = Path("data/season_record.csv")
 TARGET_SEASON = 2627
 BUCKETS = [(0.70, 1.01, "70%+"), (0.60, 0.70, "60-70%"), (0.50, 0.60, "50-60%"),
            (0.45, 0.50, "45-50%"), (0.0, 0.45, "<45%")]

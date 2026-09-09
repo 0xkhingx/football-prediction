@@ -15,7 +15,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-CLEAN_FILE = Path("data/processed/matches_clean.csv")
+from .config import CLEAN_FILE
 RHO = -0.13  # Dixon-Coles low-score dependence (literature estimate)
 HALF_LIFE_DAYS = 270.0
 MAX_GOALS = 7

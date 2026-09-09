@@ -3,13 +3,9 @@ import numpy as np
 from pathlib import Path
 import json
 
-try:
-    from .config import FEATURE_COLS_NO_ODDS
-except ImportError:  # run as script: python src/split.py
-    from config import FEATURE_COLS_NO_ODDS
+from .config import FEATURE_COLS_NO_ODDS, FEATURIZED_FILE, PROCESSED_DIR
 
-FEATURIZED_FILE = Path("data/processed/matches_featurized.csv")
-OUTPUT_DIR = Path("data/processed")
+OUTPUT_DIR = PROCESSED_DIR
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 FEATURE_COLS_WITH_ODDS = FEATURE_COLS_NO_ODDS + ["ProbB365H", "ProbB365D", "ProbB365A"]

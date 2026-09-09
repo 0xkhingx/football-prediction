@@ -11,17 +11,13 @@ refresh: pull clean features split
 
 pull:
 	python -m src.pull_openfootball
-	python src/data_pull.py
-
+	python -m src.data_pull
 clean:
-	python src/clean.py
-
+	python -m src.clean
 features:
-	python src/features.py
-
+	python -m src.features
 split:
-	python src/split.py
-
+	python -m src.split
 # Monthly (or gated): retrain prod tuned + re-evaluate + regen plots
 train:
 	python -m src.train_tuned_prod
