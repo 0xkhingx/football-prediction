@@ -34,11 +34,14 @@ def fetch_local_fixtures() -> pd.DataFrame:
     fx = fx[fx["Date"] >= today].copy()
     if fx.empty:
         return fx
+    if "Round" not in fx.columns:
+        fx["Round"] = ""
     return pd.DataFrame({
         "Div": fx["League"],
         "HomeTeam": fx["Home"],
         "AwayTeam": fx["Away"],
         "Date": fx["Date"].dt.strftime("%Y-%m-%d"),
+        "Round": fx["Round"].fillna("").astype(str),
     }).reset_index(drop=True)
 
 

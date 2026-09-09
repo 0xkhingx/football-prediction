@@ -3,7 +3,7 @@
   "imputer_name": "no_odds_imputer",
   "model_file": "no_odds_xgb_tuned.joblib",
   "framework": "xgboost 3.3.0",
-  "trained_on": "2026-09-08",
+  "trained_on": "2026-09-09",
   "train_seasons": [
     1516,
     1617,
@@ -56,9 +56,9 @@
   },
   "best_iteration": 33,
   "metrics": {
-    "val_log_loss": 0.9963840246200562,
-    "test_log_loss": 0.9458820223808289,
-    "test_acc": 0.5463917525773195
+    "val_log_loss": 0.9963840590610313,
+    "test_log_loss": 0.988457841732492,
+    "test_acc": 0.5068493150684932
   },
   "fair_play": true,
   "odds_features": []

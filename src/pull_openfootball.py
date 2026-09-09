@@ -155,7 +155,8 @@ def main() -> None:
             if not ft or len(ft) != 2 or ft[0] is None or ft[1] is None:
                 if season == 2627 and m.get("status") != "canceled":
                     fixtures.append({"Date": m["date"], "League": league,
-                                     "Home": home, "Away": away})
+                                     "Home": home, "Away": away,
+                                     "Round": str(m.get("round", "") or "")})
                 skipped += 1
                 continue
             fthg, ftag = int(ft[0]), int(ft[1])

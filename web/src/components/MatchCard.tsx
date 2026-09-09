@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { formatDate } from "@/lib/weeks";
 import type { Fixture } from "@/lib/types";
 
 export function MatchCard({ fixture }: { fixture: Fixture }) {
@@ -7,10 +8,13 @@ export function MatchCard({ fixture }: { fixture: Fixture }) {
     <Link
       href={href}
       aria-label={`Predict ${fixture.home} versus ${fixture.away}`}
-      className="block rounded-3xl bg-cream p-5 transition hover:-translate-y-0.5 hover:shadow-xl"
+      className="pressable lift block rounded-3xl bg-cream p-5 hover:shadow-xl"
     >
       <p className="font-mono text-[10px] tracking-[0.25em] text-ember">
-        {fixture.date} · {fixture.league_name.toUpperCase()}
+        <time dateTime={fixture.date}>{formatDate(fixture.date)}</time>
+        {" · "}
+        {fixture.round ? `${fixture.round.toUpperCase()} · ` : ""}
+        {fixture.league_name.toUpperCase()}
       </p>
       <p className="mt-2 font-display text-2xl uppercase leading-none text-coal">
         {fixture.home} <span className="text-ember">vs</span> {fixture.away}

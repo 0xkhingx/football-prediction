@@ -6,6 +6,7 @@ export const FixtureSchema = z.object({
   league_name: z.string(),
   home: z.string(),
   away: z.string(),
+  round: z.string().optional(),
 });
 export type Fixture = z.infer<typeof FixtureSchema>;
 

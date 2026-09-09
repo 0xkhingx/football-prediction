@@ -6,7 +6,7 @@ Date,League,Home,Away,Prediction,Confidence,PH,PD,PA,Actual,Correct,Call,Source
 2026-08-17,SP1,La Coruna,Elche,A,0.3784,0.3537,0.2679,0.3784,D,False,False,backfill
 2026-08-19,SP1,Atletico Madrid,Malaga,H,0.7099,0.7099,0.1791,0.111,H,True,True,backfill
 2026-08-20,SP1,Rayo Vallecano,Alaves,H,0.4624,0.4624,0.2864,0.2511,D,False,True,backfill
-2026-08-21,E0,Arsenal,Other,H,0.7342,0.7342,0.1563,0.1095,H,True,True,backfill
+2026-08-21,E0,Arsenal,Coventry,H,0.7342,0.7342,0.1563,0.1095,H,True,True,backfill
 2026-08-21,F1,Marseille,Strasbourg,H,0.5033,0.5033,0.2463,0.2504,H,True,True,backfill
 2026-08-21,SP1,Betis,Real Sociedad,H,0.5606,0.5606,0.259,0.1804,H,True,True,backfill
 2026-08-22,E0,Brentford,Tottenham Hotspur,H,0.5479,0.5479,0.2562,0.1959,H,True,True,backfill
@@ -14,9 +14,9 @@ Date,League,Home,Away,Prediction,Confidence,PH,PD,PA,Actual,Correct,Call,Source
 2026-08-22,E0,Hull,Manchester United,A,0.6119,0.1834,0.2047,0.6119,H,False,True,backfill
 2026-08-22,E0,Ipswich,Sunderland,A,0.4364,0.2841,0.2794,0.4364,H,False,False,backfill
 2026-08-22,E0,Nottingham Forest,Leeds,H,0.5195,0.5195,0.2755,0.205,A,False,True,backfill
+2026-08-22,F1,Le Mans,Brest,H,0.3694,0.3694,0.2963,0.3343,D,False,False,backfill
 2026-08-22,F1,Lens,Auxerre,H,0.6319,0.6319,0.2074,0.1607,H,True,True,backfill
 2026-08-22,F1,Nice,Lorient,H,0.3755,0.3755,0.3086,0.3159,D,False,False,backfill
-2026-08-22,F1,Other,Brest,H,0.3512,0.3512,0.3155,0.3333,D,False,False,backfill
 2026-08-22,F1,Toulouse,Lyon,A,0.4169,0.3068,0.2763,0.4169,A,True,False,backfill
 2026-08-22,F1,Troyes,Paris FC,A,0.5693,0.2055,0.2253,0.5693,D,False,True,backfill
 2026-08-22,I1,Genoa,Napoli,A,0.5538,0.2228,0.2235,0.5538,A,True,True,backfill
@@ -57,12 +57,12 @@ Date,League,Home,Away,Prediction,Confidence,PH,PD,PA,Actual,Correct,Call,Source
 2026-08-29,D1,Dortmund,Hamburg,H,0.7093,0.7093,0.177,0.1136,H,True,True,backfill
 2026-08-29,D1,FC Cologne,Hoffenheim,A,0.4743,0.2599,0.2658,0.4743,H,False,True,backfill
 2026-08-29,D1,Mainz 05,Paderborn,H,0.6132,0.6132,0.2233,0.1635,D,False,True,backfill
-2026-08-29,D1,Other,Leverkusen,A,0.5844,0.1983,0.2173,0.5844,H,False,True,backfill
+2026-08-29,D1,Other,Leverkusen,A,0.5764,0.2042,0.2194,0.5764,H,False,True,backfill
 2026-08-29,D1,RB Leipzig,Borussia Monchengladbach,H,0.6143,0.6143,0.2257,0.16,H,True,True,backfill
 2026-08-29,D1,Union Berlin,Eintracht Frankfurt,A,0.4336,0.2716,0.2948,0.4336,D,False,False,backfill
 2026-08-29,E0,Bournemouth,Everton,H,0.5392,0.5392,0.242,0.2188,D,False,True,backfill
+2026-08-29,E0,Coventry,Hull,H,0.5033,0.5033,0.266,0.2307,A,False,True,backfill
 2026-08-29,E0,Liverpool,Nottingham Forest,H,0.5777,0.5777,0.2254,0.1969,D,False,True,backfill
-2026-08-29,E0,Other,Hull,H,0.5214,0.5214,0.2616,0.217,A,False,True,backfill
 2026-08-29,E0,Tottenham Hotspur,Newcastle United,A,0.4366,0.288,0.2754,0.4366,A,True,False,backfill
 2026-08-29,F1,Auxerre,Angers,H,0.5257,0.5257,0.2622,0.2121,A,False,True,backfill
 2026-08-29,F1,Brest,Toulouse,H,0.3842,0.3842,0.2844,0.3314,D,False,False,backfill
@@ -84,7 +84,7 @@ Date,League,Home,Away,Prediction,Confidence,PH,PD,PA,Actual,Correct,Call,Source
 2026-08-30,E0,Sunderland,Fulham,A,0.3716,0.3487,0.2797,0.3716,H,False,False,backfill
 2026-08-30,F1,Monaco,Marseille,H,0.4199,0.4199,0.2762,0.3039,H,True,False,backfill
 2026-08-30,F1,Paris FC,Nice,H,0.474,0.474,0.2723,0.2537,H,True,True,backfill
-2026-08-30,F1,Rennes,Other,H,0.6101,0.6101,0.2302,0.1597,H,True,True,backfill
+2026-08-30,F1,Rennes,Le Mans,H,0.6002,0.6002,0.2379,0.162,H,True,True,backfill
 2026-08-30,I1,Cagliari,Inter,A,0.6225,0.1673,0.2102,0.6225,A,True,True,backfill
 2026-08-30,I1,Lazio,Genoa,H,0.5781,0.5781,0.2453,0.1766,H,True,True,backfill
 2026-08-30,I1,Napoli,Como,H,0.4646,0.4646,0.2661,0.2693,A,False,True,backfill
@@ -96,3 +96,52 @@ Date,League,Home,Away,Prediction,Confidence,PH,PD,PA,Actual,Correct,Call,Source
 2026-08-31,I1,Lecce,Roma,A,0.596,0.1894,0.2147,0.596,A,True,True,backfill
 2026-08-31,SP1,Barcelona,Rayo Vallecano,H,0.7215,0.7215,0.1622,0.1163,H,True,True,backfill
 2026-08-31,SP1,Osasuna,Getafe,H,0.4092,0.4092,0.2907,0.3002,H,True,False,backfill
+2026-09-03,F1,Toulouse,Lille,A,0.4386,0.2925,0.2689,0.4386,A,True,False,backfill
+2026-09-03,SP1,Real Sociedad,Celta,H,0.3925,0.3925,0.2863,0.3212,D,False,False,backfill
+2026-09-04,D1,Stuttgart,FC Cologne,H,0.669,0.669,0.1974,0.1336,H,True,True,backfill
+2026-09-04,E0,Ipswich,Liverpool,A,0.5915,0.2074,0.2011,0.5915,A,True,True,backfill
+2026-09-04,F1,Lyon,Auxerre,H,0.6302,0.6302,0.2088,0.161,H,True,True,backfill
+2026-09-04,F1,Paris Saint-Germain,Monaco,H,0.6205,0.6205,0.2058,0.1737,A,False,True,backfill
+2026-09-04,I1,Genoa,Como,A,0.5526,0.2298,0.2175,0.5526,A,True,True,backfill
+2026-09-04,SP1,Betis,Real Madrid,A,0.5426,0.2482,0.2092,0.5426,H,False,True,backfill
+2026-09-05,D1,Borussia Monchengladbach,Other,H,0.3913,0.3913,0.2628,0.3459,A,False,False,backfill
+2026-09-05,D1,Hoffenheim,Dortmund,A,0.5017,0.2519,0.2464,0.5017,A,True,True,backfill
+2026-09-05,D1,Leverkusen,Union Berlin,H,0.6577,0.6577,0.2062,0.1361,H,True,True,backfill
+2026-09-05,D1,Paderborn,Freiburg,A,0.5146,0.2517,0.2337,0.5146,A,True,True,backfill
+2026-09-05,D1,Schalke 04,Bayern Munich,A,0.6832,0.1545,0.1624,0.6832,D,False,True,backfill
+2026-09-05,D1,Werder Bremen,RB Leipzig,A,0.5463,0.2323,0.2214,0.5463,H,False,True,backfill
+2026-09-05,E0,Brentford,Sunderland,H,0.5693,0.5693,0.2435,0.1872,D,False,True,backfill
+2026-09-05,E0,Brighton,Leeds,H,0.5449,0.5449,0.2512,0.2039,D,False,True,backfill
+2026-09-05,E0,Fulham,Crystal Palace,H,0.4722,0.4722,0.2718,0.256,A,False,True,backfill
+2026-09-05,E0,Hull,Aston Villa,A,0.537,0.2419,0.2211,0.537,D,False,True,backfill
+2026-09-05,E0,Manchester City,Coventry,H,0.7519,0.7519,0.148,0.1,H,True,True,backfill
+2026-09-05,E0,Newcastle United,Bournemouth,H,0.4196,0.4196,0.2742,0.3063,D,False,False,backfill
+2026-09-05,E0,Nottingham Forest,Tottenham Hotspur,H,0.5443,0.5443,0.2535,0.2022,D,False,True,backfill
+2026-09-05,F1,Le Havre,Brest,H,0.3772,0.3772,0.2813,0.3415,A,False,False,backfill
+2026-09-05,F1,Lens,Lorient,H,0.6386,0.6386,0.2074,0.1541,A,False,True,backfill
+2026-09-05,F1,Nice,Le Mans,H,0.4312,0.4312,0.2824,0.2864,D,False,False,backfill
+2026-09-05,I1,Fiorentina,Torino,H,0.4675,0.4675,0.2753,0.2573,A,False,True,backfill
+2026-09-05,I1,Inter,Napoli,H,0.588,0.588,0.2337,0.1783,H,True,True,backfill
+2026-09-05,I1,Roma,Atalanta,H,0.5447,0.5447,0.2473,0.2081,H,True,True,backfill
+2026-09-05,SP1,Athletic Bilbao,Atletico Madrid,A,0.4749,0.2695,0.2556,0.4749,H,False,True,backfill
+2026-09-05,SP1,Rayo Vallecano,Racing,H,0.4468,0.4468,0.2882,0.2649,H,True,False,backfill
+2026-09-05,SP1,Villarreal,La Coruna,H,0.6883,0.6883,0.1882,0.1235,A,False,True,backfill
+2026-09-06,D1,Eintracht Frankfurt,Augsburg,H,0.5087,0.5087,0.2694,0.222,A,False,True,backfill
+2026-09-06,D1,Hamburg,Mainz 05,A,0.4175,0.2995,0.283,0.4175,A,True,False,backfill
+2026-09-06,E0,Arsenal,Chelsea,H,0.6686,0.6686,0.1854,0.146,H,True,True,backfill
+2026-09-06,E0,Everton,Manchester United,A,0.3801,0.3431,0.2768,0.3801,D,False,False,backfill
+2026-09-06,F1,Angers,Rennes,A,0.5189,0.2517,0.2294,0.5189,A,True,True,backfill
+2026-09-06,F1,Marseille,Paris FC,H,0.5569,0.5569,0.2403,0.2028,A,False,True,backfill
+2026-09-06,F1,Troyes,Strasbourg,A,0.5507,0.2284,0.2209,0.5507,A,True,True,backfill
+2026-09-06,I1,Bologna,Sassuolo,H,0.5226,0.5226,0.2534,0.224,D,False,True,backfill
+2026-09-06,I1,Frosinone,Venezia,H,0.4618,0.4618,0.2779,0.2603,H,True,True,backfill
+2026-09-06,I1,Juventus,Milan,H,0.4902,0.4902,0.2579,0.2519,D,False,True,backfill
+2026-09-06,I1,Parma,Monza,H,0.5283,0.5283,0.267,0.2047,D,False,True,backfill
+2026-09-06,SP1,Alaves,Osasuna,H,0.4219,0.4219,0.2869,0.2913,H,True,False,backfill
+2026-09-06,SP1,Espanol,Sevilla,H,0.4066,0.4066,0.2862,0.3072,D,False,False,backfill
+2026-09-06,SP1,Malaga,Levante,A,0.4388,0.3121,0.2491,0.4388,D,False,False,backfill
+2026-09-06,SP1,Valencia,Barcelona,A,0.6456,0.1652,0.1892,0.6456,A,True,True,backfill
+2026-09-07,I1,Cagliari,Lecce,H,0.4862,0.4862,0.2731,0.2407,H,True,True,backfill
+2026-09-07,I1,Udinese,Lazio,H,0.3718,0.3718,0.2831,0.345,A,False,False,backfill
+2026-09-07,SP1,Elche,Real Sociedad,A,0.3582,0.3556,0.2863,0.3582,A,True,False,backfill
+2026-09-07,SP1,Getafe,Celta,H,0.3885,0.3885,0.2886,0.3229,D,False,False,backfill

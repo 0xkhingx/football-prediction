@@ -5,11 +5,72 @@
 body {
   background: #e85a24;
   font-feature-settings: "tnum";
+  overflow-x: clip;
 }
 
 ::selection {
   background: #e7ef45;
   color: #161412;
+}
+
+/* Motion system: one ease-out token, press states, result reveals. */
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.pressable {
+  transition:
+    transform 160ms var(--ease-out),
+    box-shadow 200ms var(--ease-out),
+    background-color 200ms var(--ease-out);
+}
+.pressable:active {
+  transform: scale(0.97);
+}
+
+.bar-grow {
+  transition: width 550ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lift:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pressable:active {
+    transform: none;
+  }
+  .lift:hover {
+    transform: none;
+  }
+  .bar-grow {
+    transition: none;
+  }
+  .skeleton {
+    animation: none;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid #e7ef45;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.skeleton {
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
 }
 
 /* Diagonal pinstripe accents, like the reference corners */

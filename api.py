@@ -111,15 +111,17 @@ def fixtures():
     out = []
     for _, r in df.iterrows():
         code = r.get("Div", "?")
-        out.append(
-            {
-                "date": str(r.get("Date", "")),
-                "league": code,
-                "league_name": LEAGUE_NAMES.get(code, code),
-                "home": r.get("HomeTeam", ""),
-                "away": r.get("AwayTeam", ""),
-            }
-        )
+        row = {
+            "date": str(r.get("Date", "")),
+            "league": code,
+            "league_name": LEAGUE_NAMES.get(code, code),
+            "home": r.get("HomeTeam", ""),
+            "away": r.get("AwayTeam", ""),
+        }
+        rnd = r.get("Round", "")
+        if isinstance(rnd, str) and rnd.strip():
+            row["round"] = rnd.strip()
+        out.append(row)
     return {"fixtures": out, "source": source}
 
 

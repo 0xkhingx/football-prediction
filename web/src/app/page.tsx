@@ -1,17 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MatchCard } from "@/components/MatchCard";
 import { LeagueTabs } from "@/components/LeagueTabs";
 import { SeasonRecord } from "@/components/SeasonRecord";
 import { BranchPill, GlyphRow, PillCta } from "@/components/Motif";
 import { FixtureSchema, type Fixture } from "@/lib/types";
+import { groupWeeks, nearestWeekIndex } from "@/lib/weeks";
 
 export default function FixturesPage() {
   const [fixtures, setFixtures] = useState<Fixture[]>([]);
   const [league, setLeague] = useState("ALL");
   const [loaded, setLoaded] = useState(false);
   const [backendError, setBackendError] = useState<string | null>(null);
+  const [weekIdx, setWeekIdx] = useState<number | null>(null);
 
   useEffect(() => {
     fetch("/api/fixtures")
@@ -19,7 +21,9 @@ export default function FixturesPage() {
         const body = await r.json().catch(() => ({}));
         if (!r.ok) throw new Error(typeof body.backendError === "string" ? body.backendError : `backend ${r.status}`);
         const list = Array.isArray(body.fixtures) ? body.fixtures : [];
-        setFixtures(list.filter((f: unknown) => FixtureSchema.safeParse(f).success));
+        const valid = list.filter((f: unknown) => FixtureSchema.safeParse(f).success);
+        setFixtures(valid);
+        setWeekIdx((prev) => prev ?? nearestWeekIndex(groupWeeks(valid)));
         setLoaded(true);
       })
       .catch((e) => {
@@ -28,7 +32,9 @@ export default function FixturesPage() {
       });
   }, []);
 
-  const shown = league === "ALL" ? fixtures : fixtures.filter((f) => f.league === league);
+  const weeks = useMemo(() => groupWeeks(fixtures), [fixtures]);
+  const week = weekIdx === null ? null : (weeks[weekIdx] ?? null);
+  const shown = !week || league === "ALL" ? (week?.fixtures ?? []) : week.fixtures.filter((f) => f.league === league);
 
   return (
     <div className="space-y-3">
@@ -57,13 +63,53 @@ export default function FixturesPage() {
         </div>
       </section>
 
-      {/* FIXTURES */}
+      {/* FIXTURES — this week only, pager for the rest */}
       <section className="rounded-[2rem] bg-emberdark/40 px-6 py-10 sm:px-10">
         <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
-          <h2 className="font-display text-3xl uppercase text-cream sm:text-5xl">Upcoming ties</h2>
+          <div>
+            <h2 className="font-display text-3xl uppercase text-cream sm:text-5xl">This week</h2>
+            {week && (
+              <p className="mt-1 font-mono text-[11px] tracking-[0.25em] text-cream/70">
+                {week.label} · {week.fixtures.length} TIES
+              </p>
+            )}
+          </div>
           <LeagueTabs active={league} onChange={setLeague} />
         </div>
-      {!loaded && <p className="font-mono text-xs tracking-[0.25em] text-cream/80">LOADING…</p>}
+        {week && weeks.length > 1 && (
+          <div className="mb-5 flex items-center gap-2" role="group" aria-label="Fixture week">
+            <button
+              type="button"
+              disabled={weekIdx === 0}
+              onClick={() => setWeekIdx((i) => Math.max(0, (i ?? 0) - 1))}
+              className="pressable rounded-full bg-cream px-4 py-1.5 font-mono text-[11px] tracking-[0.2em] text-coal disabled:opacity-40"
+            >
+              ← PREV
+            </button>
+            <span className="font-mono text-[11px] tracking-[0.2em] text-cream/70">
+              {(weekIdx ?? 0) + 1} / {weeks.length}
+            </span>
+            <button
+              type="button"
+              disabled={weekIdx === weeks.length - 1}
+              onClick={() => setWeekIdx((i) => Math.min(weeks.length - 1, (i ?? 0) + 1))}
+              className="pressable rounded-full bg-cream px-4 py-1.5 font-mono text-[11px] tracking-[0.2em] text-coal disabled:opacity-40"
+            >
+              NEXT →
+            </button>
+          </div>
+        )}
+      {!loaded && (
+        <div className="grid gap-3 sm:grid-cols-2" aria-hidden>
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} className="rounded-3xl bg-cream p-5">
+              <div className="skeleton h-3 w-2/3 rounded-full bg-coal/15" />
+              <div className="skeleton mt-3 h-7 w-5/6 rounded-lg bg-coal/15" />
+              <div className="skeleton mt-4 h-7 w-24 rounded-full bg-coal/15" />
+            </div>
+          ))}
+        </div>
+      )}
       {loaded && backendError && (
         <div className="rounded-3xl bg-coal p-8 text-center" role="alert">
           <p className="font-display text-3xl uppercase text-cream">Can&apos;t reach the model</p>
@@ -98,7 +144,7 @@ export default function FixturesPage() {
       {/* BOTTOM SPLIT — reference layout, football copy */}      <section className="grid gap-3 md:grid-cols-5">
         <div className="rounded-[2rem] bg-coal p-8 sm:p-10 md:col-span-2">
           <p className="font-display text-3xl uppercase leading-[1.02] text-cream sm:text-4xl">
-            Welcome to the physics of <span className="text-lime">your own form</span>
+            Welcome to the physics of <span className="text-lime">form</span>
           </p>
           <p className="mt-8 font-mono text-[10px] tracking-[0.3em] text-cream/60">
             ELO · FORM · REST · H2H

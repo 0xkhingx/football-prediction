@@ -16,6 +16,17 @@ def test_local_fixtures_schema():
     assert (fx["Div"].isin(["E0", "SP1", "I1", "D1", "F1"]).all() if len(fx) else True)
 
 
+def test_local_fixtures_carry_round():
+    import pandas as pd
+
+    raw = pd.read_csv("data/fixtures_2627.csv")
+    assert "Round" in raw.columns
+    fx = fetch_local_fixtures()
+    if len(fx):
+        assert "Round" in fx.columns
+        assert fx["Round"].str.contains("Matchday").any()
+
+
 def test_score_for_fixture_unknown_teams_is_none():
     assert score_for_fixture("Nope FC", "Also Nope", "2026-09-08", None, "H", True) is None
 

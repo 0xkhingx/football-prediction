@@ -44,7 +44,7 @@ export function SeasonRecord() {
 
   return (
     <section className="rounded-[2rem] bg-coal p-8 sm:p-10">
-      <p className="font-mono text-[11px] tracking-[0.3em] text-lime">SEASON RECORD · 2026/27</p>
+      <p className="font-mono text-[11px] tracking-[0.3em] text-lime">SEASON RECORD</p>
       <div className="mt-3 flex flex-wrap items-baseline gap-x-8 gap-y-2">
         <p className="font-display text-5xl text-cream sm:text-6xl">{(tally.acc * 100).toFixed(1)}%</p>
         <p className="font-mono text-xs tracking-[0.2em] text-cream/60">
@@ -62,14 +62,19 @@ export function SeasonRecord() {
           </div>
         ))}
       </div>
-      <div className="mt-6 space-y-1">
+      <div className="mt-6 space-y-1.5">
         {recent.map((r, i) => (
-          <p key={i} className="font-mono text-[11px] tracking-wide text-cream/70">
+          <p key={`${r.Date}-${r.Home}-${r.Away}`} className="font-mono text-[11px] tracking-wide">
             <span className={r.Correct ? "text-lime" : "text-ember"}>
               {r.Correct ? "✓" : "✗"}
             </span>{" "}
-            {r.Home} vs {r.Away} — called {OUTCOME[r.Prediction as keyof typeof OUTCOME]},{" "}
-            {r.Actual} ({r.Source})
+            <span className="text-cream">
+              {r.Home} vs {r.Away}
+            </span>{" "}
+            <span className="text-cream/50">
+              {OUTCOME[r.Prediction as keyof typeof OUTCOME]} called · {r.Actual} ·{" "}
+              {r.Source === "live" ? "live call" : "preseason replay"}
+            </span>
           </p>
         ))}
       </div>

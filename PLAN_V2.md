@@ -66,6 +66,16 @@ tests/registry/SHAP/explanations/model page — decide the final set ONCE, here.
 - Step 8 share cards DONE (/predict/og renders live-call PNG, verified visually;
   X/WhatsApp share row on predict page).
 
+## Refresh note 2026-09-09 (+49 played: test 97 -> 146, tuned LL 0.946 -> 0.988)
+Weekly refresh pulled 49 new results; full pipeline re-rolled (splits/weights/
+record/sim all regenerated, numbers stable within early-season noise).
+Coventry + Le Mans graduated out of the `Other` rare-team bucket (>=3 apps) —
+expected entity churn, now covered by a data-derived resolve test instead of a
+hardcoded name. Suite caught it (1 failure) before users could.
+- Matchweek view + UI polish DONE (round re-captured in adapter, week-first UI
+  with pager, motion tokens + press states, skeletons, date formatting,
+  SeasonRecord hierarchy, meaningful glyphs).
+
 ## Original step specs (kept for reference; status above is authoritative)
 3. **Honesty gate (S)** — threshold tuned on val; `call`/`no-call` in API + UI badge.
 4. **Form badges + H2H (S)** — pure frontend from replayed history (risk-free, first).

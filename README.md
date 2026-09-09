@@ -60,7 +60,7 @@ Live predictions, API and tests:
 
 ```bash
 python -m src.predict_live       # CLI (deduped log, honesty-gate stamped)
-python -m pytest tests/ -v       # 47 tests: parity, gates, API contracts
+python -m pytest tests/ -v       # 51 tests: parity, gates, API contracts
 uvicorn api:app --reload         # FastAPI on :8000
 ```
 
@@ -85,12 +85,12 @@ Locked benchmark (2024/25 test, 1752 matches, archived in `models/evaluation_242
 | XGB-tuned, fair-play (PROD) | **0.985** |
 | Bookmaker B365 (benchmark) | 0.965 |
 
-Current model (trained ..2024/25, val 2025/26 n=1751, live test 2026/27-partial n=97):
+Current model (trained ..2024/25, val 2025/26 n=1751, live test 2026/27-partial n=146):
 
 | Split | XGB-tuned log-loss | Acc |
 |---|---|---|
 | Val 2025/26 | 0.996 | — |
-| Test 2026/27-partial | 0.946 | 0.546 |
+| Test 2026/27-partial | 0.988 | 0.507 |
 
 Fair-play: no odds features — Elo, form, H2H, rest, goals, shots, corners only.
 Research demo, not betting advice.

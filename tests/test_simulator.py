@@ -28,8 +28,9 @@ def test_rare_and_unknown_resolve_to_other():
     known = set(clean["HomeTeam"]) | set(clean["AwayTeam"])
     resolve = lambda t: t if (t in known and t not in rare) else "Other"
     assert resolve("Arsenal") == "Arsenal"  # known, common
-    assert resolve("Coventry") == "Other"  # never appears (mapped at clean time)
     assert resolve("Nope FC") == "Other"  # unknown entirely
+    for t in sorted(rare):
+        assert resolve(t) == "Other"  # whatever is rare today resolves consistently
 
 
 def test_api_simulation():

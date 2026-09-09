@@ -112,7 +112,7 @@ function PredictInner() {
             disabled={busy}
             aria-busy={busy}
             type="button"
-            className="inline-flex items-center gap-4 rounded-full bg-coal py-2 pl-8 pr-2 font-mono text-xs tracking-[0.25em] text-cream transition hover:bg-black disabled:opacity-50"
+            className="pressable inline-flex items-center gap-4 rounded-full bg-coal py-2 pl-8 pr-2 font-mono text-xs tracking-[0.25em] text-cream transition hover:bg-black disabled:opacity-50"
           >
             {busy ? "Reading form…" : "Call it"}
             <span aria-hidden="true" className="flex h-10 w-10 items-center justify-center rounded-full bg-cream text-coal">→</span>

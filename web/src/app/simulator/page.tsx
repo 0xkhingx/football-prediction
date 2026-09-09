@@ -62,7 +62,7 @@ export default function SimulatorPage() {
             <tbody>
               {rows.map((r) => (
                 <tr key={r.team} className="border-t border-coal/10 text-coal">
-                  <td className="max-w-40 truncate px-5 py-2 font-semibold">{String(r.team)}</td>
+                  <td title={String(r.team)} className="max-w-40 truncate px-5 py-2 font-semibold">{String(r.team)}</td>
                   <td className="px-5 py-2 text-right">{Number(r.pts)}</td>
                   <td className="px-5 py-2 text-right text-ember">{String(r.title)}</td>
                   <td className="px-5 py-2 text-right">{String(r.top4)}</td>
