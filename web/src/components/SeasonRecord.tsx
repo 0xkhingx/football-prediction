@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Mascot } from "./Mascot";
 import { PopDigits } from "./AnimatedDigits";
 
 type Bucket = { bucket: string; n: number; acc: number | null };
@@ -70,17 +71,20 @@ export function SeasonRecord() {
         ))}
       </div>
       <div className="mt-6 space-y-1.5">
-        {recent.map((r, i) => (
-          <p key={`${r.Date}-${r.Home}-${r.Away}`} className="font-mono text-[11px] tracking-wide">
-            <span className={r.Correct ? "text-lime" : "text-ember"}>
-              {r.Correct ? "✓" : "✗"}
-            </span>{" "}
-            <span className="text-cream">
-              {r.Home} vs {r.Away}
-            </span>{" "}
-            <span className="text-cream/50">
-              {OUTCOME[r.Prediction as keyof typeof OUTCOME]} called · {r.Actual} ·{" "}
-              {r.Source === "live" ? "live call" : "preseason replay"}
+        {recent.map((r) => (
+          <p key={`${r.Date}-${r.Home}-${r.Away}`} className="flex items-center gap-2 font-mono text-[11px] tracking-wide">
+            <Mascot mood={r.Correct ? "happy" : "shocked"} size={20} />
+            <span>
+              <span className={r.Correct ? "text-lime" : "text-ember"}>
+                {r.Correct ? "✓" : "✗"}
+              </span>{" "}
+              <span className="text-cream">
+                {r.Home} vs {r.Away}
+              </span>{" "}
+              <span className="text-cream/50">
+                {OUTCOME[r.Prediction as keyof typeof OUTCOME]} called · {r.Actual} ·{" "}
+                {r.Source === "live" ? "live call" : "preseason replay"}
+              </span>
             </span>
           </p>
         ))}

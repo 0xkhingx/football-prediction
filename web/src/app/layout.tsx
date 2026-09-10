@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#E85A24",
+  themeColor: "#2563EB",
 };
 
 const NAV_LINK = "font-mono text-[11px] tracking-[0.2em] text-ember hover:text-coal";

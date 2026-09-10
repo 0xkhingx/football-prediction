@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  background: #e85a24;
+  background: #2563eb;
   font-feature-settings: "tnum";
   overflow-x: clip;
 }
@@ -212,3 +212,10 @@ body {
   transform: rotate(38deg);
   transform-origin: right center;
 }
+
+@keyframes mascot-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.mascot-float { animation: mascot-bob 4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .mascot-float { animation: none; } }

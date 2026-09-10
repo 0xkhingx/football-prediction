@@ -5,13 +5,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ember: "#E85A24",
-        emberdark: "#C7481B",
+        // NOTE: token names predate the blue rebrand; ember/emberdark now hold blues.
+        ember: "#2563EB",
+        emberdark: "#1E40AF",
         cream: "#FAF5EC",
         coal: "#161412",
         lime: "#E7EF45",
         home: "#1E9E4A",
-        draw: "#E85A24",
+        draw: "#F59E0B",
         away: "#D92D20",
       },
       fontFamily: {

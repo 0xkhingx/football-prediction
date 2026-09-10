@@ -1,27 +1,3 @@
-/** Black pill with a git-branch graph — the reference's signature motif. */
-export function BranchPill({ className = "" }: { className?: string }) {
-  return (
-    <span
-      className={`inline-flex items-center rounded-full bg-coal px-4 py-2 sm:px-6 sm:py-3 ${className}`}
-      aria-hidden
-    >
-      <svg viewBox="0 0 120 36" className="h-5 w-auto sm:h-7" fill="none">
-        <line x1="14" y1="18" x2="46" y2="18" stroke="#E7EF45" strokeWidth="3" />
-        <line x1="46" y1="18" x2="66" y2="8" stroke="#E7EF45" strokeWidth="3" />
-        <line x1="46" y1="18" x2="66" y2="28" stroke="#E7EF45" strokeWidth="3" />
-        <line x1="66" y1="8" x2="96" y2="8" stroke="#E7EF45" strokeWidth="3" />
-        <line x1="66" y1="28" x2="96" y2="28" stroke="#E7EF45" strokeWidth="3" />
-        <circle cx="14" cy="18" r="7" fill="#E7EF45" />
-        <circle cx="46" cy="18" r="7" fill="#E85A24" />
-        <circle cx="66" cy="8" r="6" fill="#E85A24" />
-        <circle cx="66" cy="28" r="6" fill="#E7EF45" />
-        <circle cx="96" cy="8" r="7" fill="#FAF5EC" />
-        <circle cx="96" cy="28" r="7" fill="#FAF5EC" />
-      </svg>
-    </span>
-  );
-}
-
 /** Black pill CTA with circular arrow — straight from the reference. */
 export function PillCta({ href, children }: { href: string; children: React.ReactNode }) {
   return (
@@ -38,7 +14,7 @@ export function PillCta({ href, children }: { href: string; children: React.Reac
 }
 
 /** Four glyphs for the model's senses — Elo, Form, Rest, Head-to-head —
-    drawn in the reference's abstract-orange language. Meaning over homage. */
+    drawn in the site's abstract mark language. Meaning over homage. */
 export function GlyphRow() {
   const cls = "h-10 w-10 text-ember sm:h-14 sm:w-14";
   return (

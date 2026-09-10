@@ -2,8 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { LeagueAccordion } from "@/components/LeagueAccordion";
+import { HeroMascot } from "@/components/Mascot";
 import { SeasonRecord } from "@/components/SeasonRecord";
-import { BranchPill, GlyphRow, PillCta } from "@/components/Motif";
+import { GlyphRow, PillCta } from "@/components/Motif";
 import { Kbd } from "@/components/Tooltip";
 import { FixtureSchema, type Fixture } from "@/lib/types";
 import { groupByLeague, groupWeeks, leadLeague, nearestWeekIndex } from "@/lib/weeks";
@@ -50,21 +51,18 @@ export default function FixturesPage() {
 
   return (
     <div className="space-y-3">
-      {/* HERO — straight from the reference, text tweaked to fit */}
-      <section className="rounded-[2rem] bg-cream px-6 py-14 text-center sm:px-12 sm:py-20">
+      {/* HERO — clean stacked type, oracle floating at its side */}
+      <section className="relative rounded-[2rem] bg-cream px-6 py-14 text-center sm:px-12 sm:py-20">
+        <div className="absolute right-6 top-6 hidden sm:block lg:right-14">
+          <HeroMascot />
+        </div>
+        <div className="mb-6 flex justify-center sm:hidden">
+          <HeroMascot />
+        </div>
         <h1 className="font-display uppercase leading-[0.95] text-ember">
           <span className="block text-5xl sm:text-8xl">Every fixture</span>
-          <span className="mt-2 flex items-center justify-center gap-3 sm:gap-5">
-            <span className="hidden h-10 w-28 rounded-full bg-lime sm:block sm:h-14 sm:w-40" aria-hidden />
-            <BranchPill />
-            <span className="text-5xl sm:text-8xl">has a</span>
-          </span>
-          <span className="block text-5xl sm:text-8xl">fate</span>
-          <span className="mt-2 flex items-center justify-center gap-3 sm:gap-5">
-            <span className="text-5xl sm:text-8xl">call it</span>
-            <BranchPill />
-            <span className="hidden h-10 w-10 rounded-full bg-lime sm:block sm:h-14 sm:w-14" aria-hidden />
-          </span>
+          <span className="block text-5xl sm:text-8xl">has a fate</span>
+          <span className="block text-5xl sm:text-8xl">Call it</span>
         </h1>
         <p className="mx-auto mt-8 max-w-xl text-sm leading-relaxed text-coal/70 sm:text-base">
           What decides a match before it&apos;s played? Form, Elo, rest, history. Our fair-play

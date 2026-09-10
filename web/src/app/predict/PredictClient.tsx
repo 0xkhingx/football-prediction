@@ -4,6 +4,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { LoadingButton } from "@/components/interior/loading-button";
 import { CopyButton } from "@/components/interior/copy-button";
+import { Mascot } from "@/components/Mascot";
 import { ReelNumber } from "@/components/AnimatedDigits";
 import { Tooltip } from "@/components/Tooltip";
 import { ProbBar } from "@/components/ProbBar";
@@ -146,6 +147,9 @@ function PredictInner() {
         {error && <p role="alert" className="mt-4 text-center text-sm text-away">{error}</p>}
         {result && (
           <div className="mx-auto mt-8 max-w-2xl rounded-3xl border-2 border-coal/10 bg-white/60 p-6">
+          <div className="mb-2 flex justify-center">
+            <Mascot mood={result.call ? "happy" : "oracle"} size={72} />
+          </div>
           <p className="mb-4 text-center font-display text-2xl uppercase text-coal">
             {result.home} <span className="text-ember">vs</span> {result.away}
           </p>

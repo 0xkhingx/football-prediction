@@ -320,7 +320,7 @@ function AccordionRow({
       <div role="heading" aria-level={headingLevel}>
         <button
           {...header}
-          className="flex w-full items-center gap-3 px-3.5 py-3 text-left outline-none transition-colors duration-150 hover:bg-coal/5 focus-visible:bg-ember/10 focus-visible:shadow-[inset_0_0_0_1px_#E85A24]"
+          className="flex w-full items-center gap-3 px-3.5 py-3 text-left outline-none transition-colors duration-150 hover:bg-coal/5 focus-visible:bg-ember/10 focus-visible:shadow-[inset_0_0_0_1px_#2563EB]"
         >
           <span
             className={`min-w-0 flex-1 truncate text-[13px] font-medium transition-colors duration-150 ${

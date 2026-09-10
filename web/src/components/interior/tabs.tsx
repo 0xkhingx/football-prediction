@@ -251,7 +251,7 @@ export function Tabs({
               ref={(node) => {
                 tabRefs.current[index] = node;
               }}
-              className={`relative flex h-8 shrink-0 items-center justify-center rounded-full px-3.5 font-mono text-[11px] tracking-[0.2em] outline-none transition-colors duration-150 focus-visible:shadow-[inset_0_0_0_2px_#E85A24] ${
+              className={`relative flex h-8 shrink-0 items-center justify-center rounded-full px-3.5 font-mono text-[11px] tracking-[0.2em] outline-none transition-colors duration-150 focus-visible:shadow-[inset_0_0_0_2px_#2563EB] ${
                 item.disabled
                   ? "cursor-default text-coal/30"
                   : selected

@@ -43,7 +43,7 @@ export async function GET(req: Request) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#E85A24",
+          background: "#2563EB",
         }}
       >
         <div
@@ -58,7 +58,7 @@ export async function GET(req: Request) {
             borderRadius: "48px",
           }}
         >
-          <div style={{ fontFamily: "monospace", fontSize: 28, letterSpacing: 8, color: "#E85A24" }}>
+          <div style={{ fontFamily: "monospace", fontSize: 28, letterSpacing: 8, color: "#2563EB" }}>
             MATCHDAY FATE
           </div>
           <div style={{ display: "flex", fontSize: titleSize, fontWeight: 900, color: "#161412", marginTop: 16 }}>
@@ -66,7 +66,7 @@ export async function GET(req: Request) {
               {home} vs {away}
             </span>
           </div>
-          <div style={{ display: "flex", fontSize: 64, fontWeight: 900, color: "#E85A24", marginTop: 8 }}>
+          <div style={{ display: "flex", fontSize: 64, fontWeight: 900, color: "#2563EB", marginTop: 8 }}>
             <span>
               MODEL CALLS {call}
               {conf ? ` · ${conf}` : ""}
