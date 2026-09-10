@@ -27,6 +27,7 @@ export const PredictionSchema = z.object({
   scoreline: z
     .object({ shown: z.boolean(), h: z.number(), a: z.number(), p: z.number(), reason: z.string() })
     .nullable(),
+  resolved: z.record(z.object({ from: z.string(), to: z.string(), via: z.string() })).nullable().optional(),
 });
 export type Prediction = z.infer<typeof PredictionSchema>;
 

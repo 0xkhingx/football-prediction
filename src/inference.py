@@ -13,19 +13,88 @@ import numpy as np
 import pandas as pd
 
 from .config import (
+    AMBIGUOUS_STUBS,
     BANNED_ODDS_COLS,
     CLEAN_FILE,
+    CLUB_SUFFIXES,
     ELO_INIT,
     ELO_K,
     FEATURE_COLS_NO_ODDS,
+    FUZZY_CUTOFF,
+    FUZZY_MARGIN,
     INV_TARGET_MAP,
     MIN_CONFIDENCE,
     MODEL_DIR,
     PROD_IMPUTER_NAME,
     PROD_MODEL_NAME,
     REGISTRY_FILE,
+    TEAM_ALIASES,
 )
 from .features import elo_update, expected_score, margin_actual_score
+
+
+def normalize_team(raw: str) -> str:
+    return " ".join(str(raw).strip().casefold().split())
+
+
+def strip_suffix(normed: str) -> str:
+    parts = normed.split(" ")
+    while len(parts) > 1 and parts[-1] in CLUB_SUFFIXES:
+        parts = parts[:-1]
+    return " ".join(parts)
+
+
+def resolve_team(raw: str, teams) -> dict:
+    """Forgiving team resolution: exact -> alias -> unambiguous suffix-strip
+    -> strict fuzzy. Never guesses on ambiguous input.
+
+    Returns {"team": canonical|None, "method": ...|None, "from": raw,
+             "suggestion": best-guess|None}.
+    """
+    from difflib import SequenceMatcher
+
+    teams = list(teams)
+    by_norm = {normalize_team(t): t for t in teams}
+    n = normalize_team(raw)
+    if n in by_norm:
+        return {"team": by_norm[n], "method": "exact", "from": raw, "suggestion": None}
+    alias = TEAM_ALIASES.get(n)
+    if alias is not None and alias in teams:
+        return {"team": alias, "method": "alias", "from": raw, "suggestion": None}
+    stripped = strip_suffix(n)
+    if stripped != n:
+        hits = [t for t in teams if normalize_team(t) == stripped]
+        if len(hits) == 1:
+            return {"team": hits[0], "method": "stripped", "from": raw, "suggestion": None}
+        # Zero or 2+ hits (e.g. "paris" -> PSG + Paris FC): do NOT guess.
+    if n in AMBIGUOUS_STUBS:
+        return {"team": None, "method": None, "from": raw, "suggestion": None}
+    # Full names plus individual tokens ("newcastel" still finds Newcastle
+    # United via its "newcastle" token). Token hits only count when the
+    # token belongs to exactly one team.
+    token_owners: dict[str, set] = {}
+    for t in teams:
+        for tok in normalize_team(t).split(" "):
+            token_owners.setdefault(tok, set()).add(t)
+    cands: list[tuple[str, str]] = [(normalize_team(t), t) for t in teams]
+    for tok, owners in token_owners.items():
+        if len(owners) == 1 and tok not in AMBIGUOUS_STUBS:
+            cands.append((tok, next(iter(owners))))
+    scored = sorted(
+        ((SequenceMatcher(None, n, key).ratio(), team) for key, team in cands),
+        reverse=True,
+    )
+    # Best per team (a team may appear via full name + token).
+    seen: dict[str, float] = {}
+    for score, team in scored:
+        if team not in seen:
+            seen[team] = score
+    ranked = sorted(seen.items(), key=lambda kv: kv[1], reverse=True)
+    (best_team, best), second = ranked[0], ranked[1][1] if len(ranked) > 1 else 0.0
+    suggestion = best_team if best >= 0.5 else None
+    if best >= FUZZY_CUTOFF and (best - second) >= FUZZY_MARGIN:
+        return {"team": best_team, "method": "fuzzy", "from": raw, "suggestion": best_team}
+    return {"team": None, "method": None, "from": raw, "suggestion": suggestion}
 
 
 def guard_no_odds(payload: dict) -> None:

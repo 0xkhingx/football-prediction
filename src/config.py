@@ -60,6 +60,54 @@ BANNED_ODDS_COLS: list[str] = ["ProbB365H", "ProbB365D", "ProbB365A", "B365H", "
 TARGET_MAP: dict[str, int] = {"H": 0, "D": 1, "A": 2}
 INV_TARGET_MAP: dict[int, str] = {v: k for k, v in TARGET_MAP.items()}
 
+# Team-name forgiveness (serving only — training data untouched).
+# Normalized keys (lowercase, collapsed spaces, no trailing club suffix).
+# Deliberately EXCLUDES ambiguous stubs: united, city, real, athletic alone
+# (each matches 2+ clubs — guessing is worse than asking).
+TEAM_ALIASES: dict[str, str] = {
+    # England
+    "man utd": "Manchester United", "man united": "Manchester United",
+    "man city": "Manchester City", "spurs": "Tottenham Hotspur",
+    "hammers": "West Ham United", "west ham": "West Ham United",
+    "toon": "Newcastle United", "newcastle": "Newcastle United",
+    "magpies": "Newcastle United", "wolverhampton": "Wolves",
+    "wolverhampton wanderers": "Wolves", "gunners": "Arsenal",
+    "toffees": "Everton", "seagulls": "Brighton",
+    "bees": "Brentford", "cherries": "Bournemouth",
+    "eagles": "Crystal Palace", "palace": "Crystal Palace",
+    "forest": "Nottingham Forest", "nottingham": "Nottingham Forest",
+    "villa": "Aston Villa", "saints": "Southampton",
+    "black cats": "Sunderland", "coventry city": "Coventry",
+    "hull city": "Hull",
+    # Spain
+    "atleti": "Atletico Madrid", "barca": "Barcelona",
+    "athletic": "Athletic Bilbao", "sociedad": "Real Sociedad",
+    "la real": "Real Sociedad", "rayo": "Rayo Vallecano",
+    "racing": "Racing",
+    # Italy
+    "juve": "Juventus",
+    # Germany
+    "bayern": "Bayern Munich", "gladbach": "Borussia Monchengladbach",
+    "monchengladbach": "Borussia Monchengladbach", "schalke": "Schalke 04",
+    "mainz": "Mainz 05", "koln": "FC Cologne", "cologne": "FC Cologne",
+    "st pauli": "FC St Pauli", "sankt pauli": "FC St Pauli",
+    "freiburg": "Freiburg", "bvb": "Dortmund",
+    # France
+    "psg": "Paris Saint-Germain", "om": "Marseille",
+    "asm": "Monaco",
+}
+
+# Trailing tokens stripped before matching (e.g. "Arsenal FC" -> arsenal).
+# Applied only when the stripped form is UNAMBIGUOUS (see resolve_team).
+CLUB_SUFFIXES: tuple[str, ...] = ("fc", "afc", "cf", "ud", "sc")
+
+FUZZY_CUTOFF = 0.85
+FUZZY_MARGIN = 0.05
+
+# Single tokens that match 2+ clubs (or invite guessing): never resolve,
+# even fuzzily. "city" almost means Man City — almost isn't good enough.
+AMBIGUOUS_STUBS: tuple[str, ...] = ("united", "city", "real")
+
 LEAGUE_MAP: dict[str, str] = {
     "E0": "England",
     "SP1": "Spain",

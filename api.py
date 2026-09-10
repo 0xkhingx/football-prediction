@@ -16,7 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from src.config import LEAGUE_NAMES, MODEL_DIR, TOP_LEAGUE_CODES
-from src.inference import build_state_from_historical, load_artifacts, predict_one
+from src.inference import build_state_from_historical, load_artifacts, predict_one, resolve_team
 from src.predict_live import fetch_fixtures
 
 app = FastAPI(title="Football Predictor (fair-play XGB)", version="1.0.0")
@@ -56,6 +56,7 @@ class PredictResponse(BaseModel):
     form_away: list[str]
     h2h: dict | None
     scoreline: dict | None
+    resolved: dict | None = None
 
 
 @lru_cache(maxsize=1)
@@ -140,14 +141,26 @@ def predict(req: PredictRequest):
             detail="date out of supported range (2015-08-01 to 30 days ahead)",
         )
     elo, melo, hist, imp, model, name = _state()
-    if req.home not in hist or req.away not in hist:
-        raise HTTPException(status_code=404, detail="unknown team — check spelling (e.g. 'Arsenal')")
+    rh = resolve_team(req.home, hist)
+    ra = resolve_team(req.away, hist)
+    for r_ in (rh, ra):
+        if r_["team"] is None:
+            detail = f"unknown team '{r_['from']}'"
+            if r_["suggestion"]:
+                detail += f" — did you mean '{r_['suggestion']}'?"
+            raise HTTPException(status_code=404, detail=detail)
+    if rh["team"] == ra["team"]:
+        raise HTTPException(status_code=422, detail="both names resolve to the same team")
     try:
-        r = predict_one(req.home, req.away, req.date, elo, melo, hist, imp, model)
+        r = predict_one(rh["team"], ra["team"], req.date, elo, melo, hist, imp, model)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
     p = r["probabilities"]
     g = r["gate"]
+    resolved = {}
+    for key, rr in (("home", rh), ("away", ra)):
+        if rr["method"] != "exact":
+            resolved[key] = {"from": rr["from"], "to": rr["team"], "via": rr["method"]}
     return PredictResponse(
         home=r["home"],
         away=r["away"],
@@ -163,6 +176,7 @@ def predict(req: PredictRequest):
         form_away=r["form"][r["away"]],
         h2h=r["h2h"],
         scoreline=r["scoreline"],
+        resolved=resolved or None,
     )
 
 

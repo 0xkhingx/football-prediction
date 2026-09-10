@@ -8,6 +8,7 @@ import { ReelNumber } from "@/components/AnimatedDigits";
 import { Tooltip } from "@/components/Tooltip";
 import { ProbBar } from "@/components/ProbBar";
 import { FormBadges } from "@/components/FormBadges";
+import { TEAMS } from "@/lib/teams";
 import { PredictionSchema, type Prediction } from "@/lib/types";
 
 export function callText(r: Pick<Prediction, "home" | "away" | "prediction" | "confidence">): string {
@@ -54,6 +55,14 @@ function PredictInner() {
   const [busy, setBusy] = useState(false);
   const [shaking, setShaking] = useState(false);
   const autoRan = useRef(false);
+  const resultRef = useRef<HTMLDivElement>(null);
+
+  // Reveal the result where the user is looking.
+  useEffect(() => {
+    if (!result || !resultRef.current) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    resultRef.current.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "nearest" });
+  }, [result]);
 
   function shake() {
     setShaking(false);
@@ -121,16 +130,33 @@ function PredictInner() {
         <h1 className="mt-2 text-center font-display text-5xl uppercase leading-none text-ember sm:text-7xl">
           Name your tie
         </h1>
-        <div className={`mx-auto mt-8 grid max-w-2xl gap-3 sm:grid-cols-2 ${shaking ? "is-shaking" : ""}`}>
+        <div className={`mx-auto mt-8 grid max-w-2xl items-end gap-3 sm:grid-cols-[1fr_auto_1fr] ${shaking ? "is-shaking" : ""}`}>
           <label className="block" htmlFor="home-team">
             <span className="font-mono text-[11px] tracking-[0.3em] text-coal/60">HOME</span>
-            <input id="home-team" value={home} disabled={busy} onChange={(e) => setHome(e.target.value)} className={inputCls} placeholder="Arsenal" />
+            <input id="home-team" list="teams-list" value={home} disabled={busy} onChange={(e) => setHome(e.target.value)} className={inputCls} placeholder="Arsenal" autoComplete="off" />
           </label>
+          <button
+            type="button"
+            aria-label="Swap home and away"
+            title="Swap"
+            onClick={() => {
+              setHome(away);
+              setAway(home);
+            }}
+            className="pressable mx-auto mb-1 flex h-10 w-10 items-center justify-center rounded-full border-2 border-coal/15 font-mono text-lg text-coal hover:border-coal"
+          >
+            <span aria-hidden="true">⇅</span>
+          </button>
           <label className="block" htmlFor="away-team">
             <span className="font-mono text-[11px] tracking-[0.3em] text-coal/60">AWAY</span>
-            <input id="away-team" value={away} disabled={busy} onChange={(e) => setAway(e.target.value)} className={inputCls} placeholder="Chelsea" />
+            <input id="away-team" list="teams-list" value={away} disabled={busy} onChange={(e) => setAway(e.target.value)} className={inputCls} placeholder="Chelsea" autoComplete="off" />
           </label>
         </div>
+        <datalist id="teams-list">
+          {TEAMS.map((t) => (
+            <option key={t} value={t} />
+          ))}
+        </datalist>
         <div className="mt-6 text-center">
           <LoadingButton
             onAction={() => run(home, away)}
@@ -145,10 +171,21 @@ function PredictInner() {
         </div>
         {error && <p role="alert" className="mt-4 text-center text-sm text-away">{error}</p>}
         {result && (
-          <div className="mx-auto mt-8 max-w-2xl rounded-3xl border-2 border-coal/10 bg-white/60 p-6">
+          <div
+            key={`${result.home}-${result.away}`}
+            ref={resultRef}
+            className="result-enter mx-auto mt-8 max-w-2xl rounded-3xl border-2 border-coal/10 bg-white/60 p-6"
+          >
           <p className="mb-4 text-center font-display text-2xl uppercase text-coal">
             {result.home} <span className="text-ember">vs</span> {result.away}
           </p>
+          {result.resolved && Object.entries(result.resolved).length > 0 && (
+            <p className="mb-3 text-center font-mono text-[10px] tracking-[0.2em] text-coal/60">
+              {Object.entries(result.resolved)
+                .map(([_, r]) => `SHOWING ${r.to.toUpperCase()} FOR “${r.from.toUpperCase()}”`)
+                .join(" · ")}
+            </p>
+          )}
           <div className="mb-4 flex flex-wrap justify-center gap-4">
             <Tooltip tip="Last 5 results, oldest first. W win · D draw · L loss.">
               <span className="flex flex-wrap justify-center gap-4">
