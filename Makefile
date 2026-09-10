@@ -38,5 +38,8 @@ test:
 api:
 	python -m uvicorn api:app --port 8000
 
+api-dev:
+	python -m uvicorn api:app --port 8000 --reload
+
 web:
 	cd web && npm run dev

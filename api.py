@@ -11,13 +11,14 @@ from functools import lru_cache
 from pathlib import Path
 
 import pandas as pd
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from src.config import LEAGUE_NAMES, MODEL_DIR, TOP_LEAGUE_CODES
 from src.inference import build_state_from_historical, load_artifacts, predict_one, resolve_team
 from src.predict_live import fetch_fixtures
+from src.ratelimit import check as rate_limit
 
 app = FastAPI(title="Football Predictor (fair-play XGB)", version="1.0.0")
 
@@ -67,11 +68,22 @@ def _state():
 
 
 @app.post("/reload")
-def reload():
+def reload(authorization: str | None = Header(default=None)):
     """Drop all in-memory state (model, history, goals caches) so the next
     request rebuilds from disk. Call after make refresh / retrain instead of
     restarting the process.
+
+    Gated: requires RELOAD_TOKEN env set server-side, presented as
+    `Authorization: Bearer <token>`. No token configured -> 403 (fail closed).
     """
+    import hmac
+
+    expected = os.getenv("RELOAD_TOKEN", "")
+    if not expected:
+        raise HTTPException(status_code=403, detail="reload disabled: RELOAD_TOKEN not configured")
+    presented = (authorization or "").removeprefix("Bearer ").strip()
+    if not hmac.compare_digest(presented, expected):
+        raise HTTPException(status_code=403, detail="bad reload token")
     from src.goals import cached_matches, team_league_map
 
     _state.cache_clear()
@@ -99,7 +111,8 @@ def health():
 
 
 @app.get("/fixtures")
-def fixtures():
+def fixtures(request: Request):
+    rate_limit(request, "fixtures")
     df = fetch_fixtures()
     source = df.attrs.get("source", "none")
     network_ok = df.attrs.get("network_ok", False)
@@ -127,7 +140,8 @@ def fixtures():
 
 
 @app.post("/predict", response_model=PredictResponse)
-def predict(req: PredictRequest):
+def predict(req: PredictRequest, request: Request):
+    rate_limit(request, "predict")
     if req.home.strip().lower() == req.away.strip().lower():
         raise HTTPException(status_code=422, detail="home and away must differ")
     try:

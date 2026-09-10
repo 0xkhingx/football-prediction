@@ -79,8 +79,10 @@ set) — retuned durations, same reduced-motion guarantees.
 
 Deploy notes: set `API_URL` (web → API base) and `ALLOWED_ORIGINS` (API CORS allowlist,
 comma-separated) in the hosting env. The API holds state in memory — after any
-`make refresh` / retrain, either restart it or `POST /reload` so it serves fresh
-weights and history.
+`make refresh` / retrain, either restart it or `POST /reload` with
+`Authorization: Bearer $RELOAD_TOKEN` (set `RELOAD_TOKEN` server-side; unset =
+reload disabled). Heavy traffic is throttled per-IP on `/predict` and
+`/fixtures` (429 + Retry-After).
 
 ## Metrics
 

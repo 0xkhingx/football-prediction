@@ -5,8 +5,9 @@ export const runtime = "edge";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const home = (searchParams.get("home") ?? "Arsenal").toUpperCase();
-  const away = (searchParams.get("away") ?? "Chelsea").toUpperCase();
+  const clip = (s: string | null, fallback: string) => (s ?? fallback).slice(0, 24).toUpperCase();
+  const home = clip(searchParams.get("home"), "Arsenal");
+  const away = clip(searchParams.get("away"), "Chelsea");
 
   let call = "H";
   let conf = "";
