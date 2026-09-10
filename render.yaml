@@ -1,0 +1,26 @@
+# Render blueprint: one-click API deploy (render.com -> New -> Blueprint).
+# Processed data is committed, so the build only retrains + regenerates
+# derived artifacts (no network pulls at build time).
+services:
+  - type: web
+    name: matchday-fate-api
+    runtime: python
+    buildCommand: >-
+      pip install -r requirements.txt &&
+      python -m src.train_tuned_prod &&
+      python -m src.evaluate &&
+      python -m src.score_live &&
+      python -m src.simulate
+    startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.0
+      - key: HTTPS
+        value: 1
+      - key: ALLOWED_ORIGINS
+        sync: false # set to your Vercel URL post-deploy, e.g. https://matchday-fate.vercel.app
+      - key: RELOAD_TOKEN
+        generateValue: true
+      - key: SENTRY_DSN
+        sync: false

@@ -1,0 +1,89 @@
+{
+  "train_seasons": [
+    1516,
+    1617,
+    1718,
+    1819,
+    1920,
+    2021,
+    2122,
+    2223,
+    2324,
+    2425
+  ],
+  "val_season": 2526,
+  "test_season": 2627,
+  "train_size": 18011,
+  "val_size": 1751,
+  "test_size": 146,
+  "train_date_range": [
+    "2015-08-07",
+    "2025-05-25"
+  ],
+  "val_date_range": [
+    "2025-08-15",
+    "2026-05-24"
+  ],
+  "test_date_range": [
+    "2026-08-15",
+    "2026-09-07"
+  ],
+  "feature_cols_no_odds": [
+    "EloHome",
+    "EloAway",
+    "EloDiff",
+    "EloHomeMargin",
+    "EloAwayMargin",
+    "EloDiffMargin",
+    "HomeForm5",
+    "HomeForm10",
+    "AwayForm5",
+    "AwayForm10",
+    "H2HStreak",
+    "HomeRest",
+    "AwayRest",
+    "HomeGoalsAvg5",
+    "AwayGoalsAvg5",
+    "HomeGoalsConcededAvg5",
+    "AwayGoalsConcededAvg5",
+    "HomeShotsAvg5",
+    "AwayShotsAvg5",
+    "HomeShotsOnTargetAvg5",
+    "AwayShotsOnTargetAvg5",
+    "HomeCornersAvg5",
+    "AwayCornersAvg5"
+  ],
+  "feature_cols_with_odds": [
+    "EloHome",
+    "EloAway",
+    "EloDiff",
+    "EloHomeMargin",
+    "EloAwayMargin",
+    "EloDiffMargin",
+    "HomeForm5",
+    "HomeForm10",
+    "AwayForm5",
+    "AwayForm10",
+    "H2HStreak",
+    "HomeRest",
+    "AwayRest",
+    "HomeGoalsAvg5",
+    "AwayGoalsAvg5",
+    "HomeGoalsConcededAvg5",
+    "AwayGoalsConcededAvg5",
+    "HomeShotsAvg5",
+    "AwayShotsAvg5",
+    "HomeShotsOnTargetAvg5",
+    "AwayShotsOnTargetAvg5",
+    "HomeCornersAvg5",
+    "AwayCornersAvg5",
+    "ProbB365H",
+    "ProbB365D",
+    "ProbB365A"
+  ],
+  "target_map": {
+    "H": 0,
+    "D": 1,
+    "A": 2
+  }
+}
