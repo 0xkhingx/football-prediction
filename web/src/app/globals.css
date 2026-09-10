@@ -219,3 +219,18 @@ body {
 }
 .mascot-float { animation: mascot-bob 4s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .mascot-float { animation: none; } }
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.ticker { animation: ticker-scroll 30s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .ticker { animation: none; } }
+
+:root {
+  --flow-bg: #4A36FF;
+  --flow-pink: #F4A3D3;
+}
+@keyframes sticker-spin { to { transform: rotate(360deg); } }
+.sticker-spin { animation: sticker-spin 22s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .sticker-spin { animation: none; } }

@@ -1,163 +1,99 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { LeagueAccordion } from "@/components/LeagueAccordion";
-import { BallSceneSafe, HeroBall } from "@/components/BallScene";
-import { SeasonRecord } from "@/components/SeasonRecord";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { BallSceneSafe } from "@/components/BallScene";
+import { Tooltip } from "@/components/Tooltip";
 import { GlyphRow, PillCta } from "@/components/Motif";
-import { Kbd } from "@/components/Tooltip";
-import { FixtureSchema, type Fixture } from "@/lib/types";
-import { groupByLeague, groupWeeks, leadLeague, nearestWeekIndex } from "@/lib/weeks";
+import { BallFace, ScribbleArrow, ScribbleCircle, ScribbleUnderline, Sticker } from "@/components/Flow";
+import { LEAGUES } from "@/lib/constants";
 
-export default function FixturesPage() {
-  const [fixtures, setFixtures] = useState<Fixture[]>([]);
-  const [loaded, setLoaded] = useState(false);
-  const [backendError, setBackendError] = useState<string | null>(null);
-  const [weekIdx, setWeekIdx] = useState<number | null>(null);
-  const [expanded, setExpanded] = useState<string | null>(null);
+function Ticker() {
+  const items = [...LEAGUES.map((l) => l.tag), "LIVE 2026/27", "FAIR PLAY", "NO ODDS"];
+  const row = [...items, ...items];
+  return (
+    <div className="overflow-hidden rounded-[2rem] bg-coal py-4" aria-hidden>
+      <div className="ticker flex w-max items-center gap-8 whitespace-nowrap px-4">
+        {row.map((t, i) => (
+          <span key={i} className="font-mono text-xs tracking-[0.3em] text-cream">
+            {t} <span className="text-lime">·</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
+function TallyLine() {
+  const [text, setText] = useState<string | null>(null);
   useEffect(() => {
-    fetch("/api/fixtures")
-      .then(async (r) => {
-        const body = await r.json().catch(() => ({}));
-        if (!r.ok) throw new Error(typeof body.backendError === "string" ? body.backendError : `backend ${r.status}`);
-        const list = Array.isArray(body.fixtures) ? body.fixtures : [];
-        const valid = list.filter((f: unknown) => FixtureSchema.safeParse(f).success);
-        setFixtures(valid);
-        if (valid.length > 0) {
-          const wi = nearestWeekIndex(groupWeeks(valid));
-          setWeekIdx((prev) => prev ?? wi);
-          const w = groupWeeks(valid)[wi];
-          setExpanded((prev) => prev ?? (w ? leadLeague(groupByLeague(w.fixtures)) : null));
+    fetch("/api/season-record")
+      .then((r) => r.json())
+      .then((b) => {
+        if (b.tally && typeof b.tally.acc === "number" && typeof b.tally.n === "number") {
+          setText(`${(b.tally.acc * 100).toFixed(1)}% ACROSS ${b.tally.n} CALLS — HONEST NUMBERS ON THE MODEL PAGE`);
         }
-        setLoaded(true);
       })
-      .catch((e) => {
-        setBackendError(e instanceof Error ? e.message : "backend unreachable");
-        setLoaded(true);
-      });
+      .catch(() => {});
   }, []);
+  if (!text) return null;
+  return (
+    <p className="text-center font-mono text-[11px] tracking-[0.25em] text-cream/80">
+      <Link href="/model" className="underline decoration-lime decoration-2 underline-offset-4 hover:text-cream">
+        {text}
+      </Link>
+    </p>
+  );
+}
 
-  const weeks = useMemo(() => groupWeeks(fixtures), [fixtures]);
-  const week = weekIdx === null ? null : (weeks[weekIdx] ?? null);
-  const groups = useMemo(() => (week ? groupByLeague(week.fixtures) : []), [week]);
-
-  function goWeek(next: number) {
-    const clamped = Math.max(0, Math.min(weeks.length - 1, next));
-    setWeekIdx(clamped);
-    const w = weeks[clamped];
-    setExpanded(w ? leadLeague(groupByLeague(w.fixtures)) : null);
-  }
-
+export default function HomePage() {
   return (
     <div className="space-y-3">
-      {/* HERO — clean stacked type, oracle floating at its side */}
-      <section className="relative rounded-[2rem] bg-cream px-6 py-14 text-center sm:px-12 sm:py-20">
-        <div className="absolute right-6 top-6 hidden h-44 w-44 sm:block lg:right-14 lg:h-56 lg:w-56">
-          <HeroBall className="h-full w-full" />
-        </div>
-        <div className="mb-6 flex h-40 justify-center sm:hidden">
-          <HeroBall className="h-full w-40" />
-        </div>
-        <h1 className="font-display uppercase leading-[0.95] text-ember">
-          <span className="block text-5xl sm:text-8xl">Every fixture</span>
-          <span className="block text-5xl sm:text-8xl">has a fate</span>
-          <span className="block text-5xl sm:text-8xl">Call it</span>
-        </h1>
-        <p className="mx-auto mt-8 max-w-xl text-sm leading-relaxed text-coal/70 sm:text-base">
-          What decides a match before it&apos;s played? Form, Elo, rest, history. Our fair-play
-          XGBoost reads 23 pre-match signals — no odds — and calls home, draw or away.
-        </p>
-        <div className="mt-8">
-          <PillCta href="/predict">Predict a match</PillCta>
+      {/* HERO — FLOW full-bleed: blurple field, giant white type, real ball with face */}
+      <section className="-mx-3 bg-[var(--flow-bg)] px-6 py-14 text-center sm:-mx-6 sm:px-12 sm:py-20">
+        <div className="relative mx-auto max-w-5xl">
+          <div className="pointer-events-none absolute -right-2 top-0 hidden h-64 w-64 sm:block lg:right-6 lg:h-80 lg:w-80">
+            <Tooltip tip="Ask me anything — I read 23 pre-match signals. No odds, no tips.">
+              <a href="/predict" aria-label="Ask the oracle to predict a match" className="pointer-events-auto block h-full w-full">
+                <BallSceneSafe className="h-full w-full" />
+                <BallFace className="pointer-events-none absolute inset-0 m-auto h-1/3 w-1/3" />
+              </a>
+            </Tooltip>
+          </div>
+          <h1 className="font-display uppercase leading-[0.9] text-white">
+            <span className="block text-6xl sm:text-9xl">Every fixture</span>
+            <span className="block text-6xl sm:text-9xl">has a fate</span>
+            <span className="block text-6xl text-lime sm:text-9xl">Call it</span>
+          </h1>
+          <div className="mx-auto mt-6 flex h-44 w-44 justify-center sm:hidden">
+            <div className="relative h-full w-full">
+              <BallSceneSafe className="h-full w-full" />
+              <BallFace className="pointer-events-none absolute inset-0 m-auto h-1/3 w-1/3" />
+            </div>
+          </div>
+          <p className="mx-auto mt-8 max-w-xl text-sm leading-relaxed text-white/85 sm:text-base">
+            What decides a match before it&apos;s played? Form, Elo, rest, history. Our fair-play
+            XGBoost reads 23 pre-match signals — no odds — and calls home, draw or away.
+          </p>
+          <div className="relative mt-8 inline-block">
+            <PillCta href="/fixtures">See fixtures</PillCta>
+            <ScribbleUnderline className="absolute -bottom-5 left-1/2 h-5 w-56 -translate-x-1/2" />
+            <div className="absolute -right-24 -top-14 hidden lg:block">
+              <Sticker />
+            </div>
+          </div>
+          <div className="relative mx-auto mt-10 w-fit">
+            <TallyLine />
+            <ScribbleCircle className="pointer-events-none absolute -inset-x-8 -inset-y-3 h-[calc(100%+24px)] w-[calc(100%+64px)]" />
+          </div>
+          <ScribbleArrow className="pointer-events-none absolute bottom-10 left-6 hidden h-28 w-28 lg:block" aria-hidden />
         </div>
       </section>
 
-      {/* FIXTURES — this week only, league accordion, pager for the rest */}
-      <section className="rounded-[2rem] bg-emberdark/40 px-6 py-10 sm:px-10">
-        <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h2 className="font-display text-3xl uppercase text-cream sm:text-5xl">This week</h2>
-            {week && (
-              <p className="mt-1 font-mono text-[11px] tracking-[0.25em] text-cream/70">
-                {week.label} · {week.fixtures.length} TIES · TAP A LEAGUE
-              </p>
-            )}
-          </div>
-        </div>
-        {week && weeks.length > 1 && (
-          <div className="mb-5 flex items-center gap-2" role="group" aria-label="Fixture week">
-            <button
-              type="button"
-              disabled={weekIdx === 0}
-              onClick={() => goWeek((weekIdx ?? 0) - 1)}
-              className="pressable rounded-full bg-cream px-4 py-1.5 font-mono text-[11px] tracking-[0.2em] text-coal disabled:opacity-40"
-            >
-              ← PREV
-            </button>
-            <span className="font-mono text-[11px] tracking-[0.2em] text-cream/70">
-              {(weekIdx ?? 0) + 1} / {weeks.length}
-            </span>
-            <button
-              type="button"
-              disabled={weekIdx === weeks.length - 1}
-              onClick={() => goWeek((weekIdx ?? 0) + 1)}
-              className="pressable rounded-full bg-cream px-4 py-1.5 font-mono text-[11px] tracking-[0.2em] text-coal disabled:opacity-40"
-            >
-              NEXT →
-            </button>
-          </div>
-        )}
-        {week && (
-          <p className="mb-5 font-mono text-[10px] tracking-[0.2em] text-cream/60">
-            TIP <Kbd>↑</Kbd> <Kbd>↓</Kbd> MOVE · <Kbd>ENTER</Kbd> OPENS A LEAGUE
-          </p>
-        )}
-      {!loaded && (
-        <div className="grid gap-3 sm:grid-cols-2" aria-hidden>
-          {[0, 1, 2, 3].map((i) => (
-            <div key={i} className="rounded-3xl bg-cream p-5">
-              <div className="skeleton h-3 w-2/3 rounded-full bg-coal/15" />
-              <div className="skeleton mt-3 h-7 w-5/6 rounded-lg bg-coal/15" />
-              <div className="skeleton mt-4 h-7 w-24 rounded-full bg-coal/15" />
-            </div>
-          ))}
-        </div>
-      )}
-      {loaded && backendError && (
-        <div className="rounded-3xl bg-coal p-8 text-center" role="alert">
-          <p className="font-display text-3xl uppercase text-cream">Can&apos;t reach the model</p>
-          <p className="mx-auto mt-2 max-w-md font-mono text-xs tracking-[0.2em] text-cream/60">
-            {backendError.toUpperCase()} — START THE API OR TRY MANUAL PREDICT
-          </p>
-          <div className="mt-5">
-            <PillCta href="/predict">Manual predictor</PillCta>
-          </div>
-        </div>
-      )}
-      {loaded && !backendError && !week && (
-          <div className="rounded-3xl bg-cream p-8 text-center">
-            <p className="font-display text-3xl uppercase text-coal">Offseason — no ties right now</p>
-            <p className="mx-auto mt-2 max-w-md text-sm text-coal/70">
-              Pick any matchup manually and the model will still call it from history.
-            </p>
-            <div className="mt-5">
-              <PillCta href="/predict">Manual predictor</PillCta>
-            </div>
-          </div>
-        )}
-        {week && (
-          <LeagueAccordion
-            groups={groups}
-            expanded={expanded}
-            onToggle={(code) => setExpanded((prev) => (prev === code ? null : code))}
-          />
-        )}
-      </section>
+      <Ticker />
 
-      <SeasonRecord />
-
-      {/* BOTTOM SPLIT — reference layout, football copy */}      <section className="grid gap-3 md:grid-cols-5">
+      {/* BOTTOM SPLIT — reference layout, football copy */}
+      <section className="grid gap-3 md:grid-cols-5">
         <div className="rounded-[2rem] bg-coal p-8 sm:p-10 md:col-span-2">
           <p className="font-display text-3xl uppercase leading-[1.02] text-cream sm:text-4xl">
             Welcome to the physics of <span className="text-lime">form</span>
