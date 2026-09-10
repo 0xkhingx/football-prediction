@@ -2,17 +2,24 @@
 
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { LoadingButton } from "@/components/interior/loading-button";
+import { CopyButton } from "@/components/interior/copy-button";
 import { ProbBar } from "@/components/ProbBar";
 import { FormBadges } from "@/components/FormBadges";
 import { PredictionSchema, type Prediction } from "@/lib/types";
 
-function ShareRow({ home, away }: { home: string; away: string }) {
-  const text = `Matchday Fate calls ${home} vs ${away} — fair-play XGBoost, no odds.`;
-  const og = `/predict/og?home=${encodeURIComponent(home)}&away=${encodeURIComponent(away)}`;
+export function callText(r: Pick<Prediction, "home" | "away" | "prediction" | "confidence">): string {
+  return `${r.home} vs ${r.away} — MODEL CALLS ${r.prediction} ${Math.round(r.confidence * 100)}% (Matchday Fate, fair-play XGB, no odds)`;
+}
+
+function ShareRow({ result }: { result: Prediction }) {
+  const text = callText(result);
+  const og = `/predict/og?home=${encodeURIComponent(result.home)}&away=${encodeURIComponent(result.away)}`;
   const linkCls =
     "rounded-full border-2 border-coal/15 px-4 py-1.5 font-mono text-[10px] tracking-[0.25em] text-coal hover:border-coal";
   return (
     <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+      <CopyButton value={text} label="COPY CALL" copiedLabel="COPIED" />
       <a className={linkCls} href={og} target="_blank" rel="noreferrer">
         CARD ↗
       </a>
@@ -45,30 +52,34 @@ function PredictInner() {
   const [busy, setBusy] = useState(false);
   const autoRan = useRef(false);
 
-  async function run(h: string, a: string) {
+  async function doPredict(h: string, a: string): Promise<Prediction> {
     const homeTeam = h.trim();
     const awayTeam = a.trim();
     setHome(homeTeam);
     setAway(awayTeam);
     if (homeTeam.toLowerCase() === awayTeam.toLowerCase()) {
-      setError("Pick two different teams.");
-      return;
+      throw new Error("Pick two different teams.");
     }
+    const r = await fetch("/api/predict", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ home: homeTeam, away: awayTeam }),
+    });
+    const body = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(typeof body.detail === "string" ? body.detail : "prediction failed");
+    const parsed = PredictionSchema.safeParse(body);
+    if (!parsed.success) throw new Error("bad response from model");
+    return parsed.data;
+  }
+
+  async function run(h: string, a: string) {
     setBusy(true);
     setError(null);
     try {
-      const r = await fetch("/api/predict", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ home: homeTeam, away: awayTeam }),
-      });
-      const body = await r.json().catch(() => ({}));
-      if (!r.ok) throw new Error(typeof body.detail === "string" ? body.detail : "prediction failed");
-      const parsed = PredictionSchema.safeParse(body);
-      if (!parsed.success) throw new Error("bad response from model");
-      setResult(parsed.data);
+      setResult(await doPredict(h, a));
     } catch (e) {
       setError(e instanceof Error ? e.message : "prediction failed");
+      throw e;
     } finally {
       setBusy(false);
     }
@@ -81,7 +92,7 @@ function PredictInner() {
     const a = params.get("away");
     if (h && a) {
       autoRan.current = true;
-      run(h, a);
+      run(h, a).catch(() => {});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -107,16 +118,16 @@ function PredictInner() {
           </label>
         </div>
         <div className="mt-6 text-center">
-          <button
-            onClick={() => run(home, away)}
+          <LoadingButton
+            onAction={() => run(home, away)}
+            pendingLabel="Reading form…"
+            successLabel="Called"
+            errorLabel="Retry"
             disabled={busy}
-            aria-busy={busy}
-            type="button"
-            className="pressable inline-flex items-center gap-4 rounded-full bg-coal py-2 pl-8 pr-2 font-mono text-xs tracking-[0.25em] text-cream transition hover:bg-black disabled:opacity-50"
+            onError={(e) => setError(e instanceof Error ? e.message : "prediction failed")}
           >
-            {busy ? "Reading form…" : "Call it"}
-            <span aria-hidden="true" className="flex h-10 w-10 items-center justify-center rounded-full bg-cream text-coal">→</span>
-          </button>
+            Call it
+          </LoadingButton>
         </div>
         {error && <p role="alert" className="mt-4 text-center text-sm text-away">{error}</p>}
         {result && (
@@ -148,7 +159,7 @@ function PredictInner() {
           <p className="mt-4 text-center font-mono text-[10px] tracking-[0.25em] text-coal/50">
             MODEL: {result.model}
           </p>
-          <ShareRow home={result.home} away={result.away} />
+          <ShareRow result={result} />
           </div>
         )}
       </section>

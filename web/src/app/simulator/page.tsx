@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LeagueTabs } from "@/components/LeagueTabs";
+import { Tabs } from "@/components/interior/tabs";
+import { LEAGUES } from "@/lib/constants";
 
 type Row = { team: string; pts: number; title: string; top4: string };
 
@@ -37,7 +38,14 @@ export default function SimulatorPage() {
           Who lifts it
         </h1>
         <div className="mt-6 flex justify-center">
-          <LeagueTabs active={league} onChange={setLeague} />
+          <div className="w-full max-w-xl">
+            <Tabs
+              items={LEAGUES.map((l) => ({ value: l.code, label: l.tag }))}
+              value={league}
+              onValueChange={setLeague}
+              label="League"
+            />
+          </div>
         </div>
         {!loaded && (
           <p className="mt-8 text-center font-mono text-xs tracking-[0.25em] text-coal/60">LOADING…</p>
