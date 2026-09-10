@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { LeagueAccordion } from "@/components/LeagueAccordion";
-import { HeroMascot } from "@/components/Mascot";
+import { BallSceneSafe, HeroBall } from "@/components/BallScene";
 import { SeasonRecord } from "@/components/SeasonRecord";
 import { GlyphRow, PillCta } from "@/components/Motif";
 import { Kbd } from "@/components/Tooltip";
@@ -53,11 +53,11 @@ export default function FixturesPage() {
     <div className="space-y-3">
       {/* HERO — clean stacked type, oracle floating at its side */}
       <section className="relative rounded-[2rem] bg-cream px-6 py-14 text-center sm:px-12 sm:py-20">
-        <div className="absolute right-6 top-6 hidden sm:block lg:right-14">
-          <HeroMascot />
+        <div className="absolute right-6 top-6 hidden h-44 w-44 sm:block lg:right-14 lg:h-56 lg:w-56">
+          <HeroBall className="h-full w-full" />
         </div>
-        <div className="mb-6 flex justify-center sm:hidden">
-          <HeroMascot />
+        <div className="mb-6 flex h-40 justify-center sm:hidden">
+          <HeroBall className="h-full w-40" />
         </div>
         <h1 className="font-display uppercase leading-[0.95] text-ember">
           <span className="block text-5xl sm:text-8xl">Every fixture</span>
