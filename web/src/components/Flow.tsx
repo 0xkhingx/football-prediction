@@ -1,30 +1,8 @@
 "use client";
 
 /**
- * FLOW landing elements: rotating sticker stamp, hand-drawn marker scribbles.
- * Pure SVG + CSS.
+ * FLOW landing elements: hand-drawn marker scribbles. Pure SVG + CSS.
  */
-
-/** Pink scalloped sticker with circular text. Slow spin; still when reduced. */
-export function Sticker({ className = "" }: { className?: string }) {
-  return (
-    <div className={`sticker-spin relative h-28 w-28 sm:h-36 sm:w-36 ${className}`} aria-hidden>
-      <svg viewBox="0 0 120 120" className="h-full w-full">
-        <circle cx="60" cy="60" r="58" fill="#F4A3D3" />
-        <circle cx="60" cy="60" r="58" fill="none" stroke="#F4A3D3" strokeWidth="2" strokeDasharray="3 5" opacity="0.6" />
-        <defs>
-          <path id="sticker-ring" d="M60,60 m-42,0 a42,42 0 1,1 84,0 a42,42 0 1,1 -84,0" />
-        </defs>
-        <text fontSize="12.5" letterSpacing="3.5" fill="#161412" fontFamily="monospace">
-          <textPath href="#sticker-ring">MODEL CALL · FAIR PLAY · NO ODDS ·</textPath>
-        </text>
-        <text x="60" y="66" textAnchor="middle" fontSize="17" fontWeight="900" fill="#161412" fontFamily="monospace">
-          CALL IT
-        </text>
-      </svg>
-    </div>
-  );
-}
 
 const MARKER = {
   stroke: "#161412",

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { BallSceneSafe } from "@/components/BallScene";
 import { Tooltip } from "@/components/Tooltip";
 import { GlyphRow, PillCta } from "@/components/Motif";
-import { ScribbleArrow, ScribbleCircle, ScribbleUnderline, Sticker } from "@/components/Flow";
+import { ScribbleArrow, ScribbleCircle, ScribbleUnderline } from "@/components/Flow";
 import { LEAGUES } from "@/lib/constants";
 
 function Ticker() {
@@ -52,13 +52,13 @@ export default function HomePage() {
       {/* HERO — FLOW full-bleed: blurple field, giant white type, real ball with face */}
       <section className="-mx-3 bg-[var(--flow-bg)] px-6 py-14 text-center sm:-mx-6 sm:px-12 sm:py-20">
         <div className="relative mx-auto max-w-5xl">
-          <div className="pointer-events-none absolute -right-2 top-0 hidden h-72 w-72 sm:block lg:right-6 lg:h-96 lg:w-96">
-            <Tooltip tip="Ask me anything — I read 23 pre-match signals. No odds, no tips.">
-              <a href="/predict" aria-label="Ask the oracle to predict a match" className="pointer-events-auto block h-full w-full">
-                <BallSceneSafe className="h-full w-full" />
-              </a>
-            </Tooltip>
-          </div>
+        <div className="pointer-events-none absolute -right-2 top-0 hidden h-72 w-72 sm:block lg:-right-48 lg:h-[1000px] lg:w-[1000px]">
+          <Tooltip tip="Ask me anything — I read 23 pre-match signals. No odds, no tips.">
+            <a href="/predict" aria-label="Ask the oracle to predict a match" className="pointer-events-auto block h-full w-full">
+              <BallSceneSafe className="h-full w-full" />
+            </a>
+          </Tooltip>
+        </div>
           <h1 className="font-display uppercase leading-[0.9] text-white">
             <span className="block text-6xl sm:text-9xl">Every fixture</span>
             <span className="block text-6xl sm:text-9xl">has a fate</span>
@@ -76,9 +76,6 @@ export default function HomePage() {
           <div className="relative mt-8 inline-block">
             <PillCta href="/fixtures">See fixtures</PillCta>
             <ScribbleUnderline className="absolute -bottom-5 left-1/2 h-5 w-56 -translate-x-1/2" />
-            <div className="absolute -right-24 -top-14 hidden lg:block">
-              <Sticker />
-            </div>
           </div>
           <div className="relative mx-auto mt-10 w-fit">
             <TallyLine />
