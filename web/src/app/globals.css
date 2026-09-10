@@ -8,6 +8,14 @@ body {
   overflow-x: clip;
 }
 
+/* Kill tap delay on all interactive elements (mobile browsers wait ~300ms
+   for double-tap zoom without this or a proper viewport width). */
+button,
+a,
+[role="button"] {
+  touch-action: manipulation;
+}
+
 ::selection {
   background: #e7ef45;
   color: #161412;
@@ -50,6 +58,12 @@ body {
   }
   .skeleton {
     animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

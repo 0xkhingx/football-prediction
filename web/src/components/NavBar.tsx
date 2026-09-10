@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
 
 const ITEMS = [
   { href: "/", label: "HOME", hint: "LANDING" },
@@ -23,7 +22,6 @@ function GitHubIcon() {
 /** FLOW pill nav, app-wide: lime logo, MENU dropdown, GitHub icon. */
 export function NavBar() {
   const [open, setOpen] = useState(false);
-  const reduced = useReducedMotion();
   const rootRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -66,15 +64,22 @@ export function NavBar() {
       >
         <GitHubIcon />
       </Link>
-      {open && (
-        <motion.div
-          id="nav-menu"
-          role="menu"
-          initial={reduced ? false : { opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.18, ease: "easeOut" }}
-          className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-3xl bg-coal p-2 shadow-2xl"
-        >
+      {/*
+        Always mounted: first tap pays no mount cost. Visibility handled
+        with opacity/translate/pointer-events; inert keeps hidden links
+        out of keyboard reach. 120ms entrance for tap-instant feel.
+      */}
+      <div
+        id="nav-menu"
+        role="menu"
+        aria-hidden={!open}
+        ref={(el) => {
+          if (el) (el as HTMLElement & { inert?: boolean }).inert = !open;
+        }}
+        className={`absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-3xl bg-coal p-2 shadow-2xl transition-[opacity,transform] duration-120 ease-out ${
+          open ? "visible opacity-100" : "invisible -translate-y-1 opacity-0"
+        }`}
+      >
           {ITEMS.map((item) => (
             <Link
               key={item.href}
@@ -87,8 +92,7 @@ export function NavBar() {
               <span className="text-[10px] text-cream/50">{item.hint}</span>
             </Link>
           ))}
-        </motion.div>
-      )}
+        </div>
     </nav>
   );
 }
