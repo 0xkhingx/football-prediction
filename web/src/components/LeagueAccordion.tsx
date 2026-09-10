@@ -39,13 +39,13 @@ function LeagueTile({
         {...header}
         disabled={empty}
         aria-label={`${group.name}, ${group.fixtures.length} ties`}
-        className="pressable flex w-full items-center gap-4 px-5 py-4 text-left disabled:cursor-default disabled:opacity-70"
+        className="pressable relative flex w-full items-center gap-4 px-5 py-4 text-left disabled:cursor-default disabled:opacity-70"
       >
-        <span className="font-display text-2xl uppercase leading-none text-coal sm:text-3xl">
-          {group.tag}
-        </span>
-        <span className="font-mono text-[10px] tracking-[0.25em] text-coal/50">
+        <span className="hidden font-mono text-[10px] tracking-[0.25em] text-coal/50 sm:inline">
           {group.name.toUpperCase()}
+        </span>
+        <span className="pointer-events-none absolute left-1/2 -translate-x-1/2 font-display text-2xl uppercase leading-none text-coal sm:text-3xl">
+          {group.tag}
         </span>
         <span className="ml-auto font-mono text-[11px] tracking-[0.2em] text-ember">
           {empty ? "NO TIES THIS WEEK" : `${group.fixtures.length} TIES`}
