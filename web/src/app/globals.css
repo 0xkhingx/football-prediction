@@ -234,6 +234,3 @@ body {
 @keyframes sticker-spin { to { transform: rotate(360deg); } }
 .sticker-spin { animation: sticker-spin 22s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .sticker-spin { animation: none; } }
-
-/* Poster fallback: CSS sphere while WebGL loads or when it fails. */
-.poster-ball { display: block; width: 72%; aspect-ratio: 1; border-radius: 9999px; background: radial-gradient(circle at 35% 32%, #ffffff 0%, #bcd0ff 38%, #2563EB 72%, #1E40AF 100%); box-shadow: 0 24px 60px -18px rgba(22,20,18,0.45); }
