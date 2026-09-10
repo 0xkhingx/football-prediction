@@ -5,7 +5,7 @@ import Link from "next/link";
 import { BallSceneSafe } from "@/components/BallScene";
 import { Tooltip } from "@/components/Tooltip";
 import { GlyphRow, PillCta } from "@/components/Motif";
-import { BallFace, ScribbleArrow, ScribbleCircle, ScribbleUnderline, Sticker } from "@/components/Flow";
+import { ScribbleArrow, ScribbleCircle, ScribbleUnderline, Sticker } from "@/components/Flow";
 import { LEAGUES } from "@/lib/constants";
 
 function Ticker() {
@@ -52,11 +52,10 @@ export default function HomePage() {
       {/* HERO — FLOW full-bleed: blurple field, giant white type, real ball with face */}
       <section className="-mx-3 bg-[var(--flow-bg)] px-6 py-14 text-center sm:-mx-6 sm:px-12 sm:py-20">
         <div className="relative mx-auto max-w-5xl">
-          <div className="pointer-events-none absolute -right-2 top-0 hidden h-64 w-64 sm:block lg:right-6 lg:h-80 lg:w-80">
+          <div className="pointer-events-none absolute -right-2 top-0 hidden h-72 w-72 sm:block lg:right-6 lg:h-96 lg:w-96">
             <Tooltip tip="Ask me anything — I read 23 pre-match signals. No odds, no tips.">
               <a href="/predict" aria-label="Ask the oracle to predict a match" className="pointer-events-auto block h-full w-full">
                 <BallSceneSafe className="h-full w-full" />
-                <BallFace className="pointer-events-none absolute inset-0 m-auto h-1/3 w-1/3" />
               </a>
             </Tooltip>
           </div>
@@ -65,10 +64,9 @@ export default function HomePage() {
             <span className="block text-6xl sm:text-9xl">has a fate</span>
             <span className="block text-6xl text-lime sm:text-9xl">Call it</span>
           </h1>
-          <div className="mx-auto mt-6 flex h-44 w-44 justify-center sm:hidden">
+          <div className="mx-auto mt-6 flex h-56 w-56 justify-center sm:hidden">
             <div className="relative h-full w-full">
               <BallSceneSafe className="h-full w-full" />
-              <BallFace className="pointer-events-none absolute inset-0 m-auto h-1/3 w-1/3" />
             </div>
           </div>
           <p className="mx-auto mt-8 max-w-xl text-sm leading-relaxed text-white/85 sm:text-base">

@@ -1,31 +1,9 @@
 "use client";
 
 /**
- * FLOW landing elements: kawaii face overlay for the ball, rotating
- * sticker stamp, hand-drawn marker scribbles. Pure SVG + CSS.
+ * FLOW landing elements: rotating sticker stamp, hand-drawn marker scribbles.
+ * Pure SVG + CSS.
  */
-
-function Asterisk({ x, y }: { x: number; y: number }) {
-  const arms = [0, 60, 120];
-  return (
-    <g transform={`translate(${x} ${y})`} stroke="#161412" strokeWidth="5" strokeLinecap="round">
-      {arms.map((a) => (
-        <line key={a} x1="-11" y1="0" x2="11" y2="0" transform={`rotate(${a})`} />
-      ))}
-    </g>
-  );
-}
-
-/** Kawaii face (asterisk eyes + o mouth) overlaying the hero ball. */
-export function BallFace({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 120 90" className={className} aria-hidden>
-      <Asterisk x={38} y={30} />
-      <Asterisk x={82} y={30} />
-      <circle cx={60} cy={62} r={9} fill="#161412" />
-    </svg>
-  );
-}
 
 /** Pink scalloped sticker with circular text. Slow spin; still when reduced. */
 export function Sticker({ className = "" }: { className?: string }) {

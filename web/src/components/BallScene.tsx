@@ -11,7 +11,6 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import { useReducedMotion } from "motion/react";
 import * as THREE from "three";
-import { Mascot } from "./Mascot";
 import { Tooltip } from "./Tooltip";
 
 const BALL_URL = "/models/ball.glb";
@@ -36,7 +35,7 @@ function Ball() {
   });
 
   return (
-    <group ref={ref} scale={1.6}>
+    <group ref={ref} scale={2.1}>
       <primitive object={gltf.scene.clone()} />
     </group>
   );
@@ -45,7 +44,7 @@ function Ball() {
 function StaticBall() {
   const gltf = useGLTF(BALL_URL);
   return (
-    <group scale={1.6} rotation={[0.3, 0.8, 0]}>
+    <group scale={2.1} rotation={[0.3, 0.8, 0]}>
       <primitive object={gltf.scene.clone()} />
     </group>
   );
@@ -83,7 +82,7 @@ class ErrorFallback extends Component<
     if (this.state.failed) {
       return (
         <div className={`flex items-center justify-center ${this.props.className ?? ""}`}>
-          <Mascot mood="oracle" size={132} />
+          <span className="poster-ball" role="img" aria-label="Football" />
         </div>
       );
     }
@@ -113,7 +112,7 @@ export function BallSceneSafe({ className = "" }: { className?: string }) {
   if (!mounted) {
     return (
       <div className={`flex items-center justify-center ${className}`}>
-        <Mascot mood="oracle" size={132} />
+        <span className="poster-ball" role="img" aria-label="Football" />
       </div>
     );
   }
