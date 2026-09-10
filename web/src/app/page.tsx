@@ -1,19 +1,18 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { MatchCard } from "@/components/MatchCard";
-import { LeagueTabs } from "@/components/LeagueTabs";
+import { LeagueAccordion } from "@/components/LeagueAccordion";
 import { SeasonRecord } from "@/components/SeasonRecord";
 import { BranchPill, GlyphRow, PillCta } from "@/components/Motif";
 import { FixtureSchema, type Fixture } from "@/lib/types";
-import { groupWeeks, nearestWeekIndex } from "@/lib/weeks";
+import { groupByLeague, groupWeeks, leadLeague, nearestWeekIndex } from "@/lib/weeks";
 
 export default function FixturesPage() {
   const [fixtures, setFixtures] = useState<Fixture[]>([]);
-  const [league, setLeague] = useState("ALL");
   const [loaded, setLoaded] = useState(false);
   const [backendError, setBackendError] = useState<string | null>(null);
   const [weekIdx, setWeekIdx] = useState<number | null>(null);
+  const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/fixtures")
@@ -23,7 +22,12 @@ export default function FixturesPage() {
         const list = Array.isArray(body.fixtures) ? body.fixtures : [];
         const valid = list.filter((f: unknown) => FixtureSchema.safeParse(f).success);
         setFixtures(valid);
-        setWeekIdx((prev) => prev ?? nearestWeekIndex(groupWeeks(valid)));
+        if (valid.length > 0) {
+          const wi = nearestWeekIndex(groupWeeks(valid));
+          setWeekIdx((prev) => prev ?? wi);
+          const w = groupWeeks(valid)[wi];
+          setExpanded((prev) => prev ?? (w ? leadLeague(groupByLeague(w.fixtures)) : null));
+        }
         setLoaded(true);
       })
       .catch((e) => {
@@ -34,7 +38,14 @@ export default function FixturesPage() {
 
   const weeks = useMemo(() => groupWeeks(fixtures), [fixtures]);
   const week = weekIdx === null ? null : (weeks[weekIdx] ?? null);
-  const shown = !week || league === "ALL" ? (week?.fixtures ?? []) : week.fixtures.filter((f) => f.league === league);
+  const groups = useMemo(() => (week ? groupByLeague(week.fixtures) : []), [week]);
+
+  function goWeek(next: number) {
+    const clamped = Math.max(0, Math.min(weeks.length - 1, next));
+    setWeekIdx(clamped);
+    const w = weeks[clamped];
+    setExpanded(w ? leadLeague(groupByLeague(w.fixtures)) : null);
+  }
 
   return (
     <div className="space-y-3">
@@ -63,25 +74,24 @@ export default function FixturesPage() {
         </div>
       </section>
 
-      {/* FIXTURES — this week only, pager for the rest */}
+      {/* FIXTURES — this week only, league accordion, pager for the rest */}
       <section className="rounded-[2rem] bg-emberdark/40 px-6 py-10 sm:px-10">
         <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="font-display text-3xl uppercase text-cream sm:text-5xl">This week</h2>
             {week && (
               <p className="mt-1 font-mono text-[11px] tracking-[0.25em] text-cream/70">
-                {week.label} · {week.fixtures.length} TIES
+                {week.label} · {week.fixtures.length} TIES · TAP A LEAGUE
               </p>
             )}
           </div>
-          <LeagueTabs active={league} onChange={setLeague} />
         </div>
         {week && weeks.length > 1 && (
           <div className="mb-5 flex items-center gap-2" role="group" aria-label="Fixture week">
             <button
               type="button"
               disabled={weekIdx === 0}
-              onClick={() => setWeekIdx((i) => Math.max(0, (i ?? 0) - 1))}
+              onClick={() => goWeek((weekIdx ?? 0) - 1)}
               className="pressable rounded-full bg-cream px-4 py-1.5 font-mono text-[11px] tracking-[0.2em] text-coal disabled:opacity-40"
             >
               ← PREV
@@ -92,7 +102,7 @@ export default function FixturesPage() {
             <button
               type="button"
               disabled={weekIdx === weeks.length - 1}
-              onClick={() => setWeekIdx((i) => Math.min(weeks.length - 1, (i ?? 0) + 1))}
+              onClick={() => goWeek((weekIdx ?? 0) + 1)}
               className="pressable rounded-full bg-cream px-4 py-1.5 font-mono text-[11px] tracking-[0.2em] text-coal disabled:opacity-40"
             >
               NEXT →
@@ -121,7 +131,7 @@ export default function FixturesPage() {
           </div>
         </div>
       )}
-      {loaded && !backendError && shown.length === 0 && (
+      {loaded && !backendError && !week && (
           <div className="rounded-3xl bg-cream p-8 text-center">
             <p className="font-display text-3xl uppercase text-coal">Offseason — no ties right now</p>
             <p className="mx-auto mt-2 max-w-md text-sm text-coal/70">
@@ -132,11 +142,13 @@ export default function FixturesPage() {
             </div>
           </div>
         )}
-        <div className="grid gap-3 sm:grid-cols-2">
-          {shown.map((f) => (
-            <MatchCard key={`${f.date}-${f.home}-${f.away}`} fixture={f} />
-          ))}
-        </div>
+        {week && (
+          <LeagueAccordion
+            groups={groups}
+            expanded={expanded}
+            onToggle={(code) => setExpanded((prev) => (prev === code ? null : code))}
+          />
+        )}
       </section>
 
       <SeasonRecord />

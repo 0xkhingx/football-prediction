@@ -1,3 +1,4 @@
+import { LEAGUES } from "./constants";
 import type { Fixture } from "./types";
 
 export type Week = {
@@ -55,4 +56,44 @@ export function nearestWeekIndex(weeks: Week[], today = new Date()): number {
     if (Date.parse(`${weeks[i].start}T12:00:00`) >= t) return i;
   }
   return Math.max(0, weeks.length - 1);
+}
+
+export type LeagueGroup = {
+  code: string;
+  tag: string;
+  name: string;
+  fixtures: Fixture[];
+};
+
+/** Group a week's fixtures by league in fixed LEAGUES order, always
+    including empty leagues (stable layout, no jumping). Unknown codes
+    collect under an OTHER tile rather than being dropped. */
+export function groupByLeague(fixtures: Fixture[]): LeagueGroup[] {
+  const groups: LeagueGroup[] = LEAGUES.map((l) => ({
+    code: l.code,
+    tag: l.tag,
+    name: l.name,
+    fixtures: [],
+  }));
+  const byCode = new Map(groups.map((g) => [g.code, g]));
+  let other: LeagueGroup | null = null;
+  for (const f of fixtures) {
+    const g = byCode.get(f.league);
+    if (g) {
+      g.fixtures.push(f);
+    } else {
+      other ??= { code: f.league, tag: f.league.toUpperCase(), name: f.league_name, fixtures: [] };
+      other.fixtures.push(f);
+    }
+  }
+  return other ? [...groups, other] : groups;
+}
+
+/** Code with the most ties (first on ties) — the default expanded tile. */
+export function leadLeague(groups: LeagueGroup[]): string | null {
+  let best: LeagueGroup | null = null;
+  for (const g of groups) {
+    if (!best || g.fixtures.length > best.fixtures.length) best = g;
+  }
+  return best && best.fixtures.length > 0 ? best.code : null;
 }

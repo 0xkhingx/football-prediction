@@ -2,13 +2,15 @@ import Link from "next/link";
 import { formatDate } from "@/lib/weeks";
 import type { Fixture } from "@/lib/types";
 
-export function MatchCard({ fixture }: { fixture: Fixture }) {
+export function MatchCard({ fixture, tone = "card" }: { fixture: Fixture; tone?: "card" | "inset" }) {
   const href = `/predict?home=${encodeURIComponent(fixture.home)}&away=${encodeURIComponent(fixture.away)}`;
   return (
     <Link
       href={href}
       aria-label={`Predict ${fixture.home} versus ${fixture.away}`}
-      className="pressable lift block rounded-3xl bg-cream p-5 hover:shadow-xl"
+      className={`pressable lift block rounded-3xl p-5 hover:shadow-xl ${
+        tone === "inset" ? "bg-white" : "bg-cream"
+      }`}
     >
       <p className="font-mono text-[10px] tracking-[0.25em] text-ember">
         <time dateTime={fixture.date}>{formatDate(fixture.date)}</time>
