@@ -4,6 +4,8 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { LoadingButton } from "@/components/interior/loading-button";
 import { CopyButton } from "@/components/interior/copy-button";
+import { ReelNumber } from "@/components/AnimatedDigits";
+import { Tooltip } from "@/components/Tooltip";
 import { ProbBar } from "@/components/ProbBar";
 import { FormBadges } from "@/components/FormBadges";
 import { PredictionSchema, type Prediction } from "@/lib/types";
@@ -50,7 +52,18 @@ function PredictInner() {
   const [result, setResult] = useState<Prediction | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [shaking, setShaking] = useState(false);
   const autoRan = useRef(false);
+
+  function shake() {
+    setShaking(false);
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        setShaking(true);
+        setTimeout(() => setShaking(false), 350);
+      }),
+    );
+  }
 
   async function doPredict(h: string, a: string): Promise<Prediction> {
     const homeTeam = h.trim();
@@ -79,6 +92,7 @@ function PredictInner() {
       setResult(await doPredict(h, a));
     } catch (e) {
       setError(e instanceof Error ? e.message : "prediction failed");
+      shake();
       throw e;
     } finally {
       setBusy(false);
@@ -107,7 +121,7 @@ function PredictInner() {
         <h1 className="mt-2 text-center font-display text-5xl uppercase leading-none text-ember sm:text-7xl">
           Name your tie
         </h1>
-        <div className="mx-auto mt-8 grid max-w-2xl gap-3 sm:grid-cols-2">
+        <div className={`mx-auto mt-8 grid max-w-2xl gap-3 sm:grid-cols-2 ${shaking ? "is-shaking" : ""}`}>
           <label className="block" htmlFor="home-team">
             <span className="font-mono text-[11px] tracking-[0.3em] text-coal/60">HOME</span>
             <input id="home-team" value={home} disabled={busy} onChange={(e) => setHome(e.target.value)} className={inputCls} placeholder="Arsenal" />
@@ -136,8 +150,12 @@ function PredictInner() {
             {result.home} <span className="text-ember">vs</span> {result.away}
           </p>
           <div className="mb-4 flex flex-wrap justify-center gap-4">
-            <FormBadges form={result.form_home} label={result.home.slice(0, 3).toUpperCase()} />
-            <FormBadges form={result.form_away} label={result.away.slice(0, 3).toUpperCase()} />
+            <Tooltip tip="Last 5 results, oldest first. W win · D draw · L loss.">
+              <span className="flex flex-wrap justify-center gap-4">
+                <FormBadges form={result.form_home} label={result.home.slice(0, 3).toUpperCase()} />
+                <FormBadges form={result.form_away} label={result.away.slice(0, 3).toUpperCase()} />
+              </span>
+            </Tooltip>
           </div>
           {result.h2h && (
             <p className="mb-4 text-center font-mono text-xs tracking-[0.2em] text-coal/60">
@@ -149,7 +167,9 @@ function PredictInner() {
           {result.scoreline?.shown ? (
             <p className="mt-3 text-center font-display text-xl uppercase text-coal">
               Model&apos;s scoreline: {result.scoreline.h}–{result.scoreline.a}{" "}
-              <span className="text-ember">{(result.scoreline.p * 100).toFixed(1)}%</span>
+              <span className="text-ember">
+                <ReelNumber value={`${(result.scoreline.p * 100).toFixed(1)}%`} />
+              </span>
             </p>
           ) : (
             <p className="mt-3 text-center font-mono text-[10px] tracking-[0.25em] text-coal/50">

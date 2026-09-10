@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { LeagueAccordion } from "@/components/LeagueAccordion";
 import { SeasonRecord } from "@/components/SeasonRecord";
 import { BranchPill, GlyphRow, PillCta } from "@/components/Motif";
+import { Kbd } from "@/components/Tooltip";
 import { FixtureSchema, type Fixture } from "@/lib/types";
 import { groupByLeague, groupWeeks, leadLeague, nearestWeekIndex } from "@/lib/weeks";
 
@@ -108,6 +109,11 @@ export default function FixturesPage() {
               NEXT →
             </button>
           </div>
+        )}
+        {week && (
+          <p className="mb-5 font-mono text-[10px] tracking-[0.2em] text-cream/60">
+            TIP <Kbd>↑</Kbd> <Kbd>↓</Kbd> MOVE · <Kbd>ENTER</Kbd> OPENS A LEAGUE
+          </p>
         )}
       {!loaded && (
         <div className="grid gap-3 sm:grid-cols-2" aria-hidden>

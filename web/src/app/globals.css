@@ -59,6 +59,122 @@ body {
   border-radius: 4px;
 }
 
+/* ——— transitions.dev adaptations (Jakub Antalik; free copy-paste set).
+     Tokens retuned to this app's motion system; reduced-motion guards kept. */
+
+/* Number pop-in: blur+rise with per-digit stagger. Replay by re-mounting
+   (key on the value) — matches the .is-animating contract. */
+:root {
+  --digit-dur: 450ms;
+  --digit-distance: 8px;
+  --digit-stagger: 60ms;
+  --digit-blur: 2px;
+  --digit-ease: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes t-digit-pop-in {
+  0% {
+    transform: translateY(var(--digit-distance));
+    opacity: 0;
+    filter: blur(var(--digit-blur));
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.t-digit-group {
+  display: inline-flex;
+  align-items: baseline;
+}
+.t-digit {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+.t-digit-group.is-animating .t-digit {
+  animation: t-digit-pop-in var(--digit-dur) var(--digit-ease) both;
+}
+.t-digit-group.is-animating .t-digit[data-stagger="1"] {
+  animation-delay: var(--digit-stagger);
+}
+.t-digit-group.is-animating .t-digit[data-stagger="2"] {
+  animation-delay: calc(var(--digit-stagger) * 2);
+}
+.t-digit-group.is-animating .t-digit[data-stagger="3"] {
+  animation-delay: calc(var(--digit-stagger) * 3);
+}
+.t-digit-group.is-animating .t-digit[data-stagger="4"] {
+  animation-delay: calc(var(--digit-stagger) * 4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-digit-group .t-digit {
+    animation: none !important;
+  }
+}
+
+/* Error shake: multi-segment keyframes, each leg eased independently.
+   Trigger by adding .is-shaking (with reflow restart); remove on animationend. */
+:root {
+  --shake-distance: 6px;
+  --shake-overshoot: 4px;
+  --shake-ease: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes t-shake {
+  0% { transform: translateX(0); animation-timing-function: var(--shake-ease); }
+  28.57% { transform: translateX(calc(var(--shake-distance) * -1)); animation-timing-function: var(--shake-ease); }
+  57.14% { transform: translateX(var(--shake-overshoot)); animation-timing-function: var(--shake-ease); }
+  78.57% { transform: translateX(calc(var(--shake-overshoot) * -0.5)); animation-timing-function: var(--shake-ease); }
+  100% { transform: translateX(0); }
+}
+
+.is-shaking {
+  animation: t-shake 280ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-shaking {
+    animation: none;
+  }
+}
+
+/* Spinning counter reel (transitions.dev recipe): each column clips a
+   0-9 strip; JS translates the strip up to spin then land. em-based cells
+   inherit the surrounding type size. */
+.t-reel {
+  display: inline-flex;
+  align-items: center;
+  height: 1em;
+  font-variant-numeric: tabular-nums;
+}
+.t-reel-col {
+  position: relative;
+  height: 1em;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+}
+.t-reel-strip {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+.t-reel-digit {
+  height: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-reel-strip {
+    transition: none !important;
+  }
+}
+
 @keyframes skeleton-pulse {
   0%,
   100% {

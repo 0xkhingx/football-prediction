@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { pct } from "@/lib/format";
+import { ReelNumber } from "./AnimatedDigits";
+import { Tooltip } from "./Tooltip";
 import type { Prediction } from "@/lib/types";
 import { OUTCOME_LABEL } from "@/lib/types";
 
@@ -35,7 +37,7 @@ export function ProbBar({ prediction }: { prediction: Prediction }) {
                 </span>
               )}
             </span>
-            <span>{pct(r.value)}</span>
+            <ReelNumber value={pct(r.value)} />
           </div>
           <div className="h-3 overflow-hidden rounded-full bg-coal/10">
             <div
@@ -49,15 +51,27 @@ export function ProbBar({ prediction }: { prediction: Prediction }) {
         </div>
       ))}
       <p className="pt-1 font-display text-2xl uppercase text-coal">
-        {OUTCOME_LABEL[prediction.prediction]} · {pct(prediction.confidence)}
+        <Tooltip tip="Fair-play XGBoost on 23 pre-match signals. No bookmaker odds in, no tips out.">
+          <span>
+            {OUTCOME_LABEL[prediction.prediction]} · {pct(prediction.confidence)}
+          </span>
+        </Tooltip>
       </p>
-      <p
-        className={`inline-block rounded-full px-4 py-1.5 font-mono text-[11px] tracking-[0.25em] ${
-          prediction.call ? "bg-coal text-lime" : "bg-coal/10 text-coal/70"
-        }`}
+      <Tooltip
+        tip={
+          prediction.call
+            ? "Confidence cleared 45%, so the model stamps this call."
+            : "Confidence under 45%: probabilities shown, but the model makes no call."
+        }
       >
-        {prediction.call_label}
-      </p>
+        <span
+          className={`inline-block rounded-full px-4 py-1.5 font-mono text-[11px] tracking-[0.25em] ${
+            prediction.call ? "bg-coal text-lime" : "bg-coal/10 text-coal/70"
+          }`}
+        >
+          {prediction.call_label}
+        </span>
+      </Tooltip>
     </div>
   );
 }

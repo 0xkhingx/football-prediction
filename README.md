@@ -73,6 +73,9 @@ cd web && npm install && npm run dev   # :3000, proxies to API_URL
 Micro-interactions in `web/src/components/interior/` are vendored from
 [interior.dev](https://www.interior.dev) by Ozzy (MIT licensed; see headers) —
 motion logic unchanged, surfaces restyled to this app's token system.
+Digit transitions (`ReelNumber`, pop-in, error shake) adapt recipes from
+[transitions.dev](https://transitions.dev) by Jakub Antalik (free copy-paste
+set) — retuned durations, same reduced-motion guarantees.
 
 Deploy notes: set `API_URL` (web → API base) and `ALLOWED_ORIGINS` (API CORS allowlist,
 comma-separated) in the hosting env. The API holds state in memory — after any

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { PopDigits } from "./AnimatedDigits";
 
 type Bucket = { bucket: string; n: number; acc: number | null };
 type Tally = { n: number; acc: number; log_loss: number; brier: number };
@@ -46,7 +47,9 @@ export function SeasonRecord() {
     <section className="rounded-[2rem] bg-coal p-8 sm:p-10">
       <p className="font-mono text-[11px] tracking-[0.3em] text-lime">SEASON RECORD</p>
       <div className="mt-3 flex flex-wrap items-baseline gap-x-8 gap-y-2">
-        <p className="font-display text-5xl text-cream sm:text-6xl">{(tally.acc * 100).toFixed(1)}%</p>
+        <p className="font-display text-5xl text-cream sm:text-6xl">
+          <PopDigits key={`tally-${tally.acc}`} value={`${(tally.acc * 100).toFixed(1)}%`} />
+        </p>
         <p className="font-mono text-xs tracking-[0.2em] text-cream/60">
           {tally.n} CALLS · LOG-LOSS {tally.log_loss.toFixed(3)}
         </p>
@@ -56,7 +59,11 @@ export function SeasonRecord() {
           <div key={b.bucket} className="rounded-2xl bg-white/5 p-3">
             <p className="font-mono text-[10px] tracking-[0.2em] text-cream/60">{b.bucket}</p>
             <p className="mt-1 font-display text-2xl text-cream">
-              {b.acc === null ? "—" : `${(b.acc * 100).toFixed(0)}%`}
+              {b.acc === null ? (
+                "—"
+              ) : (
+                <PopDigits key={`${b.bucket}-${b.acc}`} value={`${(b.acc * 100).toFixed(0)}%`} />
+              )}
             </p>
             <p className="font-mono text-[10px] text-cream/50">n={b.n}</p>
           </div>

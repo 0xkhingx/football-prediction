@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Tabs } from "@/components/interior/tabs";
+import { Kbd } from "@/components/Tooltip";
 import { LEAGUES } from "@/lib/constants";
 
 type Row = { team: string; pts: number; title: string; top4: string };
@@ -37,7 +38,7 @@ export default function SimulatorPage() {
         <h1 className="mt-2 text-center font-display text-5xl uppercase leading-none text-ember sm:text-7xl">
           Who lifts it
         </h1>
-        <div className="mt-6 flex justify-center">
+        <div className="mt-6 flex flex-col items-center gap-2">
           <div className="w-full max-w-xl">
             <Tabs
               items={LEAGUES.map((l) => ({ value: l.code, label: l.tag }))}
@@ -46,6 +47,9 @@ export default function SimulatorPage() {
               label="League"
             />
           </div>
+          <p className="font-mono text-[10px] tracking-[0.2em] text-coal/50">
+            TIP <Kbd>←</Kbd> <Kbd>→</Kbd> SWITCH LEAGUES
+          </p>
         </div>
         {!loaded && (
           <p className="mt-8 text-center font-mono text-xs tracking-[0.25em] text-coal/60">LOADING…</p>
