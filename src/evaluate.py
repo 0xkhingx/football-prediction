@@ -1,14 +1,15 @@
+import json
+
+import matplotlib
 import numpy as np
 import pandas as pd
-import json
-import matplotlib
+
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 from pathlib import Path
-from sklearn.calibration import calibration_curve
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler
+
 import joblib
+import matplotlib.pyplot as plt
+from sklearn.calibration import calibration_curve
 
 from .metrics import brier_score, log_loss
 
@@ -123,7 +124,7 @@ def main():
         ll = log_loss(y_league, probs_league)
         brier = brier_score(y_league, probs_league)
         acc = np.mean(probs_league.argmax(axis=1) == y_league)
-        rows.append({"League": f"{name} ({code})", "Matches": int(len(y_league)),
+        rows.append({"League": f"{name} ({code})", "Matches": len(y_league),
                       "Log-Loss": float(ll), "Brier": float(brier), "Acc": float(acc)})
         print(f"  {name} ({code}): {len(y_league):>4} matches, LL={ll:.4f}, Acc={acc:.3f}")
 
@@ -131,7 +132,7 @@ def main():
     print("CALIBRATION ANALYSIS — prod tuned (no odds)")
     print("=" * 70)
     probs = headline_probs
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    _, axes = plt.subplots(1, 3, figsize=(15, 5))
     for idx, outcome in enumerate(["Home Win", "Draw", "Away Win"]):
         prob_true, prob_pred = calibration_curve(y_test == idx, probs[:, idx], n_bins=10)
         axes[idx].plot(prob_pred, prob_true, marker="o", label="XGB-tuned (no odds)")
@@ -151,7 +152,7 @@ def main():
 
     results = {
         "alignment_check": bool(aligned),
-        "test_set_size": int(len(y_test)),
+        "test_set_size": len(y_test),
         "test_season": int(test_season),
         "odds_coverage": f"{odds_count}/{len(y_test)}",
         "naive": {"log_loss": float(naive_ll), "brier": float(naive_brier)},

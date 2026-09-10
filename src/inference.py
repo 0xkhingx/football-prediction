@@ -289,9 +289,10 @@ def last_meeting(team_history, home: str, away: str) -> dict | None:
     best = None
     for team in (home, away):
         for r in team_history.get(team, []):
-            if r["opponent"] == (away if team == home else home):
-                if best is None or r["date"] > best[0]:
-                    best = (r["date"], team, r)
+            if r["opponent"] == (away if team == home else home) and (
+                best is None or r["date"] > best[0]
+            ):
+                best = (r["date"], team, r)
     if best is None:
         return None
     _, entry_team, r = best
@@ -332,7 +333,12 @@ def score_for_fixture(home: str, away: str, date, league: str | None,
                       xgb_prediction: str, gate_call: bool) -> dict | None:
     """Dixon-Coles scoreline pick, conditional on the XGB call. None when the
     league can't be resolved (manual entry of unknown teams)."""
-    from .goals import cached_matches, predict_scorelines, select_scoreline, team_league_map
+    from .goals import (
+        cached_matches,
+        predict_scorelines,
+        select_scoreline,
+        team_league_map,
+    )
 
     lg = league or team_league_map().get(home) or team_league_map().get(away)
     if lg is None:

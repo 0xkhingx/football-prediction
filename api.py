@@ -6,9 +6,8 @@ Run: uvicorn api:app --reload  (from repo root)
 from __future__ import annotations
 
 import os
-from datetime import date as _date
+from datetime import datetime, timezone
 from functools import lru_cache
-from pathlib import Path
 
 import pandas as pd
 from fastapi import FastAPI, Header, HTTPException, Request
@@ -16,11 +15,33 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from src.config import LEAGUE_NAMES, MODEL_DIR, TOP_LEAGUE_CODES
-from src.inference import build_state_from_historical, load_artifacts, predict_one, resolve_team
+from src.inference import (
+    build_state_from_historical,
+    load_artifacts,
+    predict_one,
+    resolve_team,
+)
 from src.predict_live import fetch_fixtures
 from src.ratelimit import check as rate_limit
 
-app = FastAPI(title="Football Predictor (fair-play XGB)", version="1.0.0")
+app = FastAPI(
+    title="Football Predictor (fair-play XGB)",
+    version="1.0.0",
+    # Interactive docs only when explicitly enabled (dev). Prod serves API only.
+    docs_url="/docs" if os.getenv("ENABLE_DOCS") == "1" else None,
+    redoc_url="/redoc" if os.getenv("ENABLE_DOCS") == "1" else None,
+)
+
+if os.getenv("SENTRY_DSN"):
+    import sentry_sdk
+    from sentry_sdk.integrations.fastapi import FastApiIntegration
+
+    sentry_sdk.init(
+        dsn=os.getenv("SENTRY_DSN"),
+        integrations=[FastApiIntegration()],
+        traces_sample_rate=0.1,
+        send_default_pii=False,
+    )
 
 ALLOWED_ORIGINS = [o for o in os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",") if o]
 if "ALLOWED_ORIGINS" not in os.environ:
@@ -38,9 +59,8 @@ app.add_middleware(
 class PredictRequest(BaseModel):
     home: str = Field(min_length=2)
     away: str = Field(min_length=2)
-    date: str = Field(default_factory=lambda: _date.today().isoformat(),
+    date: str = Field(default_factory=lambda: datetime.now(timezone.utc).date().isoformat(),
                       description="ISO date; predictions use history strictly before it")
-
 
 class PredictResponse(BaseModel):
     home: str
@@ -167,7 +187,7 @@ def predict(req: PredictRequest, request: Request):
         raise HTTPException(status_code=422, detail="both names resolve to the same team")
     try:
         r = predict_one(rh["team"], ra["team"], req.date, elo, melo, hist, imp, model)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 — any model failure becomes a 400, never a 500 trace
         raise HTTPException(status_code=400, detail=str(e))
     p = r["probabilities"]
     g = r["gate"]

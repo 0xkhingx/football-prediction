@@ -1,7 +1,8 @@
-import pandas as pd
-import numpy as np
 import re
 from pathlib import Path
+
+import numpy as np
+import pandas as pd
 
 RAW_FILE = Path("data/raw/matches_raw.csv")
 OUTPUT = Path("data/processed/matches_clean.csv")

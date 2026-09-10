@@ -117,7 +117,7 @@ def fetch(season_label: str, code: str) -> dict:
             r = requests.get(url, timeout=60, headers=UA)
             r.raise_for_status()
             return json.loads(r.content.decode("utf-8"))
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 — retryable network/parse failure
             last = e
             print(f"  retry {attempt}/3 {season_label}/{code} after {wait}s ({e})")
             time.sleep(wait)

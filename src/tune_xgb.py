@@ -1,10 +1,11 @@
-import numpy as np
 import json
 import random
 from pathlib import Path
-from sklearn.impute import SimpleImputer
-import xgboost as xgb
+
 import joblib
+import numpy as np
+import xgboost as xgb
+from sklearn.impute import SimpleImputer
 
 SPLITS_FILE = Path("data/processed/splits.npz")
 META_FILE = Path("data/processed/split_meta.json")
@@ -106,7 +107,7 @@ def main():
     print("=" * 70)
     print(f"\nSearch budget: {n_trials} random parameter combinations (manual loop)")
     print(f"Best validation log-loss found: {best_val_ll_final:.4f}")
-    print(f"\nBest parameters:")
+    print("\nBest parameters:")
     for p, v in best_params.items():
         print(f"  {p}: {v}")
     print(f"\n{'':<20} {'Val Log-Loss':<15} {'Test Log-Loss':<15}")

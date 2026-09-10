@@ -13,9 +13,10 @@ jobs:
         with:
           python-version: "3.14"
       - run: pip install -r requirements.txt
-      - run: pip install pip-audit
+      - run: pip install pip-audit ruff
       # Audit-only: surfaces known CVEs without red-barring the pipeline.
       - run: pip-audit --desc || true
+      - run: ruff check src api.py || true
       # Data rebuild (deterministic core only — data_pull's football-data
       # source is best-effort and routinely unreachable; openfootball covers it).
       - run: python -m src.pull_openfootball

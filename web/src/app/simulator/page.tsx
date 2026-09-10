@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Tabs } from "@/components/interior/tabs";
 import { Kbd } from "@/components/Tooltip";
+import { trackEvent } from "@/lib/analytics";
 import { LEAGUES } from "@/lib/constants";
 
 type Row = { team: string; pts: number; title: string; top4: string };
@@ -24,6 +25,7 @@ export default function SimulatorPage() {
         setRows(b.table);
         setNote(typeof b.note === "string" ? b.note : "");
         setLoaded(true);
+        trackEvent("simulation_viewed", { league });
       })
       .catch(() => {
         setFailed(true);

@@ -22,6 +22,12 @@ split:
 train:
 	python -m src.train_tuned_prod
 
+# Promote current weights as a rollback point: git-tag registry + artifacts.
+# Roll back with: git checkout <tag> -- models/ && curl -X POST localhost:8000/reload
+promote:
+	git tag -a model-v$(shell python -c "import datetime; print(datetime.date.today().isoformat())") -m "promote prod model"
+	@echo "promoted — push tags with: git push origin --tags"
+
 evaluate:
 	python -m src.evaluate
 	python -m src.shap_analysis

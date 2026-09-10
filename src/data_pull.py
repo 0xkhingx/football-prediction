@@ -1,7 +1,8 @@
-import pandas as pd
-import requests
 import time
 from pathlib import Path
+
+import pandas as pd
+import requests
 
 RAW_DIR = Path("data/raw")
 RAW_DIR.mkdir(parents=True, exist_ok=True)
@@ -31,7 +32,7 @@ def main():
                         break
                     else:
                         print(f"HTTP {resp.status_code} {season} / {code}")
-                except Exception as e:
+                except Exception as e:  # noqa: BLE001 — one bad download retries, never aborts the pull
                     print(f"ERR {season} / {code} (attempt {attempt+1}): {e}")
                     time.sleep(2)
 

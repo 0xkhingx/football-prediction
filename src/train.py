@@ -1,15 +1,15 @@
-import numpy as np
 import json
 from pathlib import Path
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
+
+import joblib
+import numpy as np
+import xgboost as xgb
 from sklearn.impute import SimpleImputer
 from sklearn.isotonic import IsotonicRegression
-import xgboost as xgb
-import joblib
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
 
 SPLITS_FILE = Path("data/processed/splits.npz")
-META_FILE = Path("data/processed/split_meta.json")
 MODEL_DIR = Path("models")
 MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -123,8 +123,6 @@ def train_model(X_train, y_train, X_val, y_val, X_test, y_test, label, prefix):
 
 def main():
     data = np.load(SPLITS_FILE)
-    with open(META_FILE) as f:
-        meta = json.load(f)
 
     has_odds = "X_train_odds" in data
 

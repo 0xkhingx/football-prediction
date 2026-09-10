@@ -8,15 +8,12 @@ and models/model_registry.json.
 from __future__ import annotations
 
 import json
-from datetime import date
-from pathlib import Path
+from datetime import datetime, timezone
 
 import joblib
 import numpy as np
 import xgboost as xgb
 from sklearn.impute import SimpleImputer
-
-from .metrics import log_loss
 
 from .config import (
     FEATURE_COLS_NO_ODDS,
@@ -28,6 +25,7 @@ from .config import (
     SPLITS_FILE,
     TUNED_PARAMS_FILE,
 )
+from .metrics import log_loss
 
 
 def main() -> None:
@@ -72,7 +70,7 @@ def main() -> None:
         "imputer_name": PROD_IMPUTER_NAME,
         "model_file": f"{PROD_MODEL_NAME}.joblib",
         "framework": f"xgboost {xgb.__version__}",
-        "trained_on": str(date.today()),
+        "trained_on": str(datetime.now(timezone.utc).date()),
         "train_seasons": meta["train_seasons"],
         "val_season": meta["val_season"],
         "test_season": meta["test_season"],

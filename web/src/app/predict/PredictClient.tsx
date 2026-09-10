@@ -6,6 +6,7 @@ import { LoadingButton } from "@/components/interior/loading-button";
 import { CopyButton } from "@/components/interior/copy-button";
 import { ReelNumber } from "@/components/AnimatedDigits";
 import { Tooltip } from "@/components/Tooltip";
+import { confBucket, trackEvent } from "@/lib/analytics";
 import { ProbBar } from "@/components/ProbBar";
 import { FormBadges } from "@/components/FormBadges";
 import { TEAMS } from "@/lib/teams";
@@ -22,7 +23,12 @@ function ShareRow({ result }: { result: Prediction }) {
     "rounded-full border-2 border-coal/15 px-4 py-1.5 font-mono text-[10px] tracking-[0.25em] text-coal hover:border-coal";
   return (
     <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-      <CopyButton value={text} label="COPY CALL" copiedLabel="COPIED" />
+      <CopyButton
+        value={text}
+        label="COPY CALL"
+        copiedLabel="COPIED"
+        onCopy={() => trackEvent("share_copy", { channel: "clipboard" })}
+      />
       <a className={linkCls} href={og} target="_blank" rel="noreferrer">
         CARD ↗
       </a>
@@ -89,9 +95,14 @@ function PredictInner() {
     });
     const body = await r.json().catch(() => ({}));
     if (!r.ok) throw new Error(typeof body.detail === "string" ? body.detail : "prediction failed");
-    const parsed = PredictionSchema.safeParse(body);
-    if (!parsed.success) throw new Error("bad response from model");
-    return parsed.data;
+      const parsed = PredictionSchema.safeParse(body);
+      if (!parsed.success) throw new Error("bad response from model");
+      trackEvent("prediction_made", {
+        outcome: parsed.data.prediction,
+        confidence: confBucket(parsed.data.confidence),
+        called: parsed.data.call ? "yes" : "no",
+      });
+      return parsed.data;
   }
 
   async function run(h: string, a: string) {

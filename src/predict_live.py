@@ -6,9 +6,7 @@ Log dedupes on (Date, Home, Away).
 from __future__ import annotations
 
 from io import StringIO
-from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import requests
 
@@ -75,7 +73,7 @@ def fetch_fixtures() -> pd.DataFrame:
                     df.attrs["source"] = "live"
                     df.attrs["network_ok"] = True
                     return df
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 — any fetch failure falls back to local cache
         print(f"Failed to fetch fixtures: {e}")
     local = fetch_local_fixtures()
     if len(local):
@@ -101,7 +99,7 @@ def _fallback_current_season() -> pd.DataFrame:
                 unplayed = df[df["FTHG"].isna()]
                 if len(unplayed) > 0:
                     fixtures = pd.concat([fixtures, unplayed], ignore_index=True)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 — one bad league must not kill the other four
             print(f"  {code}: {e}")
     return fixtures
 
@@ -135,7 +133,7 @@ def main() -> None:
         try:
             r = predict_one(home, away, fixture["Date"], elo, margin_elo, team_history, imputer, model,
                             league=fixture.get("League", fixture.get("Div")))
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 — skip bad fixture, keep the batch going
             print(f"  skip {home} vs {away}: {e}")
             continue
         p = r["probabilities"]
@@ -166,7 +164,7 @@ def main() -> None:
     for _, r in pred_df.iterrows():
         league_name = LEAGUE_NAMES.get(r["League"], r["League"])
         gate = "CALL" if r["Call"] else "no-call"
-        print(f"{str(r['Date']):<14} {league_name:<12} {r['Home']:<22} {r['Away']:<22} {r['Prediction']:<6} {r['Confidence']:<8.3f} {r['P(H)']:<8.3f} {r['P(D)']:<8.3f} {r['P(A)']:<8.3f} {gate}")
+        print(f"{r['Date']!s:<14} {league_name:<12} {r['Home']:<22} {r['Away']:<22} {r['Prediction']:<6} {r['Confidence']:<8.3f} {r['P(H)']:<8.3f} {r['P(D)']:<8.3f} {r['P(A)']:<8.3f} {gate}")
 
     PREDICTIONS_LOG.parent.mkdir(parents=True, exist_ok=True)
     append_predictions(pred_df)

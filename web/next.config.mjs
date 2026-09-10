@@ -1,13 +1,15 @@
 /** @type {import('next').NextConfig} */
+import { withSentryConfig } from "@sentry/nextjs";
+
 const isProd = process.env.NODE_ENV === "production";
 const csp = [
   "default-src 'self'",
   "img-src 'self' data: blob:",
   // unsafe-eval: dev-only (Next dev runtime needs it); never in production.
-  `script-src 'self' 'unsafe-inline'${isProd ? "" : " 'unsafe-eval'"}`,
+  `script-src 'self' 'unsafe-inline'${isProd ? "" : " 'unsafe-eval'"} https://plausible.io`,
   "style-src 'self' 'unsafe-inline'",
   "font-src 'self' data:",
-  "connect-src 'self'",
+  "connect-src 'self' https://plausible.io https://*.sentry.io",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -34,4 +36,9 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  // Source maps for readable stack traces; no behavior change.
+  widenClientFileUpload: true,
+  hideSourceMaps: true,
+  disableLogger: true,
+});

@@ -13,7 +13,6 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import joblib
 import numpy as np
 import pandas as pd
 import xgboost as xgb
@@ -104,7 +103,6 @@ def main():
             pooled_mask[name].append(None)
             print(f"  {name:<14} LL={ll:.4f}", flush=True)
 
-    y_all = np.concatenate(pooled_y)
     rng = np.random.default_rng(SEED)
     verdicts = {}
     for name in sets:

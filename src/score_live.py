@@ -13,7 +13,6 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
-from pathlib import Path
 
 from .config import CLEAN_FILE, INV_TARGET_MAP, PREDICTIONS_LOG, RECORD_FILE
 from .inference import (
@@ -23,6 +22,7 @@ from .inference import (
     load_artifacts,
     vectorize,
 )
+
 TARGET_SEASON = 2627
 BUCKETS = [(0.70, 1.01, "70%+"), (0.60, 0.70, "60-70%"), (0.50, 0.60, "50-60%"),
            (0.45, 0.50, "45-50%"), (0.0, 0.45, "<45%")]
@@ -103,7 +103,7 @@ def metrics(df: pd.DataFrame) -> dict:
     p = df[["PH", "PD", "PA"]].to_numpy(dtype=float)
     p = np.clip(p, 1e-15, 1 - 1e-15)
     out = {
-        "n": int(len(df)),
+        "n": len(df),
         "acc": round(float((df["Prediction"] == df["Actual"]).mean()), 4),
         "log_loss": round(float(-np.mean([np.log(p[i, y[i]]) for i in range(len(df))])), 4),
         "brier": round(float(np.mean(((p - np.eye(3)[y]) ** 2).sum(axis=1))), 4),
@@ -113,7 +113,7 @@ def metrics(df: pd.DataFrame) -> dict:
         ys = sub["Actual"].map({"H": 0, "D": 1, "A": 2}).to_numpy()
         ps = np.clip(sub[["PH", "PD", "PA"]].to_numpy(dtype=float), 1e-15, 1 - 1e-15)
         by_league[str(lg)] = {
-            "n": int(len(sub)),
+            "n": len(sub),
             "acc": round(float((sub["Prediction"] == sub["Actual"]).mean()), 4),
             "log_loss": round(float(-np.mean([np.log(ps[i, ys[i]]) for i in range(len(sub))])), 4),
         }
@@ -121,7 +121,7 @@ def metrics(df: pd.DataFrame) -> dict:
     buckets = []
     for lo, hi, label in BUCKETS:
         sub = df[(df.Confidence >= lo) & (df.Confidence < hi)]
-        buckets.append({"bucket": label, "n": int(len(sub)),
+        buckets.append({"bucket": label, "n": len(sub),
                         "acc": round(float((sub["Prediction"] == sub["Actual"]).mean()), 4) if len(sub) else None})
     out["buckets"] = buckets
     return out

@@ -4,12 +4,13 @@ from __future__ import annotations
 import matplotlib
 
 matplotlib.use("Agg")
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import numpy as np
 import shap
-from pathlib import Path
 
-from .config import FEATURE_COLS_NO_ODDS, MODEL_DIR, SPLITS_FILE
+from .config import FEATURE_COLS_NO_ODDS, SPLITS_FILE
 
 OUTPUT_DIR = Path("notebooks")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -19,12 +20,10 @@ def main() -> None:
     from .inference import load_artifacts
 
     data = np.load(SPLITS_FILE)
-    X_train = data["X_train"]
     X_test = data["X_test"]
 
     imputer, xgb_model, model_file = load_artifacts()
     print(f"Explaining {model_file}")
-    X_train_imp = imputer.transform(X_train)
     X_test_imp = imputer.transform(X_test)
 
     sample = X_test_imp[:500]
