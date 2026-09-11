@@ -84,38 +84,40 @@ comma-separated) in the hosting env. The API holds state in memory — after any
 reload disabled). Heavy traffic is throttled per-IP on `/predict` and
 `/fixtures` (429 + Retry-After).
 
-## Deploy (Render API + Vercel web)
+## Deploy (HF Spaces API + Vercel web)
 
 API first, then web — the web needs the API URL.
 
-**1. API — Render Blueprint (one click)**
-1. Push this repo (processed data + prod model are committed, so the build
-   needs no network pulls).
-2. Render dashboard → New → Blueprint → select this repo. `render.yaml`
-   defines the service (build retrains + regenerates artifacts, then serves).
-3. After first deploy, set `ALLOWED_ORIGINS` to your Vercel URL
-   (e.g. `https://matchday-fate.vercel.app`). `RELOAD_TOKEN` is auto-generated;
-   copy it somewhere safe — needed for `POST /reload` after refreshes.
-4. Optional: `SENTRY_DSN`. `HTTPS=1` is preset (enables HSTS).
-5. Note the service URL, e.g. `https://matchday-fate-api.onrender.com`.
-   Free tier sleeps when idle: first request takes ~60s+ (model load). Keep it
-   warm with a free UptimeRobot ping to `/health` every 5 minutes.
+**1. API — Hugging Face Spaces, Docker SDK (free, no card)**
+1. Push this repo (processed data + prod model are committed; `Dockerfile`
+   needs no network pulls at build time).
+2. huggingface.co → New Space → name it (e.g. `matchday-fate-api`), SDK
+   **Docker**, visibility public (no secrets in code) or private — your call.
+3. Get the code in: link this GitHub repo (auto-rebuilds on push) or
+   `git remote add space https://huggingface.co/spaces/<you>/<name>` and push.
+4. Space Settings → Variables: `ALLOWED_ORIGINS` (your Vercel URL),
+   `RELOAD_TOKEN` (generate one, keep it safe — needed for `POST /reload`),
+   `HTTPS=1` (enables HSTS). Optional: `SENTRY_DSN`.
+5. Note the Space URL, e.g. `https://<you>-matchday-fate-api.hf.space`.
+   Free Spaces sleep when idle: first request takes ~60s+ (model load). Keep
+   it warm with a free UptimeRobot ping to `/health` every 5 minutes.
+6. Alternative (needs a card): `render.yaml` remains for Render Blueprint.
 
 **2. Web — Vercel (import, two settings)**
 1. Vercel dashboard → Add New → Project → Import this repo.
 2. Set **Root Directory** to `web`. Framework auto-detected (Next.js).
 3. Environment variables:
-   - `API_URL` = Render URL from step 1 (required — server-side only)
+   - `API_URL` = Space URL from step 1 (required — server-side only)
    - `NEXT_PUBLIC_SITE_URL` = your Vercel URL (required for OG unfurls)
    - `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`, `NEXT_PUBLIC_SENTRY_DSN`, `SENTRY_DSN` (optional)
 4. Deploy. Verify: home loads, predict returns a call. Set `ALLOWED_ORIGINS`
-   on Render to this URL if you haven't yet.
+   on the Space to this URL if you haven't yet.
 
 **3. Ongoing ops**
 - Weekly: `make refresh` locally → commit regenerated artifacts → push
-  (both services redeploy) → `POST /reload` with your token (or wait for restart).
+  (Space rebuilds) → `POST /reload` with your token (or wait for restart).
 - Rollback: `make promote` tags each model; `git checkout <tag> -- models/` + reload.
-- Uptime: Render/Vercel dashboards + UptimeRobot on `/health`.
+- Uptime: Space logs + UptimeRobot on `/health`.
 
 ## Metrics
 

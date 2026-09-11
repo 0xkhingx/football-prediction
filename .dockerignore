@@ -1,0 +1,14 @@
+.git/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+web/node_modules/
+web/.next/
+notebooks/
+experiments/
+data/raw/
+data/predictions_log.csv
+.env
+*.log
