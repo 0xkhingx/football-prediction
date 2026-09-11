@@ -14,6 +14,9 @@ export async function POST(req: Request) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(parsed.data),
+      // Bound the wait: a sleeping backend wakes slowly; better a clean
+      // 502 ("backend unreachable") than hanging until the platform kills us.
+      signal: AbortSignal.timeout(55000),
     });
     const body = await r.json().catch(() => ({}));
     if (!r.ok) {

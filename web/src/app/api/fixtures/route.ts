@@ -3,7 +3,10 @@ import { API_BASE } from "@/lib/constants";
 
 export async function GET() {
   try {
-    const r = await fetch(`${API_BASE}/fixtures`, { next: { revalidate: 900 } });
+    const r = await fetch(`${API_BASE}/fixtures`, {
+      next: { revalidate: 900 },
+      signal: AbortSignal.timeout(25000),
+    });
     const body = await r.json().catch(() => ({}));
     if (!r.ok) {
       return NextResponse.json(
