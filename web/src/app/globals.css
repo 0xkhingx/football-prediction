@@ -21,6 +21,13 @@ a,
   color: #161412;
 }
 
+/* Display type (BespokeStencil headers) defaults to bold: the variable file
+   spans 300–800, and 700 preserves the heavy poster feel site-wide without
+   touching every heading class. Override per-element with font-light etc. */
+.font-display {
+  font-weight: 700;
+}
+
 /* Motion system: one ease-out token, press states, result reveals. */
 :root {
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);

@@ -1,13 +1,19 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Anton, IBM_Plex_Mono, Inter } from "next/font/google";
+import localFont from "next/font/local";
+import { IBM_Plex_Mono, Nunito_Sans } from "next/font/google";
 import { NavBar } from "@/components/NavBar";
 import "./globals.css";
 
-const display = Anton({
-  weight: "400",
-  subsets: ["latin"],
+// Headers: BespokeStencil, self-hosted from src/fonts (Fontshare FFL license,
+// free for commercial use). Variable file covers weights 300–800 in one 38KB
+// download; display type defaults to bold (see .font-display in globals.css)
+// to keep the poster's heavy feel that Anton used to give us.
+const display = localFont({
+  src: "../fonts/BespokeStencil-Variable.woff2",
   variable: "--font-display",
+  weight: "300 800",
+  display: "swap",
 });
 
 const mono = IBM_Plex_Mono({
@@ -16,7 +22,8 @@ const mono = IBM_Plex_Mono({
   variable: "--font-mono",
 });
 
-const sans = Inter({
+const sans = Nunito_Sans({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-sans",
 });
