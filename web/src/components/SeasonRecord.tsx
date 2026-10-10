@@ -5,6 +5,7 @@ import { PopDigits } from "./AnimatedDigits";
 
 type Bucket = { bucket: string; n: number; acc: number | null };
 type Tally = { n: number; acc: number; log_loss: number; brier: number };
+type Sources = { live: number; backfill: number };
 type Recent = {
   Date: string;
   League: string;
@@ -23,6 +24,7 @@ export function SeasonRecord() {
   const [tally, setTally] = useState<Tally | null>(null);
   const [buckets, setBuckets] = useState<Bucket[]>([]);
   const [recent, setRecent] = useState<Recent[]>([]);
+  const [sources, setSources] = useState<Sources | null>(null);
   const [failed, setFailed] = useState(false);
   const [mode, setMode] = useState<"simple" | "detailed">("simple");
 
@@ -37,6 +39,9 @@ export function SeasonRecord() {
         setTally(b.tally);
         if (Array.isArray(b.buckets)) setBuckets(b.buckets);
         if (Array.isArray(b.recent)) setRecent(b.recent.slice(-5).reverse());
+        if (typeof b.sources?.live === "number" && typeof b.sources?.backfill === "number") {
+          setSources({ live: b.sources.live, backfill: b.sources.backfill });
+        }
       })
       .catch(() => setFailed(true));
   }, []);
@@ -72,9 +77,23 @@ export function SeasonRecord() {
         </div>
       </div>
       {!detailed && (
-        <p className="mt-3 max-w-xl text-sm leading-relaxed text-cream/80">
-          I&rsquo;ve predicted {tally.n} matches this season and gotten {pct}% right. The more
-          confident I say I am, the more often I&rsquo;m correct.
+        <p className="mt-3 max-w-xl text-sm leading-relaxed text-cream/85">
+          I&rsquo;ve predicted {tally.n} matches this season and gotten {pct}% right
+          {sources && (sources.live > 0 || sources.backfill > 0) && (
+            <>
+              {" "}— {sources.live} live {sources.live === 1 ? "call" : "calls"}
+              {sources.backfill > 0 && (
+                <> and {sources.backfill} preseason {sources.backfill === 1 ? "replay" : "replays"}</>
+              )}
+            </>
+          )}
+          . The more confident I say I am, the more often I&rsquo;m correct.
+        </p>
+      )}
+      {!detailed && (
+        <p className="mt-3 max-w-xl text-xs leading-relaxed text-cream/70">
+          A &ldquo;preseason replay&rdquo; means a past match re-run as if predicted live, before
+          knowing the score. Live calls take over from the ship date.
         </p>
       )}
       <div className="mt-3 flex flex-wrap items-baseline gap-x-8 gap-y-2">
@@ -82,11 +101,11 @@ export function SeasonRecord() {
           <PopDigits key={`tally-${tally.acc}`} value={`${pct}%`} />
         </p>
         {detailed ? (
-          <p className="font-mono text-xs tracking-[0.2em] text-cream/60">
+          <p className="font-mono text-xs tracking-[0.2em] text-cream/75">
             {tally.n} CALLS · LOG-LOSS {tally.log_loss.toFixed(3)}
           </p>
         ) : (
-          <p className="flex items-center gap-2 font-mono text-xs tracking-[0.2em] text-cream/60">
+          <p className="flex items-center gap-2 font-mono text-xs tracking-[0.2em] text-cream/75">
             {tally.n} CALLS
             <details className="relative inline-block">
               <summary
@@ -109,10 +128,10 @@ export function SeasonRecord() {
           HOW OFTEN MY PREDICTIONS CAME TRUE, GROUPED BY HOW CONFIDENT I WAS
         </p>
       )}
-      <div className={`grid gap-2 sm:grid-cols-5 ${detailed ? "mt-6" : "mt-2"}`}>
+      <div className={`grid gap-2 sm:grid-cols-5 ${detailed ? "mt-6" : "mt-4"}`}>
         {buckets.map((b) => (
           <div key={b.bucket} className="rounded-2xl bg-white/5 p-3">
-            <p className="font-mono text-[10px] tracking-[0.2em] text-cream/60">{b.bucket}</p>
+            <p className="font-mono text-[11px] tracking-[0.15em] text-cream/75">{b.bucket}</p>
             <p className="mt-1 font-display text-2xl text-cream">
               {b.acc === null ? (
                 "—"
@@ -120,18 +139,17 @@ export function SeasonRecord() {
                 <PopDigits key={`${b.bucket}-${b.acc}`} value={`${(b.acc * 100).toFixed(0)}%`} />
               )}
             </p>
-            <p className="font-mono text-[10px] text-cream/50">
+            <p className="font-mono text-[11px] text-cream/70">
               {detailed ? `n=${b.n}` : `(${b.n} ${b.n === 1 ? "game" : "games"})`}
+              {b.n < 15 && b.acc !== null && (
+                <span className="ml-1 rounded-full border border-lime/40 px-1.5 py-px text-[9px] tracking-[0.1em] text-lime">
+                  SMALL SAMPLE
+                </span>
+              )}
             </p>
           </div>
         ))}
       </div>
-      {!detailed && (
-        <p className="mt-6 text-xs leading-relaxed text-cream/60">
-          &ldquo;Preseason replay&rdquo; below means I re-ran a past match as if predicting it
-          live, before knowing the score.
-        </p>
-      )}
       <div className={`space-y-1.5 ${detailed ? "mt-6" : "mt-2"}`}>
         {recent.map((r) => (
           <p key={`${r.Date}-${r.Home}-${r.Away}`} className="font-mono text-[11px] tracking-wide">
@@ -141,7 +159,7 @@ export function SeasonRecord() {
             <span className="text-cream">
                 {r.Home} vs {r.Away}
               </span>{" "}
-              <span className="text-cream/50">
+              <span className="text-cream/65">
                 {OUTCOME[r.Prediction as keyof typeof OUTCOME]} called · {r.Actual} ·{" "}
                 {r.Source === "live" ? "live call" : "preseason replay"}
               </span>

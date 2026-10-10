@@ -16,10 +16,12 @@ import pandas as pd
 
 from .config import CLEAN_FILE, INV_TARGET_MAP, PREDICTIONS_LOG, RECORD_FILE
 from .inference import (
+    apply_calibrators,
     apply_honesty_gate,
     build_state_from_historical,
     featurize_fixture,
     load_artifacts,
+    load_serving_stack,
     vectorize,
 )
 
@@ -51,7 +53,11 @@ def _row_to_entry(date, league, home, away, probs, actual, source: str) -> dict:
 
 def backfill() -> pd.DataFrame:
     imputer, model, name = load_artifacts()
-    print(f"backfilling with {name}")
+    try:
+        lr, scaler, weight, cal = load_serving_stack()
+    except Exception:
+        lr, scaler, weight, cal = None, None, 1.0, None
+    print(f"backfilling with {name}" + (f" + blend(w={weight:.2f})+cal" if cal is not None else " (raw)"))
     entries: list[dict] = []
 
     def on_row(row, elo, melo, hist):
@@ -59,6 +65,18 @@ def backfill() -> pd.DataFrame:
             return
         feats = featurize_fixture(row["HomeTeam"], row["AwayTeam"], row["Date"], elo, melo, hist)
         probs = model.predict_proba(imputer.transform(vectorize(feats)))[0]
+        # Score the served path (blend + calibration), not raw XGB.
+        if lr is not None and scaler is not None and weight < 1.0:
+            try:
+                lr_p = lr.predict_proba(scaler.transform(imputer.transform(vectorize(feats))))[0]
+                probs = weight * probs + (1 - weight) * lr_p
+            except Exception:
+                pass
+        if cal is not None:
+            try:
+                probs = apply_calibrators(probs.reshape(1, -1), cal)[0]
+            except Exception:
+                pass
         entries.append(_row_to_entry(row["Date"], row["League"], row["HomeTeam"],
                                      row["AwayTeam"], probs, row["FTR"], "backfill"))
 

@@ -177,10 +177,18 @@ DERBY_PAIRS: set[frozenset] = frozenset({
 
 # Step-2 experiment candidates: name -> added columns (appended AFTER the 23
 # prod cols; prod order untouched so parity tests keep passing).
+# Phase-1 additions (free, fair-play, past-only): chance-quality proxies from
+# existing shot columns + new-team flags replacing the need for the 'Other'
+# ghost entity. Availability set is schema-reserved (all-NaN until a free
+# pre-match feed lands) so the harness can adopt it without re-plumbing.
 EXPERIMENT_SETS: dict[str, list[str]] = {
     "restdiff": ["RestDiff"],
     "congestion": ["HomeCongestion14", "AwayCongestion14"],
     "gameno": ["HomeGameNo", "AwayGameNo"],
     "derby": ["Derby"],
     "ppg": ["PPGDiff"],
+    "chance": ["HomeShotAcc5", "AwayShotAcc5", "HomeConvRate5", "AwayConvRate5"],
+    "newteam": ["HomeNewTeam", "AwayNewTeam"],
+    "avail": ["HomeOut", "AwayOut", "AvailMissing"],
+    "oppadj": ["HomeAttStr", "AwayAttStr", "HomeDefStr", "AwayDefStr"],
 }

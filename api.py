@@ -18,6 +18,7 @@ from src.config import LEAGUE_NAMES, MODEL_DIR, TOP_LEAGUE_CODES
 from src.inference import (
     build_state_from_historical,
     load_artifacts,
+    load_serving_stack,
     predict_one,
     resolve_team,
 )
@@ -84,7 +85,11 @@ class PredictResponse(BaseModel):
 def _state():
     elo, melo, hist = build_state_from_historical()
     imp, model, name = load_artifacts()
-    return elo, melo, hist, imp, model, name
+    try:
+        stack = load_serving_stack()
+    except Exception:
+        stack = (None, None, 1.0, None)
+    return elo, melo, hist, imp, model, name, stack
 
 
 @app.post("/reload")
@@ -114,19 +119,24 @@ def reload(authorization: str | None = Header(default=None)):
 
 @app.get("/health")
 def health():
-    _, _, _, _, _, name = _state()
+    _, _, _, _, _, name, stack = _state()
     reg_path = MODEL_DIR / "model_registry.json"
     registry = {}
     if reg_path.exists():
         import json
 
         registry = json.loads(reg_path.read_text())
+    _, _, weight, cal = stack if stack else (None, None, 1.0, None)
     return {
         "status": "ok",
         "model": name,
         "features": registry.get("n_features", len(registry.get("features", [])) or None),
         "fair_play": True,
         "metrics": registry.get("metrics", {}),
+        "serving": {
+            "ensemble_weight": registry.get("ensemble", {}).get("xgb_weight", weight),
+            "calibrated": cal is not None,
+        },
     }
 
 
@@ -174,7 +184,7 @@ def predict(req: PredictRequest, request: Request):
             status_code=422,
             detail="date out of supported range (2015-08-01 to 30 days ahead)",
         )
-    elo, melo, hist, imp, model, name = _state()
+    elo, melo, hist, imp, model, name, stack = _state()
     rh = resolve_team(req.home, hist)
     ra = resolve_team(req.away, hist)
     for r_ in (rh, ra):
@@ -186,7 +196,8 @@ def predict(req: PredictRequest, request: Request):
     if rh["team"] == ra["team"]:
         raise HTTPException(status_code=422, detail="both names resolve to the same team")
     try:
-        r = predict_one(rh["team"], ra["team"], req.date, elo, melo, hist, imp, model)
+        r = predict_one(rh["team"], ra["team"], req.date, elo, melo, hist, imp, model,
+                        serving_stack=stack)
     except Exception as e:  # noqa: BLE001 — any model failure becomes a 400, never a 500 trace
         raise HTTPException(status_code=400, detail=str(e))
     p = r["probabilities"]
@@ -226,8 +237,10 @@ def season_record():
     m = metrics(df)
     recent = df.tail(10)[["Date", "League", "Home", "Away", "Prediction", "Confidence",
                           "Actual", "Correct", "Source"]].to_dict(orient="records")
+    sources = df["Source"].value_counts().to_dict() if "Source" in df.columns else {}
     return {
         "tally": {k: m[k] for k in ("n", "acc", "log_loss", "brier")},
+        "sources": {"live": int(sources.get("live", 0)), "backfill": int(sources.get("backfill", 0))},
         "per_league": m["per_league"],
         "buckets": m["buckets"],
         "recent": recent,

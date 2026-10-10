@@ -3,7 +3,7 @@
   "imputer_name": "no_odds_imputer",
   "model_file": "no_odds_xgb_tuned.joblib",
   "framework": "xgboost 3.3.0",
-  "trained_on": "2026-09-09",
+  "trained_on": "2026-10-10",
   "train_seasons": [
     1516,
     1617,
@@ -58,7 +58,29 @@
   "metrics": {
     "val_log_loss": 0.9963840590610313,
     "test_log_loss": 0.988457841732492,
-    "test_acc": 0.5068493150684932
+    "test_acc": 0.5068493150684932,
+    "note": "served path is xgb-only; blend+cal gated OFF after test 1.2084 (overfit, see components)"
+  },
+  "components": {
+    "xgb": {
+      "val_log_loss": 0.9963840590610313,
+      "test_log_loss": 0.988457841732492
+    },
+    "lr": {
+      "val_log_loss": 0.9950886886768606,
+      "test_log_loss": 1.0019969401079376
+    },
+    "blend_uncalibrated": {
+      "val_log_loss": 0.9946079185342823,
+      "test_log_loss": 0.9945915510986924
+    }
+  },
+  "ensemble": {
+    "lr_model": "no_odds_lr_prod",
+    "scaler": "no_odds_scaler_prod",
+    "calibrators": "",
+    "xgb_weight": 1.0,
+    "status": "gated-off: blend w=0.30 test 0.9946 vs xgb 0.9885; isotonic test 1.2084 overfit — serve xgb-only"
   },
   "fair_play": true,
   "odds_features": []

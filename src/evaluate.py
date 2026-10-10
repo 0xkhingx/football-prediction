@@ -61,6 +61,23 @@ def main():
         xgb_tuned = joblib.load(tuned_path)
         xgb_tuned_probs = xgb_tuned.predict_proba(X_test_imp)
 
+    # Served path: blend + isotonic (what /predict actually returns post-retrain).
+    served_probs = None
+    try:
+        from .inference import apply_calibrators, load_serving_stack
+        lr_p, scaler_p, w_p, cal_p = load_serving_stack()
+        if lr_p is not None and scaler_p is not None and (MODEL_DIR / "no_odds_lr_prod.joblib").exists():
+            _lr = joblib.load(MODEL_DIR / "no_odds_lr_prod.joblib")
+            _sc = joblib.load(MODEL_DIR / "no_odds_scaler_prod.joblib")
+            _lr_probs = _lr.predict_proba(_sc.transform(X_test_imp))
+            _base = xgb_tuned_probs if xgb_tuned_probs is not None else xgb_no_probs
+            served_probs = w_p * _base + (1 - w_p) * _lr_probs
+            if cal_p is not None:
+                served_probs = apply_calibrators(served_probs, cal_p)
+    except Exception as e:  # noqa: BLE001 — evaluation never fails on optional stack
+        print(f"  served-path unavailable ({e})")
+        served_probs = None
+
     has_odds = "X_test_odds" in data
     if has_odds:
         X_test_odds = data["X_test_odds"]
@@ -94,6 +111,8 @@ def main():
     print(f"{'XGB (no odds)':<30} {log_loss(y_test, xgb_no_probs):<12.4f} {brier_score(y_test, xgb_no_probs):<12.4f}")
     if xgb_tuned_probs is not None:
         print(f"{'XGB-tuned (no odds, PROD)':<30} {log_loss(y_test, xgb_tuned_probs):<12.4f} {brier_score(y_test, xgb_tuned_probs):<12.4f}")
+    if served_probs is not None:
+        print(f"{'SERVED blend+cal (PROD)':<30} {log_loss(y_test, served_probs):<12.4f} {brier_score(y_test, served_probs):<12.4f}")
 
     if has_odds and use_odds:
         print(f"{'LR (with B365 odds)':<30} {log_loss(y_test, lr_with_probs):<12.4f} {brier_score(y_test, lr_with_probs):<12.4f}")
@@ -110,9 +129,9 @@ def main():
         print(f"{'Bookmaker (B365, normalized)':<30} {'n/a (no odds coverage)'}")
 
     print("\n" + "=" * 70)
-    print("PER-LEAGUE BREAKDOWN — prod tuned (no odds)")
+    print("PER-LEAGUE BREAKDOWN — served prod (blend+cal if present)")
     print("=" * 70)
-    headline_probs = xgb_tuned_probs if xgb_tuned_probs is not None else xgb_no_probs
+    headline_probs = served_probs if served_probs is not None else (xgb_tuned_probs if xgb_tuned_probs is not None else xgb_no_probs)
     rows = []
     for code, name in LEAGUE_MAP.items():
         mask = df_test["League"] == code
@@ -170,6 +189,12 @@ def main():
         results["prod_tuned"] = {
             "model": "no_odds_xgb_tuned",
             "xgboost_tuned": {"log_loss": float(log_loss(y_test, xgb_tuned_probs)), "brier": float(brier_score(y_test, xgb_tuned_probs))},
+        }
+    if served_probs is not None:
+        results["served"] = {
+            "model": "blend+cal",
+            "log_loss": float(log_loss(y_test, served_probs)),
+            "brier": float(brier_score(y_test, served_probs)),
         }
     if has_odds and use_odds:
         results["with_odds"] = {

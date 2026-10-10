@@ -85,6 +85,9 @@ function PredictInner() {
     const awayTeam = a.trim();
     setHome(homeTeam);
     setAway(awayTeam);
+    if (!homeTeam || !awayTeam) {
+      throw new Error("Type both teams first — suggestions appear as you type.");
+    }
     if (homeTeam.toLowerCase() === awayTeam.toLowerCase()) {
       throw new Error("Pick two different teams.");
     }
@@ -136,14 +139,18 @@ function PredictInner() {
 
   return (
     <div className="space-y-3">
-      <section className="rounded-[2rem] bg-cream px-6 py-12 sm:px-12">
+      <section className="rounded-[2rem] bg-cream px-6 py-10 sm:px-12">
         <p className="text-center font-mono text-[11px] tracking-[0.3em] text-ember">MANUAL PREDICTOR</p>
         <h1 className="mt-2 text-center font-display text-5xl uppercase leading-none text-ember sm:text-7xl">
           Name your tie
         </h1>
+        <p className="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-coal/75">
+          Choose two teams to generate a match prediction — outcome, confidence, form and a
+          likely scoreline.
+        </p>
         <div className={`mx-auto mt-8 grid max-w-2xl items-end gap-3 sm:grid-cols-[1fr_auto_1fr] ${shaking ? "is-shaking" : ""}`}>
           <label className="block" htmlFor="home-team">
-            <span className="font-mono text-[11px] tracking-[0.3em] text-coal/60">HOME</span>
+            <span className="font-mono text-[11px] tracking-[0.25em] text-coal/70">HOME — TYPE TO SEARCH TEAMS</span>
             <input id="home-team" list="teams-list" value={home} disabled={busy} onChange={(e) => setHome(e.target.value)} className={inputCls} placeholder="Arsenal" autoComplete="off" />
           </label>
           <button
@@ -159,7 +166,7 @@ function PredictInner() {
             <span aria-hidden="true">⇅</span>
           </button>
           <label className="block" htmlFor="away-team">
-            <span className="font-mono text-[11px] tracking-[0.3em] text-coal/60">AWAY</span>
+            <span className="font-mono text-[11px] tracking-[0.25em] text-coal/70">AWAY — TYPE TO SEARCH TEAMS</span>
             <input id="away-team" list="teams-list" value={away} disabled={busy} onChange={(e) => setAway(e.target.value)} className={inputCls} placeholder="Chelsea" autoComplete="off" />
           </label>
         </div>
@@ -172,15 +179,25 @@ function PredictInner() {
           <LoadingButton
             onAction={() => run(home, away)}
             pendingLabel="Reading form…"
-            successLabel="Called"
+            successLabel="Predicted"
             errorLabel="Retry"
             disabled={busy}
             onError={(e) => setError(e instanceof Error ? e.message : "prediction failed")}
           >
-            Call it
+            Generate prediction
           </LoadingButton>
+          {!result && !error && (
+            <p className="mx-auto mt-3 max-w-md text-xs leading-relaxed text-coal/65">
+              You&apos;ll get P(Home / Draw / Away), a stamped call when confidence clears 45%,
+              last-5 form for both sides and the model&apos;s scoreline.
+            </p>
+          )}
         </div>
-        {error && <p role="alert" className="mt-4 text-center text-sm text-away">{error}</p>}
+        {error && (
+          <p role="alert" className="mx-auto mt-4 max-w-md rounded-2xl border-2 border-ember/30 bg-ember/10 px-4 py-3 text-center text-sm font-medium text-coal">
+            {error}
+          </p>
+        )}
         {result && (
           <div
             key={`${result.home}-${result.away}`}

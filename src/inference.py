@@ -141,6 +141,52 @@ def load_artifacts(model_dir: Path = MODEL_DIR):
     return imputer, model, str(model_file.name)
 
 
+def load_serving_stack(model_dir: Path = MODEL_DIR):
+    """Optional ensemble + calibrators pinned by the registry.
+
+    Returns (lr, scaler, xgb_weight, calibrators) with Nones where absent so
+    old deployments (XGB-only artifacts) keep serving raw probs. Never raises
+    for missing optional files — retrain creates them.
+    """
+    reg = load_registry() or {}
+    ens = reg.get("ensemble", {})
+    lr = scaler = cal = None
+    weight = float(ens.get("xgb_weight", 1.0))
+    try:
+        if ens.get("lr_model") and (model_dir / f"{ens['lr_model']}.joblib").exists():
+            lr = joblib.load(model_dir / f"{ens['lr_model']}.joblib")
+        if ens.get("scaler") and (model_dir / f"{ens['scaler']}.joblib").exists():
+            scaler = joblib.load(model_dir / f"{ens['scaler']}.joblib")
+        if ens.get("calibrators") and (model_dir / f"{ens['calibrators']}.joblib").exists():
+            cal = joblib.load(model_dir / f"{ens['calibrators']}.joblib")
+    except Exception:
+        lr, scaler, cal = None, None, None
+        weight = 1.0
+    if lr is None or scaler is None:
+        return None, None, 1.0, cal
+    return lr, scaler, weight, cal
+
+
+def apply_calibrators(probs, calibrators) -> np.ndarray:
+    """Per-outcome isotonic map + renormalize. Identity when absent."""
+    if not calibrators:
+        return np.asarray(probs, dtype=float)
+    p = np.asarray(probs, dtype=float)
+    out = np.zeros_like(p)
+    for k in range(p.shape[1] if p.ndim == 2 else 3):
+        iso = calibrators[k] if isinstance(calibrators, dict) else calibrators[k]
+        if p.ndim == 2:
+            out[:, k] = iso.transform(p[:, k])
+        else:
+            out[k] = iso.transform([p[k]])[0]
+    out = np.clip(out, 1e-15, 1 - 1e-15)
+    if out.ndim == 2:
+        out /= out.sum(axis=1, keepdims=True)
+    else:
+        out /= out.sum()
+    return out
+
+
 def _mean(xs: list) -> float:
     return float(np.mean(xs)) if xs else float("nan")
 
@@ -308,10 +354,33 @@ def last_meeting(team_history, home: str, away: str) -> dict | None:
 
 
 def predict_one(home: str, away: str, date, elo, margin_elo, team_history, imputer, model,
-                league: str | None = None, with_scoreline: bool = True) -> dict:
+                league: str | None = None, with_scoreline: bool = True,
+                serving_stack=None) -> dict:
     feats = featurize_fixture(home, away, date, elo, margin_elo, team_history)
     x = vectorize(feats)
     probs = model.predict_proba(imputer.transform(x))[0]
+    # Optional blend + calibration (served once retrained; identity otherwise).
+    if serving_stack is None:
+        try:
+            lr, scaler, weight, cal = load_serving_stack()
+        except Exception:
+            lr, scaler, weight, cal = None, None, 1.0, None
+    else:
+        lr, scaler, weight, cal = serving_stack
+    blended_by = "xgb"
+    if lr is not None and scaler is not None and weight < 1.0:
+        try:
+            lr_probs = lr.predict_proba(scaler.transform(imputer.transform(x)))[0]
+            probs = weight * probs + (1 - weight) * lr_probs
+            blended_by = f"blend(w={weight:.2f})"
+        except Exception:
+            pass
+    if cal is not None:
+        try:
+            probs = apply_calibrators(probs.reshape(1, -1), cal)[0]
+            blended_by += "+cal"
+        except Exception:
+            pass
     idx = int(np.argmax(probs))
     gate = apply_honesty_gate(probs)
     scoreline = score_for_fixture(home, away, date, league, INV_TARGET_MAP[idx], gate["call"]) if with_scoreline else None
@@ -326,6 +395,7 @@ def predict_one(home: str, away: str, date, elo, margin_elo, team_history, imput
         "h2h": last_meeting(team_history, home, away),
         "scoreline": scoreline,
         "features": feats,
+        "served_by": blended_by,
     }
 
 

@@ -51,10 +51,21 @@ export function NavBar() {
         aria-expanded={open}
         aria-controls="nav-menu"
         onClick={() => setOpen((v) => !v)}
-        className="pressable absolute left-1/2 -translate-x-1/2 rounded-full bg-lime px-5 py-2.5 font-mono text-xs tracking-[0.25em] text-coal sm:px-6"
+        className="pressable absolute left-1/2 min-h-[44px] -translate-x-1/2 rounded-full bg-lime px-5 py-2.5 font-mono text-xs tracking-[0.25em] text-coal sm:px-6 md:hidden"
       >
         MENU
       </button>
+      <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 md:flex" role="group" aria-label="Primary">
+        {ITEMS.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="pressable rounded-full px-4 py-2.5 font-mono text-[11px] tracking-[0.2em] text-cream/85 hover:bg-white/10 hover:text-cream"
+          >
+            {item.label}
+          </Link>
+        ))}
+      </div>
       <Link
         href="https://github.com/0xkhingx/football-prediction"
         target="_blank"

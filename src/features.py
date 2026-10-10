@@ -11,6 +11,14 @@ OUTPUT = Path("data/processed/matches_featurized.csv")
 ELO_K = 20
 ELO_INIT = 1500
 
+# Online strength ratings (opp-adjusted candidates): exponential update rate
+# + hard clip so a 5-0 vs a promoted side can't detonate the rating.
+_STR_ALPHA = 0.10
+_STR_LO, _STR_HI = 0.40, 2.00
+# League-average priors until enough past games accumulate (goals/match).
+_LG_HOME_PRIOR, _LG_AWAY_PRIOR = 1.45, 1.15
+_LG_PRIOR_N = 20
+
 
 def verify_no_leakage(df):
     # MUST replay in the exact order the featurizer used. sort_values defaults
@@ -24,6 +32,12 @@ def verify_no_leakage(df):
     season_apps_v = {}
     season_pts_v = {}
     result_map = {"H": 1, "D": 0, "A": -1}
+    att_v: dict = {}
+    dfn_v: dict = {}
+    lg_h_sum_v: dict = {}
+    lg_h_n_v: dict = {}
+    lg_a_sum_v: dict = {}
+    lg_a_n_v: dict = {}
     errors = 0
 
     def _cong(hist, date):
@@ -163,6 +177,35 @@ def verify_no_leakage(df):
         errors += _close_or_nan(row["PPGDiff"], exp_ppg, "PPGDiff", i, date)
         exp_rd = row["HomeRest"] - row["AwayRest"]
         errors += _close_or_nan(row["RestDiff"], exp_rd, "RestDiff", i, date)
+        # Phase-1 verification (past only, mirrors main loop).
+        def _exp_ratio(hist, num_key, den_key, n=5):
+            if not hist:
+                return np.nan
+            vals = []
+            for r in hist[-n:]:
+                num, den = r.get(num_key, np.nan), r.get(den_key, np.nan)
+                if pd.isna(num) or pd.isna(den) or not den:
+                    continue
+                vals.append(num / den)
+            return float(np.mean(vals)) if vals else np.nan
+
+        errors += _close_or_nan(row["HomeShotAcc5"], _exp_ratio(home_hist, "hst", "hs"), "HomeShotAcc5", i, date)
+        errors += _close_or_nan(row["AwayShotAcc5"], _exp_ratio(away_hist, "ast", "as"), "AwayShotAcc5", i, date)
+        errors += _close_or_nan(row["HomeConvRate5"], _exp_ratio(home_hist, "gf", "hst"), "HomeConvRate5", i, date)
+        errors += _close_or_nan(row["AwayConvRate5"], _exp_ratio(away_hist, "gf", "ast"), "AwayConvRate5", i, date)
+        errors += _close_or_nan(row["HomeNewTeam"], 1.0 if len(home_hist) < 8 else 0.0, "HomeNewTeam", i, date)
+        errors += _close_or_nan(row["AwayNewTeam"], 1.0 if len(away_hist) < 8 else 0.0, "AwayNewTeam", i, date)
+        errors += _close_or_nan(row["AvailMissing"], 1.0, "AvailMissing", i, date)
+        # Opp-adjusted verification (snapshot before update, mirrors main loop).
+        _lg = row["League"]
+        _hn = lg_h_n_v.get(_lg, 0)
+        _an = lg_a_n_v.get(_lg, 0)
+        _lgh = lg_h_sum_v.get(_lg, 0.0) / _hn if _hn >= _LG_PRIOR_N else _LG_HOME_PRIOR
+        _lga = lg_a_sum_v.get(_lg, 0.0) / _an if _an >= _LG_PRIOR_N else _LG_AWAY_PRIOR
+        errors += _close_or_nan(row["HomeAttStr"], att_v.get(home, 1.0), "HomeAttStr", i, date)
+        errors += _close_or_nan(row["AwayAttStr"], att_v.get(away, 1.0), "AwayAttStr", i, date)
+        errors += _close_or_nan(row["HomeDefStr"], dfn_v.get(home, 1.0), "HomeDefStr", i, date)
+        errors += _close_or_nan(row["AwayDefStr"], dfn_v.get(away, 1.0), "AwayDefStr", i, date)
         season_apps_v[(home, season)] = season_apps_v.get((home, season), 0) + 1
         season_apps_v[(away, season)] = season_apps_v.get((away, season), 0) + 1
         vhp = 3.0 if ftr == "H" else (1.0 if ftr == "D" else 0.0)
@@ -171,6 +214,27 @@ def verify_no_leakage(df):
         season_pts_v[(home, season)] = (s + vhp, n + 1)
         s, n = season_pts_v.get((away, season), (0.0, 0))
         season_pts_v[(away, season)] = (s + vap, n + 1)
+
+        # Opp-adjusted state update (mirrors main loop, past-only denominators).
+        def _vclip(x):
+            return min(_STR_HI, max(_STR_LO, x))
+
+        _ah, _aa = att_v.get(home, 1.0), att_v.get(away, 1.0)
+        _dh, _da = dfn_v.get(home, 1.0), dfn_v.get(away, 1.0)
+        _den_h = _lgh * _da if _lgh * _da > 1e-6 else np.nan
+        _den_a = _lga * _dh if _lga * _dh > 1e-6 else np.nan
+        _obs_h = (fthg / _den_h) if not pd.isna(_den_h) else np.nan
+        _obs_a = (ftag / _den_a) if not pd.isna(_den_a) else np.nan
+        if not pd.isna(_obs_h):
+            att_v[home] = _vclip((1 - _STR_ALPHA) * _ah + _STR_ALPHA * _obs_h)
+            dfn_v[away] = _vclip((1 - _STR_ALPHA) * _da + _STR_ALPHA * _obs_h)
+        if not pd.isna(_obs_a):
+            att_v[away] = _vclip((1 - _STR_ALPHA) * _aa + _STR_ALPHA * _obs_a)
+            dfn_v[home] = _vclip((1 - _STR_ALPHA) * _dh + _STR_ALPHA * _obs_a)
+        lg_h_sum_v[_lg] = lg_h_sum_v.get(_lg, 0.0) + float(fthg)
+        lg_h_n_v[_lg] = lg_h_n_v.get(_lg, 0) + 1
+        lg_a_sum_v[_lg] = lg_a_sum_v.get(_lg, 0.0) + float(ftag)
+        lg_a_n_v[_lg] = lg_a_n_v.get(_lg, 0) + 1
 
         team_history.setdefault(home, []).append(
             {"date": date, "result": match_result, "opponent": away,
@@ -236,6 +300,14 @@ def main():
     season_apps: dict = {}
     season_pts: dict = {}
     result_map = {"H": 1, "D": 0, "A": -1}
+    # Online strength state (past-only): attack/defense multipliers per team
+    # + running league goal averages for the expectation denominator.
+    att: dict = {}
+    dfn: dict = {}
+    lg_h_sum: dict = {}
+    lg_h_n: dict = {}
+    lg_a_sum: dict = {}
+    lg_a_n: dict = {}
 
     def congestion(hist, date):
         # matches in the 14 days strictly before this one (past only)
@@ -274,6 +346,23 @@ def main():
     away_gameno = np.empty(len(df), dtype=np.float64)
     derby_flag = np.empty(len(df), dtype=np.int64)
     ppg_diff = np.empty(len(df), dtype=np.float64)
+    # Phase-1 candidates (free, past-only): chance-quality proxies + new-team flags.
+    # Availability cols stay all-NaN until a free pre-match feed lands (schema reserved).
+    home_shotacc5 = np.empty(len(df), dtype=np.float64)
+    away_shotacc5 = np.empty(len(df), dtype=np.float64)
+    home_conv5 = np.empty(len(df), dtype=np.float64)
+    away_conv5 = np.empty(len(df), dtype=np.float64)
+    home_newteam = np.empty(len(df), dtype=np.float64)
+    away_newteam = np.empty(len(df), dtype=np.float64)
+    home_out = np.empty(len(df), dtype=np.float64)
+    away_out = np.empty(len(df), dtype=np.float64)
+    avail_missing = np.empty(len(df), dtype=np.float64)
+    # Opp-adjusted strengths (online, past-only): exponential attack/defense
+    # ratings vs running league averages. See _STR_ALPHA / _STR_CLIP below.
+    home_att_str = np.empty(len(df), dtype=np.float64)
+    away_att_str = np.empty(len(df), dtype=np.float64)
+    home_def_str = np.empty(len(df), dtype=np.float64)
+    away_def_str = np.empty(len(df), dtype=np.float64)
 
     for i, row in df.iterrows():
         home = row["HomeTeam"]
@@ -350,6 +439,44 @@ def main():
         appg = asum / an if an else np.nan
         ppg_diff[i] = hppg - appg
 
+        # --- Phase-1 candidates (past data only, NaN-safe) ---
+        def _ratio_mean(hist, num_key, den_key, n=5):
+            if not hist:
+                return np.nan
+            vals = []
+            for r in hist[-n:]:
+                num, den = r.get(num_key, np.nan), r.get(den_key, np.nan)
+                if pd.isna(num) or pd.isna(den) or not den:
+                    continue
+                vals.append(num / den)
+            return float(np.mean(vals)) if vals else np.nan
+
+        # Chance quality: shot accuracy (SOT/shots) + conversion (goals/SOT).
+        # Home perspective uses hs/hst/gf; away uses as/ast/gf (swapped at log time).
+        home_shotacc5[i] = _ratio_mean(home_hist, "hst", "hs")
+        away_shotacc5[i] = _ratio_mean(away_hist, "ast", "as")
+        home_conv5[i] = _ratio_mean(home_hist, "gf", "hst")
+        away_conv5[i] = _ratio_mean(away_hist, "gf", "ast")
+        # New-team flag: <8 prior appearances -> promoted-like prior signal.
+        # Replaces the need to read the 'Other' ghost entity downstream.
+        home_newteam[i] = 1.0 if len(home_hist) < 8 else 0.0
+        away_newteam[i] = 1.0 if len(away_hist) < 8 else 0.0
+        # Availability: reserved schema, all-NaN until free feed lands.
+        home_out[i] = np.nan
+        away_out[i] = np.nan
+        avail_missing[i] = 1.0
+
+        # --- Opp-adjusted strengths (past only): snapshot before update ---
+        league = row["League"]
+        hn_lg = lg_h_n.get(league, 0)
+        an_lg = lg_a_n.get(league, 0)
+        lg_h = lg_h_sum.get(league, 0.0) / hn_lg if hn_lg >= _LG_PRIOR_N else _LG_HOME_PRIOR
+        lg_a = lg_a_sum.get(league, 0.0) / an_lg if an_lg >= _LG_PRIOR_N else _LG_AWAY_PRIOR
+        home_att_str[i] = att.get(home, 1.0)
+        away_att_str[i] = att.get(away, 1.0)
+        home_def_str[i] = dfn.get(home, 1.0)
+        away_def_str[i] = dfn.get(away, 1.0)
+
         last_h2h = next(
             (
                 r
@@ -424,6 +551,27 @@ def main():
         s, n = season_pts.get((away, season), (0.0, 0))
         season_pts[(away, season)] = (s + ap, n + 1)
 
+        # Online strength update (uses pre-match snapshot denominators only).
+        def _clip(x):
+            return min(_STR_HI, max(_STR_LO, x))
+
+        ah_old, aa_old = att.get(home, 1.0), att.get(away, 1.0)
+        dh_old, da_old = dfn.get(home, 1.0), dfn.get(away, 1.0)
+        denom_h = lg_h * da_old if lg_h * da_old > 1e-6 else np.nan
+        denom_a = lg_a * dh_old if lg_a * dh_old > 1e-6 else np.nan
+        obs_h = (fthg / denom_h) if not pd.isna(denom_h) else np.nan
+        obs_a = (ftag / denom_a) if not pd.isna(denom_a) else np.nan
+        if not pd.isna(obs_h):
+            att[home] = _clip((1 - _STR_ALPHA) * ah_old + _STR_ALPHA * obs_h)
+            dfn[away] = _clip((1 - _STR_ALPHA) * da_old + _STR_ALPHA * obs_h)
+        if not pd.isna(obs_a):
+            att[away] = _clip((1 - _STR_ALPHA) * aa_old + _STR_ALPHA * obs_a)
+            dfn[home] = _clip((1 - _STR_ALPHA) * dh_old + _STR_ALPHA * obs_a)
+        lg_h_sum[league] = lg_h_sum.get(league, 0.0) + float(fthg)
+        lg_h_n[league] = lg_h_n.get(league, 0) + 1
+        lg_a_sum[league] = lg_a_sum.get(league, 0.0) + float(ftag)
+        lg_a_n[league] = lg_a_n.get(league, 0) + 1
+
     df["EloHome"] = home_elo_vals
     df["EloAway"] = away_elo_vals
     df["EloDiff"] = df["EloHome"] - df["EloAway"]
@@ -455,6 +603,20 @@ def main():
     df["AwayGameNo"] = away_gameno
     df["Derby"] = derby_flag
     df["PPGDiff"] = ppg_diff
+    # Phase-1 candidates (appended after Step-2; prod 23 order still untouched)
+    df["HomeShotAcc5"] = home_shotacc5
+    df["AwayShotAcc5"] = away_shotacc5
+    df["HomeConvRate5"] = home_conv5
+    df["AwayConvRate5"] = away_conv5
+    df["HomeNewTeam"] = home_newteam
+    df["AwayNewTeam"] = away_newteam
+    df["HomeOut"] = home_out
+    df["AwayOut"] = away_out
+    df["AvailMissing"] = avail_missing
+    df["HomeAttStr"] = home_att_str
+    df["AwayAttStr"] = away_att_str
+    df["HomeDefStr"] = home_def_str
+    df["AwayDefStr"] = away_def_str
 
     # Normalized B365 implied probabilities
     odds_cols = ["B365H", "B365D", "B365A"]

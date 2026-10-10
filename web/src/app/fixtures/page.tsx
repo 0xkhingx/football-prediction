@@ -10,6 +10,7 @@ import { groupByLeague, groupWeeks, leadLeague, nearestWeekIndex } from "@/lib/w
 
 export default function FixturesPage() {
   const [fixtures, setFixtures] = useState<Fixture[]>([]);
+  const [rawCount, setRawCount] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [backendError, setBackendError] = useState<string | null>(null);
   const [weekIdx, setWeekIdx] = useState<number | null>(null);
@@ -21,6 +22,7 @@ export default function FixturesPage() {
         const body = await r.json().catch(() => ({}));
         if (!r.ok) throw new Error(typeof body.backendError === "string" ? body.backendError : `backend ${r.status}`);
         const list = Array.isArray(body.fixtures) ? body.fixtures : [];
+        setRawCount(list.length);
         const valid = list.filter((f: unknown) => FixtureSchema.safeParse(f).success);
         setFixtures(valid);
         if (valid.length > 0) {
@@ -41,6 +43,9 @@ export default function FixturesPage() {
   const weeks = useMemo(() => groupWeeks(fixtures), [fixtures]);
   const week = weekIdx === null ? null : (weeks[weekIdx] ?? null);
   const groups = useMemo(() => (week ? groupByLeague(week.fixtures) : []), [week]);
+  // Backend returned rows but none survived validation: data is corrupt, and
+  // saying "offseason" would be a lie. Surface it as a data problem instead.
+  const corruptData = loaded && !backendError && rawCount > 0 && fixtures.length === 0;
 
   function goWeek(next: number) {
     const clamped = Math.max(0, Math.min(weeks.length - 1, next));
@@ -51,47 +56,50 @@ export default function FixturesPage() {
 
   return (
     <div className="space-y-3">
-      <SeasonRecord />
-
-      {/* FIXTURES — this week only, league accordion, pager for the rest */}
-      <section className="rounded-[2rem] bg-emberdark/40 px-6 py-10 sm:px-10">
+      {/* FIXTURES FIRST — this is what users came to do. Season record
+          supports it from below rather than leading the page. */}
+      <section
+        className="rounded-[2rem] bg-emberdark/40 px-6 py-10 sm:px-10"
+        aria-labelledby="this-week-heading"
+      >
         <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="font-display text-3xl uppercase text-cream sm:text-5xl">This week</h1>
+            <h1 id="this-week-heading" className="font-display text-3xl uppercase text-cream sm:text-5xl">
+              This week
+            </h1>
             {week && (
-              <p className="mt-1 font-mono text-[11px] tracking-[0.25em] text-cream/70">
-                {week.label} · {week.fixtures.length} TIES · TAP A LEAGUE
+              <p className="mt-2 text-sm leading-relaxed text-cream/85">
+                {week.label} · {week.fixtures.length} {week.fixtures.length === 1 ? "tie" : "ties"} — tap a
+                league to see predictions
               </p>
             )}
           </div>
         </div>
         {week && weeks.length > 1 && (
-          <div className="mb-5 flex items-center gap-2" role="group" aria-label="Fixture week">
+          <div className="mb-5 flex flex-wrap items-center gap-2" role="group" aria-label="Fixture week">
             <button
               type="button"
               disabled={weekIdx === 0}
               onClick={() => goWeek((weekIdx ?? 0) - 1)}
-              className="pressable rounded-full bg-cream px-4 py-1.5 font-mono text-[11px] tracking-[0.2em] text-coal disabled:opacity-40"
+              className="pressable min-h-[44px] rounded-full bg-cream px-5 py-2 font-mono text-xs tracking-[0.2em] text-coal disabled:opacity-40"
             >
               ← PREV
             </button>
-            <span className="font-mono text-[11px] tracking-[0.2em] text-cream/70">
+            <span className="font-mono text-xs tracking-[0.2em] text-cream/80">
               {(weekIdx ?? 0) + 1} / {weeks.length}
             </span>
             <button
               type="button"
               disabled={weekIdx === weeks.length - 1}
               onClick={() => goWeek((weekIdx ?? 0) + 1)}
-              className="pressable rounded-full bg-cream px-4 py-1.5 font-mono text-[11px] tracking-[0.2em] text-coal disabled:opacity-40"
+              className="pressable min-h-[44px] rounded-full bg-cream px-5 py-2 font-mono text-xs tracking-[0.2em] text-coal disabled:opacity-40"
             >
               NEXT →
             </button>
+            <span className="ml-1 hidden font-mono text-[11px] tracking-[0.15em] text-cream/60 lg:inline">
+              <Kbd>↑</Kbd> <Kbd>↓</Kbd> MOVE · <Kbd>ENTER</Kbd> OPENS A LEAGUE
+            </span>
           </div>
-        )}
-        {week && (
-          <p className="mb-5 font-mono text-[10px] tracking-[0.2em] text-cream/60">
-            TIP <Kbd>↑</Kbd> <Kbd>↓</Kbd> MOVE · <Kbd>ENTER</Kbd> OPENS A LEAGUE
-          </p>
         )}
       {!loaded && (
         <div className="grid gap-3 sm:grid-cols-2" aria-hidden>
@@ -107,7 +115,7 @@ export default function FixturesPage() {
       {loaded && backendError && (
         <div className="rounded-3xl bg-coal p-8 text-center" role="alert">
           <p className="font-display text-3xl uppercase text-cream">Can&apos;t reach the model</p>
-          <p className="mx-auto mt-2 max-w-md font-mono text-xs tracking-[0.2em] text-cream/60">
+          <p className="mx-auto mt-2 max-w-md font-mono text-xs tracking-[0.2em] text-cream/75">
             {backendError.toUpperCase()} — START THE API OR TRY MANUAL PREDICT
           </p>
           <div className="mt-5">
@@ -115,10 +123,22 @@ export default function FixturesPage() {
           </div>
         </div>
       )}
-      {loaded && !backendError && !week && (
+      {loaded && !backendError && corruptData && (
+        <div className="rounded-3xl bg-coal p-8 text-center" role="alert">
+          <p className="font-display text-3xl uppercase text-cream">Fixture data looked wrong</p>
+          <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-cream/75">
+            The model returned {rawCount} {rawCount === 1 ? "row" : "rows"} but none had a usable
+            date and teams, so nothing is shown rather than guessing. Try the manual predictor.
+          </p>
+          <div className="mt-5">
+            <PillCta href="/predict">Manual predictor</PillCta>
+          </div>
+        </div>
+      )}
+      {loaded && !backendError && !corruptData && !week && (
           <div className="rounded-3xl bg-cream p-8 text-center">
             <p className="font-display text-3xl uppercase text-coal">Offseason — no ties right now</p>
-            <p className="mx-auto mt-2 max-w-md text-sm text-coal/70">
+            <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-coal/75">
               Pick any matchup manually and the model will still call it from history.
             </p>
             <div className="mt-5">
@@ -134,6 +154,8 @@ export default function FixturesPage() {
           />
         )}
       </section>
+
+      <SeasonRecord />
     </div>
   );
 }
