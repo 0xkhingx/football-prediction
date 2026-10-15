@@ -2,7 +2,7 @@
 
 Predicts Home Win / Draw / Away Win for the top 5 European leagues (England, Spain, Italy, Germany, France) using only pre-match information — no betting odds as inputs.
 
-**Live demo:** [matchday.pxxl.click](https://matchday.pxxl.click) — pick a fixture, run the manual predictor, or check the title-odds simulator.
+**Live demo:** [matchday.pxxl.click](https://matchday.vercel.app) — pick a fixture, run the manual predictor, or check the title-odds simulator.
 
 This repo covers the data pipeline and model. The live site consumes model output through a FastAPI service (`api.py`) containerized with the root `Dockerfile` and hosted on Pxxl, with the Next.js frontend on Vercel; see `src/predict_live.py` for the inference entry point and `src/inference.py` for the shared train==serve logic.
 
