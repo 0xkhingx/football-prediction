@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import PredictClient from "./PredictClient";
 
 type Props = {
-  searchParams: { home?: string; away?: string };
+  searchParams: { home?: string; away?: string; date?: string };
 };
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const home = searchParams.home ?? "Arsenal";
   const away = searchParams.away ?? "Chelsea";
-  const og = `/predict/og?home=${encodeURIComponent(home)}&away=${encodeURIComponent(away)}`;
+  const og = `/predict/og?home=${encodeURIComponent(home)}&away=${encodeURIComponent(away)}${searchParams.date ? `&date=${encodeURIComponent(searchParams.date)}` : ""}`;
   return {
     title: `Predict ${home} vs ${away}`,
     description: `Fair-play XGBoost call for ${home} vs ${away} — no odds. Research demo, not betting advice.`,

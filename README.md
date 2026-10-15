@@ -119,6 +119,10 @@ cd web && npm install && npm run dev   # :3000, proxies to API_URL
 
 Deploy notes: set `API_URL` (web → API base) and `ALLOWED_ORIGINS` (API CORS allowlist, comma-separated) in the hosting env. On Pxxl deploy the API from the GitHub source (repo root `/` as Base Directory, pinned in `pxxl.toml`) — the Dockerfile-upload source ships only the Dockerfile with no build context and fails at `COPY requirements.txt`. After any refresh/retrain, either restart the API or `POST /reload` with `Authorization: Bearer $RELOAD_TOKEN`.
 
+Rate limiting uses the client address resolved by Uvicorn, never raw forwarding headers. Set `FORWARDED_ALLOW_IPS` only to your trusted ingress proxy addresses; the ingress must sanitize forwarding headers. Do not use `*` on a publicly reachable backend. Clients behind a proxy that does not forward verified client identities share that proxy's quota. Idle rate-limit entries expire and the in-memory client table is bounded.
+
+Historical API requests replay match history strictly before the requested ISO date, including Elo, form and head-to-head results. They still use the current model weights, so this endpoint is not a historical model backtest. Retraining serves raw XGB and saves blend/calibration settings under `candidate_ensemble`; promoting a candidate requires a separate out-of-sample validation decision and an explicit registry change. Calibration-fit metrics are labeled separately from validation metrics.
+
 ## Metrics
 
 - **Primary:** Log loss (cross-entropy)

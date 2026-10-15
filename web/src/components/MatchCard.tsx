@@ -3,7 +3,7 @@ import { formatDate } from "@/lib/weeks";
 import type { Fixture } from "@/lib/types";
 
 export function MatchCard({ fixture, tone = "card" }: { fixture: Fixture; tone?: "card" | "inset" }) {
-  const href = `/predict?home=${encodeURIComponent(fixture.home)}&away=${encodeURIComponent(fixture.away)}`;
+  const href = `/predict?home=${encodeURIComponent(fixture.home)}&away=${encodeURIComponent(fixture.away)}&date=${encodeURIComponent(fixture.date)}`;
   // Runtime guards: schema-validated data should always be strings, but a
   // malformed backend row must degrade to labels, never crash or print NaN.
   const leagueLabel =

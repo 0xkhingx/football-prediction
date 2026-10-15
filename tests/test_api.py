@@ -31,6 +31,18 @@ def test_predict_rejects_same_team():
     assert r.status_code == 422
 
 
+def test_predict_rejects_non_iso_dates():
+    for date in ("09/10/2026", "2026-10-09T00:00:00Z", "2026-02-30"):
+        r = client.post("/predict", json={"home": "Arsenal", "away": "Chelsea", "date": date})
+        assert r.status_code == 422
+
+
+def test_predict_historical_response_has_no_future_meeting():
+    r = client.post("/predict", json={"home": "Arsenal", "away": "Chelsea", "date": "2020-01-01"})
+    assert r.status_code == 200
+    assert r.json()["h2h"]["date"] < "2020-01-01"
+
+
 def test_predict_rejects_unknown_team():
     r = client.post("/predict", json={"home": "Nope FC", "away": "Chelsea"})
     assert r.status_code == 404
@@ -59,6 +71,7 @@ def test_reload_requires_token(monkeypatch):
     ok = client.post("/reload", headers={"Authorization": "Bearer s3cret"})
     assert ok.status_code == 200
     assert api_module._state.cache_info().currsize == 0  # cache actually dropped
+    assert api_module._history_before.cache_info().currsize == 0
     monkeypatch.delenv("RELOAD_TOKEN", raising=False)
 
 

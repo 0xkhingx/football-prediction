@@ -6,6 +6,7 @@ Run: uvicorn api:app --reload  (from repo root)
 from __future__ import annotations
 
 import os
+import re
 from datetime import datetime, timezone
 from functools import lru_cache
 
@@ -92,6 +93,11 @@ def _state():
     return elo, melo, hist, imp, model, name, stack
 
 
+@lru_cache(maxsize=2)
+def _history_before(date: str):
+    return build_state_from_historical(as_of=date)
+
+
 @app.post("/reload")
 def reload(authorization: str | None = Header(default=None)):
     """Drop all in-memory state (model, history, goals caches) so the next
@@ -112,6 +118,7 @@ def reload(authorization: str | None = Header(default=None)):
     from src.goals import cached_matches, team_league_map
 
     _state.cache_clear()
+    _history_before.cache_clear()
     cached_matches.cache_clear()
     team_league_map.cache_clear()
     return {"status": "reloaded"}
@@ -175,10 +182,12 @@ def predict(req: PredictRequest, request: Request):
     if req.home.strip().lower() == req.away.strip().lower():
         raise HTTPException(status_code=422, detail="home and away must differ")
     try:
-        as_of = pd.to_datetime(req.date)
+        if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", req.date):
+            raise ValueError("expected ISO date")
+        as_of = pd.Timestamp(datetime.strptime(req.date, "%Y-%m-%d"))
     except (ValueError, TypeError):
         raise HTTPException(status_code=422, detail="date must be ISO YYYY-MM-DD")
-    today = pd.Timestamp.today().normalize()
+    today = pd.Timestamp(datetime.now(timezone.utc).date())
     if not (pd.Timestamp("2015-08-01") <= as_of <= today + pd.Timedelta(days=30)):
         raise HTTPException(
             status_code=422,
@@ -195,6 +204,10 @@ def predict(req: PredictRequest, request: Request):
             raise HTTPException(status_code=404, detail=detail)
     if rh["team"] == ra["team"]:
         raise HTTPException(status_code=422, detail="both names resolve to the same team")
+    # Elo must be replayed as well as form: truncating team histories alone
+    # would leave future results embedded in the strength ratings.
+    if any(rows and rows[-1]["date"] >= as_of for rows in hist.values()):
+        elo, melo, hist = _history_before(req.date)
     try:
         r = predict_one(rh["team"], ra["team"], req.date, elo, melo, hist, imp, model,
                         serving_stack=stack)

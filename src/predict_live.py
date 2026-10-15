@@ -10,9 +10,22 @@ from io import StringIO
 import pandas as pd
 import requests
 
+from .clean import TEAM_NAME_MAP, parse_mixed_date
 from .config import FIXTURES_FILE as LOCAL_FIXTURES
 from .config import LEAGUE_NAMES, PREDICTIONS_LOG, TOP_LEAGUE_CODES
 from .inference import build_state_from_historical, load_artifacts, predict_one
+
+
+def normalize_fixtures(df: pd.DataFrame) -> pd.DataFrame:
+    """Use the training team's identities and ISO dates at every ingress."""
+    df = df.copy()
+    for col in ("HomeTeam", "AwayTeam"):
+        df[col] = df[col].str.strip().replace(TEAM_NAME_MAP)
+    dates = pd.to_datetime(df["Date"].apply(parse_mixed_date))
+    valid = dates.notna() & df["HomeTeam"].notna() & df["AwayTeam"].notna()
+    df = df.loc[valid].copy()
+    df["Date"] = dates.loc[valid].dt.strftime("%Y-%m-%d")
+    return df.reset_index(drop=True)
 
 
 def current_season_code(today=None) -> str:
@@ -34,13 +47,13 @@ def fetch_local_fixtures() -> pd.DataFrame:
         return fx
     if "Round" not in fx.columns:
         fx["Round"] = ""
-    return pd.DataFrame({
+    return normalize_fixtures(pd.DataFrame({
         "Div": fx["League"],
         "HomeTeam": fx["Home"],
         "AwayTeam": fx["Away"],
         "Date": fx["Date"].dt.strftime("%Y-%m-%d"),
         "Round": fx["Round"].fillna("").astype(str),
-    }).reset_index(drop=True)
+    }))
 
 
 def fetch_fixtures() -> pd.DataFrame:
@@ -68,6 +81,9 @@ def fetch_fixtures() -> pd.DataFrame:
                 print(f"Columns after cleaning: {list(df.columns)}")
             else:
                 df = df[df["Div"].isin(TOP_LEAGUE_CODES)].copy()
+                df = normalize_fixtures(df)
+                today = pd.Timestamp.now(tz="UTC").date().isoformat()
+                df = df[df["Date"] >= today].copy()
                 if len(df):
                     print(f"fixtures source: live ({len(df)} rows)")
                     df.attrs["source"] = "live"
@@ -98,7 +114,7 @@ def _fallback_current_season() -> pd.DataFrame:
                 df.columns = df.columns.str.replace("\ufeff", "", regex=False)
                 unplayed = df[df["FTHG"].isna()]
                 if len(unplayed) > 0:
-                    fixtures = pd.concat([fixtures, unplayed], ignore_index=True)
+                    fixtures = pd.concat([fixtures, normalize_fixtures(unplayed)], ignore_index=True)
         except Exception as e:  # noqa: BLE001 — one bad league must not kill the other four
             print(f"  {code}: {e}")
     return fixtures

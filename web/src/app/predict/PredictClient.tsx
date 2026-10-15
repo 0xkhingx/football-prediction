@@ -16,9 +16,9 @@ export function callText(r: Pick<Prediction, "home" | "away" | "prediction" | "c
   return `${r.home} vs ${r.away} — MODEL CALLS ${r.prediction} ${Math.round(r.confidence * 100)}% (Matchday Fate, fair-play XGB, no odds)`;
 }
 
-function ShareRow({ result }: { result: Prediction }) {
+function ShareRow({ result, date }: { result: Prediction; date?: string }) {
   const text = callText(result);
-  const og = `/predict/og?home=${encodeURIComponent(result.home)}&away=${encodeURIComponent(result.away)}`;
+  const og = `/predict/og?home=${encodeURIComponent(result.home)}&away=${encodeURIComponent(result.away)}${date ? `&date=${encodeURIComponent(date)}` : ""}`;
   const linkCls =
     "rounded-full border-2 border-coal/15 px-4 py-1.5 font-mono text-[10px] tracking-[0.25em] text-coal hover:border-coal";
   return (
@@ -54,6 +54,7 @@ function ShareRow({ result }: { result: Prediction }) {
 
 function PredictInner() {
   const params = useSearchParams();
+  const date = params.get("date") ?? undefined;
   const [home, setHome] = useState(params.get("home") ?? "Arsenal");
   const [away, setAway] = useState(params.get("away") ?? "Chelsea");
   const [result, setResult] = useState<Prediction | null>(null);
@@ -94,7 +95,7 @@ function PredictInner() {
     const r = await fetch("/api/predict", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ home: homeTeam, away: awayTeam }),
+      body: JSON.stringify({ home: homeTeam, away: awayTeam, date }),
     });
     const body = await r.json().catch(() => ({}));
     if (!r.ok) throw new Error(typeof body.detail === "string" ? body.detail : "prediction failed");
@@ -244,7 +245,7 @@ function PredictInner() {
           <p className="mt-4 text-center font-mono text-[10px] tracking-[0.25em] text-coal/50">
             MODEL: {result.model}
           </p>
-          <ShareRow result={result} />
+          <ShareRow result={result} date={date} />
           </div>
         )}
       </section>

@@ -95,6 +95,7 @@ def simulate_league(league: str, n_sims: int = N_SIMS, seed: int = SEED) -> dict
     base = np.array([table[t] for t in teams], dtype=float)
     titles = np.zeros(len(teams), dtype=int)
     top4s = np.zeros(len(teams), dtype=int)
+    totals = np.broadcast_to(base, (n_sims, len(teams)))
     if len(prob_rows):
         ph = np.array([r[2] for r in prob_rows], dtype=float)
         pd_ = np.array([r[3] for r in prob_rows], dtype=float)
@@ -109,7 +110,10 @@ def simulate_league(league: str, n_sims: int = N_SIMS, seed: int = SEED) -> dict
         np.add.at(add, (np.arange(n_sims)[:, None], home_idx), hp)
         np.add.at(add, (np.arange(n_sims)[:, None], away_idx), ap)
         totals = base + add
-        order = np.argsort(-totals, axis=1)
+    # Rank even when there are no fixtures left. Ties retain the simulator's
+    # points-only approximation; this is not an official league table.
+    order = np.argsort(-totals, axis=1, kind="stable")
+    if teams:
         for s in range(n_sims):
             titles[order[s, 0]] += 1
             for t in order[s, :4]:

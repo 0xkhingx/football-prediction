@@ -18,7 +18,7 @@ export async function GET(req: Request) {
     const r = await fetch(`${API_BASE}/predict`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ home: searchParams.get("home") ?? "Arsenal", away: searchParams.get("away") ?? "Chelsea" }),
+      body: JSON.stringify({ home: searchParams.get("home") ?? "Arsenal", away: searchParams.get("away") ?? "Chelsea", date: searchParams.get("date") ?? undefined }),
       signal: ctl.signal,
     });
     clearTimeout(timer);

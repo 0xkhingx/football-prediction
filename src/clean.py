@@ -20,6 +20,7 @@ TEAM_NAME_MAP = {
     "FC Koln": "FC Cologne",
     "M'gladbach": "Borussia Monchengladbach",
     "Sociedad": "Real Sociedad",
+    "Santander": "Racing",
     "Sp Gijon": "Sporting Gijon",
     "Vallecano": "Rayo Vallecano",
     "St Pauli": "FC St Pauli",

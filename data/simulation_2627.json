@@ -6,92 +6,132 @@
       "sims": 2000,
       "table": [
         {
-          "team": "Arsenal",
-          "pts": 9,
-          "title": "45-50%",
+          "team": "Manchester City",
+          "pts": 18,
+          "title": "70-75%",
           "top4": ">95%",
-          "title_raw": 0.483,
-          "top4_raw": 0.9925
+          "title_raw": 0.7075,
+          "top4_raw": 0.998
         },
         {
-          "team": "Manchester City",
-          "pts": 9,
-          "title": "45-50%",
+          "team": "Arsenal",
+          "pts": 15,
+          "title": "25-30%",
           "top4": ">95%",
-          "title_raw": 0.4915,
-          "top4_raw": 0.9915
+          "title_raw": 0.274,
+          "top4_raw": 0.989
+        },
+        {
+          "team": "Brighton",
+          "pts": 13,
+          "title": "<5%",
+          "top4": "70-75%",
+          "title_raw": 0.013,
+          "top4_raw": 0.7225
+        },
+        {
+          "team": "Brentford",
+          "pts": 10,
+          "title": "<5%",
+          "top4": "15-20%",
+          "title_raw": 0.0005,
+          "top4_raw": 0.1975
+        },
+        {
+          "team": "Chelsea",
+          "pts": 10,
+          "title": "<5%",
+          "top4": "20-25%",
+          "title_raw": 0.0005,
+          "top4_raw": 0.2205
+        },
+        {
+          "team": "Everton",
+          "pts": 10,
+          "title": "<5%",
+          "top4": "5-10%",
+          "title_raw": 0.0,
+          "top4_raw": 0.061
         },
         {
           "team": "Hull",
+          "pts": 9,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0005
+        },
+        {
+          "team": "Ipswich",
+          "pts": 9,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0
+        },
+        {
+          "team": "Leeds",
+          "pts": 9,
+          "title": "<5%",
+          "top4": "0-5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0265
+        },
+        {
+          "team": "Liverpool",
+          "pts": 9,
+          "title": "<5%",
+          "top4": "45-50%",
+          "title_raw": 0.0035,
+          "top4_raw": 0.452
+        },
+        {
+          "team": "Newcastle United",
+          "pts": 8,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.02
+        },
+        {
+          "team": "Crystal Palace",
           "pts": 7,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
-          "top4_raw": 0.0015
+          "top4_raw": 0.0045
         },
         {
-          "team": "Chelsea",
+          "team": "Coventry",
           "pts": 6,
           "title": "<5%",
-          "top4": "25-30%",
-          "title_raw": 0.0025,
-          "top4_raw": 0.262
-        },
-        {
-          "team": "Brentford",
-          "pts": 5,
-          "title": "<5%",
-          "top4": "10-15%",
-          "title_raw": 0.001,
-          "top4_raw": 0.143
-        },
-        {
-          "team": "Everton",
-          "pts": 5,
-          "title": "<5%",
-          "top4": "5-10%",
+          "top4": "<5%",
           "title_raw": 0.0,
-          "top4_raw": 0.069
+          "top4_raw": 0.0005
         },
         {
-          "team": "Leeds",
+          "team": "Manchester United",
+          "pts": 6,
+          "title": "<5%",
+          "top4": "20-25%",
+          "title_raw": 0.001,
+          "top4_raw": 0.2015
+        },
+        {
+          "team": "Aston Villa",
           "pts": 5,
           "title": "<5%",
           "top4": "0-5%",
           "title_raw": 0.0,
-          "top4_raw": 0.026
+          "top4_raw": 0.0355
         },
         {
-          "team": "Liverpool",
+          "team": "Nottingham Forest",
           "pts": 5,
           "title": "<5%",
-          "top4": "55-60%",
-          "title_raw": 0.013,
-          "top4_raw": 0.5815
-        },
-        {
-          "team": "Newcastle United",
-          "pts": 5,
-          "title": "<5%",
-          "top4": "10-15%",
-          "title_raw": 0.0005,
-          "top4_raw": 0.149
-        },
-        {
-          "team": "Brighton",
-          "pts": 4,
-          "title": "<5%",
-          "top4": "15-20%",
-          "title_raw": 0.0005,
-          "top4_raw": 0.155
-        },
-        {
-          "team": "Manchester United",
-          "pts": 4,
-          "title": "<5%",
-          "top4": "30-35%",
-          "title_raw": 0.007,
-          "top4_raw": 0.3425
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.009
         },
         {
           "team": "Sunderland",
@@ -99,59 +139,19 @@
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
-          "top4_raw": 0.0005
-        },
-        {
-          "team": "Crystal Palace",
-          "pts": 3,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0085
-        },
-        {
-          "team": "Ipswich",
-          "pts": 3,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
           "top4_raw": 0.0
         },
         {
           "team": "Bournemouth",
-          "pts": 2,
-          "title": "<5%",
-          "top4": "15-20%",
-          "title_raw": 0.0005,
-          "top4_raw": 0.1655
-        },
-        {
-          "team": "Nottingham Forest",
-          "pts": 2,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0155
-        },
-        {
-          "team": "Aston Villa",
-          "pts": 1,
+          "pts": 3,
           "title": "<5%",
           "top4": "5-10%",
-          "title_raw": 0.0005,
-          "top4_raw": 0.095
+          "title_raw": 0.0,
+          "top4_raw": 0.061
         },
         {
           "team": "Tottenham Hotspur",
-          "pts": 1,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0005
-        },
-        {
-          "team": "Coventry",
-          "pts": 0,
+          "pts": 3,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
@@ -159,11 +159,11 @@
         },
         {
           "team": "Fulham",
-          "pts": 0,
+          "pts": 2,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
-          "top4_raw": 0.001
+          "top4_raw": 0.0005
         }
       ],
       "note": "Probs frozen at current form; bands rounded, not precise."
@@ -174,163 +174,163 @@
       "table": [
         {
           "team": "Barcelona",
-          "pts": 12,
-          "title": "70-75%",
+          "pts": 24,
+          "title": "80-85%",
           "top4": ">95%",
-          "title_raw": 0.748,
+          "title_raw": 0.84,
           "top4_raw": 0.9995
         },
         {
-          "team": "Alaves",
-          "pts": 10,
-          "title": "<5%",
-          "top4": "10-15%",
-          "title_raw": 0.0,
-          "top4_raw": 0.133
+          "team": "Atletico Madrid",
+          "pts": 19,
+          "title": "5-10%",
+          "top4": "95-100%",
+          "title_raw": 0.0615,
+          "top4_raw": 0.9715
         },
         {
           "team": "Betis",
-          "pts": 9,
+          "pts": 19,
           "title": "<5%",
-          "top4": "65-70%",
-          "title_raw": 0.0065,
-          "top4_raw": 0.6535
+          "top4": "85-90%",
+          "title_raw": 0.0045,
+          "top4_raw": 0.881
         },
         {
           "team": "Real Madrid",
-          "pts": 9,
-          "title": "20-25%",
+          "pts": 18,
+          "title": "5-10%",
           "top4": ">95%",
-          "title_raw": 0.2345,
-          "top4_raw": 0.991
-        },
-        {
-          "team": "La Coruna",
-          "pts": 8,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.002
-        },
-        {
-          "team": "Atletico Madrid",
-          "pts": 7,
-          "title": "<5%",
-          "top4": "70-75%",
-          "title_raw": 0.011,
-          "top4_raw": 0.7105
-        },
-        {
-          "team": "Osasuna",
-          "pts": 7,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0215
-        },
-        {
-          "team": "Real Sociedad",
-          "pts": 7,
-          "title": "<5%",
-          "top4": "0-5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.029
+          "title_raw": 0.094,
+          "top4_raw": 0.994
         },
         {
           "team": "Sevilla",
-          "pts": 7,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0125
-        },
-        {
-          "team": "Athletic Bilbao",
-          "pts": 6,
-          "title": "<5%",
-          "top4": "5-10%",
-          "title_raw": 0.0,
-          "top4_raw": 0.092
-        },
-        {
-          "team": "Levante",
-          "pts": 5,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0095
-        },
-        {
-          "team": "Espanol",
-          "pts": 4,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.008
-        },
-        {
-          "team": "Getafe",
-          "pts": 4,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.013
-        },
-        {
-          "team": "Racing",
-          "pts": 4,
+          "pts": 14,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
           "top4_raw": 0.0045
         },
         {
-          "team": "Rayo Vallecano",
-          "pts": 4,
+          "team": "Real Sociedad",
+          "pts": 13,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.012
+        },
+        {
+          "team": "Alaves",
+          "pts": 11,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.002
+        },
+        {
+          "team": "La Coruna",
+          "pts": 10,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0005
+        },
+        {
+          "team": "Athletic Bilbao",
+          "pts": 8,
           "title": "<5%",
           "top4": "0-5%",
           "title_raw": 0.0,
-          "top4_raw": 0.0395
+          "top4_raw": 0.0275
         },
         {
           "team": "Celta",
-          "pts": 3,
+          "pts": 8,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
-          "top4_raw": 0.019
+          "top4_raw": 0.003
         },
         {
-          "team": "Malaga",
-          "pts": 2,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0
-        },
-        {
-          "team": "Villarreal",
-          "pts": 2,
-          "title": "<5%",
-          "top4": "25-30%",
-          "title_raw": 0.0,
-          "top4_raw": 0.2565
-        },
-        {
-          "team": "Elche",
-          "pts": 1,
+          "team": "Espanol",
+          "pts": 8,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
           "top4_raw": 0.0
         },
         {
-          "team": "Valencia",
-          "pts": 1,
+          "team": "Getafe",
+          "pts": 8,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0005
+        },
+        {
+          "team": "Osasuna",
+          "pts": 8,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0
+        },
+        {
+          "team": "Racing",
+          "pts": 8,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0
+        },
+        {
+          "team": "Rayo Vallecano",
+          "pts": 8,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
           "top4_raw": 0.0055
+        },
+        {
+          "team": "Villarreal",
+          "pts": 8,
+          "title": "<5%",
+          "top4": "5-10%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0975
+        },
+        {
+          "team": "Elche",
+          "pts": 6,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0005
+        },
+        {
+          "team": "Levante",
+          "pts": 6,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0005
+        },
+        {
+          "team": "Valencia",
+          "pts": 5,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0
+        },
+        {
+          "team": "Malaga",
+          "pts": 4,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0
         }
       ],
       "note": "Probs frozen at current form; bands rounded, not precise."
@@ -341,95 +341,63 @@
       "table": [
         {
           "team": "Inter",
-          "pts": 9,
-          "title": "55-60%",
-          "top4": "95-100%",
-          "title_raw": 0.576,
-          "top4_raw": 0.9575
+          "pts": 16,
+          "title": "65-70%",
+          "top4": ">95%",
+          "title_raw": 0.679,
+          "top4_raw": 0.9845
         },
         {
           "team": "Lazio",
-          "pts": 9,
+          "pts": 16,
           "title": "<5%",
-          "top4": "15-20%",
-          "title_raw": 0.0085,
-          "top4_raw": 0.1895
+          "top4": "25-30%",
+          "title_raw": 0.0105,
+          "top4_raw": 0.283
         },
         {
           "team": "Roma",
-          "pts": 9,
+          "pts": 14,
           "title": "20-25%",
-          "top4": "80-85%",
-          "title_raw": 0.2475,
-          "top4_raw": 0.8435
-        },
-        {
-          "team": "Como",
-          "pts": 7,
-          "title": "5-10%",
-          "top4": "50-55%",
-          "title_raw": 0.0595,
-          "top4_raw": 0.5315
-        },
-        {
-          "team": "Juventus",
-          "pts": 7,
-          "title": "5-10%",
-          "top4": "50-55%",
-          "title_raw": 0.051,
-          "top4_raw": 0.543
-        },
-        {
-          "team": "Milan",
-          "pts": 7,
-          "title": "<5%",
-          "top4": "30-35%",
-          "title_raw": 0.0185,
-          "top4_raw": 0.3255
-        },
-        {
-          "team": "Atalanta",
-          "pts": 6,
-          "title": "<5%",
-          "top4": "25-30%",
-          "title_raw": 0.018,
-          "top4_raw": 0.2795
+          "top4": "90-95%",
+          "title_raw": 0.221,
+          "top4_raw": 0.902
         },
         {
           "team": "Cagliari",
-          "pts": 6,
+          "pts": 13,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
-          "top4_raw": 0.001
+          "top4_raw": 0.0085
+        },
+        {
+          "team": "Milan",
+          "pts": 12,
+          "title": "<5%",
+          "top4": "25-30%",
+          "title_raw": 0.0055,
+          "top4_raw": 0.2675
+        },
+        {
+          "team": "Como",
+          "pts": 11,
+          "title": "0-5%",
+          "top4": "45-50%",
+          "title_raw": 0.0285,
+          "top4_raw": 0.4895
+        },
+        {
+          "team": "Juventus",
+          "pts": 11,
+          "title": "0-5%",
+          "top4": "55-60%",
+          "title_raw": 0.0415,
+          "top4_raw": 0.5955
         },
         {
           "team": "Frosinone",
-          "pts": 6,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0
-        },
-        {
-          "team": "Sassuolo",
-          "pts": 4,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.001
-        },
-        {
-          "team": "Udinese",
-          "pts": 4,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0025
-        },
-        {
-          "team": "Lecce",
-          "pts": 3,
+          "pts": 10,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
@@ -437,15 +405,39 @@
         },
         {
           "team": "Napoli",
-          "pts": 3,
+          "pts": 10,
           "title": "<5%",
-          "top4": "30-35%",
-          "title_raw": 0.021,
-          "top4_raw": 0.3185
+          "top4": "35-40%",
+          "title_raw": 0.0135,
+          "top4_raw": 0.39
+        },
+        {
+          "team": "Atalanta",
+          "pts": 9,
+          "title": "<5%",
+          "top4": "5-10%",
+          "title_raw": 0.0005,
+          "top4_raw": 0.0755
+        },
+        {
+          "team": "Sassuolo",
+          "pts": 8,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.001
         },
         {
           "team": "Torino",
-          "pts": 3,
+          "pts": 7,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0
+        },
+        {
+          "team": "Lecce",
+          "pts": 6,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
@@ -453,15 +445,31 @@
         },
         {
           "team": "Bologna",
-          "pts": 1,
+          "pts": 5,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
-          "top4_raw": 0.006
+          "top4_raw": 0.0015
+        },
+        {
+          "team": "Fiorentina",
+          "pts": 4,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0015
+        },
+        {
+          "team": "Genoa",
+          "pts": 4,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0
         },
         {
           "team": "Monza",
-          "pts": 1,
+          "pts": 4,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
@@ -469,23 +477,15 @@
         },
         {
           "team": "Parma",
-          "pts": 1,
+          "pts": 4,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
           "top4_raw": 0.0
         },
         {
-          "team": "Fiorentina",
-          "pts": 0,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.001
-        },
-        {
-          "team": "Genoa",
-          "pts": 0,
+          "team": "Udinese",
+          "pts": 4,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
@@ -507,124 +507,140 @@
       "sims": 2000,
       "table": [
         {
-          "team": "Augsburg",
-          "pts": 6,
-          "title": "<5%",
-          "top4": "5-10%",
-          "title_raw": 0.0,
-          "top4_raw": 0.06
-        },
-        {
           "team": "Dortmund",
-          "pts": 6,
-          "title": "25-30%",
-          "top4": "90-95%",
-          "title_raw": 0.2845,
-          "top4_raw": 0.9485
+          "pts": 13,
+          "title": "20-25%",
+          "top4": "95-100%",
+          "title_raw": 0.2285,
+          "top4_raw": 0.957
         },
         {
           "team": "Freiburg",
-          "pts": 6,
+          "pts": 13,
           "title": "<5%",
-          "top4": "10-15%",
-          "title_raw": 0.002,
-          "top4_raw": 0.1415
-        },
-        {
-          "team": "Other",
-          "pts": 6,
-          "title": "<5%",
-          "top4": "0-5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.04
+          "top4": "30-35%",
+          "title_raw": 0.0055,
+          "top4_raw": 0.3145
         },
         {
           "team": "Bayern Munich",
-          "pts": 4,
-          "title": "60-65%",
+          "pts": 11,
+          "title": "65-70%",
           "top4": ">95%",
-          "title_raw": 0.6205,
-          "top4_raw": 0.9885
-        },
-        {
-          "team": "Mainz 05",
-          "pts": 4,
-          "title": "<5%",
-          "top4": "5-10%",
-          "title_raw": 0.001,
-          "top4_raw": 0.0925
-        },
-        {
-          "team": "FC Cologne",
-          "pts": 3,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0015
+          "title_raw": 0.67,
+          "top4_raw": 0.9925
         },
         {
           "team": "Leverkusen",
-          "pts": 3,
-          "title": "0-5%",
-          "top4": "70-75%",
-          "title_raw": 0.048,
-          "top4_raw": 0.7045
+          "pts": 10,
+          "title": "5-10%",
+          "top4": "85-90%",
+          "title_raw": 0.076,
+          "top4_raw": 0.856
         },
         {
           "team": "RB Leipzig",
-          "pts": 3,
+          "pts": 9,
           "title": "<5%",
-          "top4": "35-40%",
-          "title_raw": 0.0105,
-          "top4_raw": 0.358
+          "top4": "50-55%",
+          "title_raw": 0.0165,
+          "top4_raw": 0.5
         },
         {
-          "team": "Stuttgart",
-          "pts": 3,
-          "title": "0-5%",
-          "top4": "55-60%",
-          "title_raw": 0.033,
-          "top4_raw": 0.5985
-        },
-        {
-          "team": "Werder Bremen",
-          "pts": 3,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0025
-        },
-        {
-          "team": "Eintracht Frankfurt",
-          "pts": 1,
+          "team": "Augsburg",
+          "pts": 8,
           "title": "<5%",
           "top4": "0-5%",
           "title_raw": 0.0,
-          "top4_raw": 0.0305
+          "top4_raw": 0.0345
         },
         {
-          "team": "Paderborn",
-          "pts": 1,
+          "team": "Werder Bremen",
+          "pts": 8,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
-          "top4_raw": 0.0
+          "top4_raw": 0.0065
+        },
+        {
+          "team": "Elversberg",
+          "pts": 7,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.002
+        },
+        {
+          "team": "FC Cologne",
+          "pts": 7,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.001
+        },
+        {
+          "team": "Mainz 05",
+          "pts": 7,
+          "title": "<5%",
+          "top4": "0-5%",
+          "title_raw": 0.0005,
+          "top4_raw": 0.0405
+        },
+        {
+          "team": "Hamburg",
+          "pts": 6,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.001
+        },
+        {
+          "team": "Stuttgart",
+          "pts": 6,
+          "title": "<5%",
+          "top4": "25-30%",
+          "title_raw": 0.003,
+          "top4_raw": 0.2685
+        },
+        {
+          "team": "Eintracht Frankfurt",
+          "pts": 5,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.016
         },
         {
           "team": "Schalke 04",
-          "pts": 1,
+          "pts": 5,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
           "top4_raw": 0.0005
         },
         {
-          "team": "Union Berlin",
-          "pts": 1,
+          "team": "Paderborn",
+          "pts": 4,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
-          "top4_raw": 0.0015
+          "top4_raw": 0.0
+        },
+        {
+          "team": "Union Berlin",
+          "pts": 4,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0
+        },
+        {
+          "team": "Hoffenheim",
+          "pts": 3,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0095
         },
         {
           "team": "Borussia Monchengladbach",
@@ -632,23 +648,7 @@
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
-          "top4_raw": 0.003
-        },
-        {
-          "team": "Hamburg",
-          "pts": 0,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0005
-        },
-        {
-          "team": "Hoffenheim",
-          "pts": 0,
-          "title": "<5%",
-          "top4": "0-5%",
-          "title_raw": 0.0005,
-          "top4_raw": 0.028
+          "top4_raw": 0.0
         }
       ],
       "note": "Probs frozen at current form; bands rounded, not precise."
@@ -659,67 +659,131 @@
       "table": [
         {
           "team": "Monaco",
-          "pts": 9,
-          "title": "15-20%",
-          "top4": "70-75%",
-          "title_raw": 0.176,
-          "top4_raw": 0.7055
+          "pts": 14,
+          "title": "5-10%",
+          "top4": "65-70%",
+          "title_raw": 0.0935,
+          "top4_raw": 0.6825
         },
         {
           "team": "Lille",
-          "pts": 7,
-          "title": "15-20%",
-          "top4": "65-70%",
-          "title_raw": 0.1655,
-          "top4_raw": 0.6565
-        },
-        {
-          "team": "Lyon",
-          "pts": 7,
+          "pts": 13,
           "title": "5-10%",
-          "top4": "45-50%",
-          "title_raw": 0.068,
-          "top4_raw": 0.4705
-        },
-        {
-          "team": "Paris FC",
-          "pts": 7,
-          "title": "<5%",
-          "top4": "5-10%",
-          "title_raw": 0.006,
-          "top4_raw": 0.092
+          "top4": "50-55%",
+          "title_raw": 0.052,
+          "top4_raw": 0.533
         },
         {
           "team": "Rennes",
-          "pts": 7,
+          "pts": 13,
           "title": "0-5%",
-          "top4": "35-40%",
-          "title_raw": 0.046,
-          "top4_raw": 0.38
+          "top4": "55-60%",
+          "title_raw": 0.0495,
+          "top4_raw": 0.5715
         },
         {
-          "team": "Strasbourg",
-          "pts": 6,
+          "team": "Lyon",
+          "pts": 11,
           "title": "0-5%",
-          "top4": "25-30%",
-          "title_raw": 0.027,
-          "top4_raw": 0.28
+          "top4": "50-55%",
+          "title_raw": 0.049,
+          "top4_raw": 0.5385
+        },
+        {
+          "team": "Paris FC",
+          "pts": 11,
+          "title": "<5%",
+          "top4": "10-15%",
+          "title_raw": 0.001,
+          "top4_raw": 0.1255
+        },
+        {
+          "team": "Paris Saint-Germain",
+          "pts": 11,
+          "title": "70-75%",
+          "top4": ">95%",
+          "title_raw": 0.7265,
+          "top4_raw": 0.98
         },
         {
           "team": "Brest",
-          "pts": 5,
+          "pts": 8,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
-          "top4_raw": 0.0115
+          "top4_raw": 0.011
         },
         {
           "team": "Lorient",
-          "pts": 4,
+          "pts": 8,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,
+          "top4_raw": 0.004
+        },
+        {
+          "team": "Nice",
+          "pts": 8,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0005,
           "top4_raw": 0.006
+        },
+        {
+          "team": "Angers",
+          "pts": 7,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.0
+        },
+        {
+          "team": "Lens",
+          "pts": 7,
+          "title": "0-5%",
+          "top4": "35-40%",
+          "title_raw": 0.026,
+          "top4_raw": 0.393
+        },
+        {
+          "team": "Strasbourg",
+          "pts": 7,
+          "title": "<5%",
+          "top4": "0-5%",
+          "title_raw": 0.0005,
+          "top4_raw": 0.048
+        },
+        {
+          "team": "Auxerre",
+          "pts": 6,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.001
+        },
+        {
+          "team": "Le Mans",
+          "pts": 6,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.002
+        },
+        {
+          "team": "Marseille",
+          "pts": 6,
+          "title": "<5%",
+          "top4": "5-10%",
+          "title_raw": 0.0015,
+          "top4_raw": 0.095
+        },
+        {
+          "team": "Toulouse",
+          "pts": 6,
+          "title": "<5%",
+          "top4": "<5%",
+          "title_raw": 0.0,
+          "top4_raw": 0.009
         },
         {
           "team": "Troyes",
@@ -730,72 +794,8 @@
           "top4_raw": 0.0
         },
         {
-          "team": "Angers",
-          "pts": 3,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0
-        },
-        {
-          "team": "Lens",
-          "pts": 3,
-          "title": "0-5%",
-          "top4": "30-35%",
-          "title_raw": 0.038,
-          "top4_raw": 0.313
-        },
-        {
-          "team": "Marseille",
-          "pts": 3,
-          "title": "<5%",
-          "top4": "20-25%",
-          "title_raw": 0.0185,
-          "top4_raw": 0.2045
-        },
-        {
-          "team": "Le Mans",
-          "pts": 2,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0
-        },
-        {
-          "team": "Nice",
-          "pts": 2,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.001
-        },
-        {
-          "team": "Paris Saint-Germain",
-          "pts": 2,
-          "title": "45-50%",
-          "top4": "85-90%",
-          "title_raw": 0.4545,
-          "top4_raw": 0.874
-        },
-        {
           "team": "Le Havre",
-          "pts": 1,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0,
-          "top4_raw": 0.0
-        },
-        {
-          "team": "Toulouse",
-          "pts": 1,
-          "title": "<5%",
-          "top4": "<5%",
-          "title_raw": 0.0005,
-          "top4_raw": 0.0055
-        },
-        {
-          "team": "Auxerre",
-          "pts": 0,
+          "pts": 2,
           "title": "<5%",
           "top4": "<5%",
           "title_raw": 0.0,

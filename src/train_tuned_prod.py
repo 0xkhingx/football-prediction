@@ -7,8 +7,9 @@ models/no_odds_lr_prod.joblib, models/no_odds_scaler_prod.joblib,
 models/no_odds_blend_calibrators.joblib and models/model_registry.json.
 
 Blend: w*xgb + (1-w)*lr with w tuned on val log-loss (grid 0..1 step 0.05).
-Calibration: per-outcome isotonic on blended val probs, applied at serve.
-Top-level registry metrics are the served path (blend-calibrated).
+Calibration: per-outcome isotonic on blended val probs, saved as a candidate.
+Retraining keeps production XGB-only. Candidate promotion requires separate
+out-of-sample validation; training does not undo the production rejection.
 """
 from __future__ import annotations
 
@@ -106,9 +107,9 @@ def main() -> None:
     cal_test /= cal_test.sum(axis=1, keepdims=True)
     joblib.dump(calibrators, MODEL_DIR / "no_odds_blend_calibrators.joblib")
 
-    val_ll = log_loss(y_val, cal_val)
-    test_ll = log_loss(y_test, cal_test)
-    test_acc = float(cal_test.argmax(1).__eq__(y_test).mean())
+    val_ll = log_loss(y_val, xgb_val)
+    test_ll = log_loss(y_test, xgb_test)
+    test_acc = float(xgb_test.argmax(1).__eq__(y_test).mean())
     print(f"val LL={val_ll:.4f} test LL={test_ll:.4f} acc={test_acc:.3f} best_iter={model.best_iteration}")
     print(f"xgb-only val={log_loss(y_val, xgb_val):.4f} test={log_loss(y_test, xgb_test):.4f} | "
           f"lr-only val={log_loss(y_val, lr_val):.4f} test={log_loss(y_test, lr_test):.4f} | "
@@ -136,8 +137,15 @@ def main() -> None:
             "lr": {"val_log_loss": log_loss(y_val, lr_val), "test_log_loss": log_loss(y_test, lr_test)},
             "blend_uncalibrated": {"val_log_loss": log_loss(y_val, blend_val),
                                    "test_log_loss": log_loss(y_test, blend_test)},
+            "blend_calibrated": {"val_fit_log_loss": log_loss(y_val, cal_val),
+                                 "test_log_loss": log_loss(y_test, cal_test)},
         },
         "ensemble": {
+            "xgb_weight": 1.0,
+            "calibrators": "",
+            "status": "disabled: candidate requires separate validation and promotion",
+        },
+        "candidate_ensemble": {
             "lr_model": "no_odds_lr_prod",
             "scaler": "no_odds_scaler_prod",
             "calibrators": "no_odds_blend_calibrators",

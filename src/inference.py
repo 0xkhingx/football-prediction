@@ -191,8 +191,10 @@ def _mean(xs: list) -> float:
     return float(np.mean(xs)) if xs else float("nan")
 
 
-def build_state_from_historical(clean_file: Path = CLEAN_FILE, on_row=None):
+def build_state_from_historical(clean_file: Path = CLEAN_FILE, on_row=None, as_of=None):
     """Replay clean history -> (elo, margin_elo, team_history).
+
+    With as_of, exclude every match on or after that date before replaying.
 
     Mirrors src/features.py main loop, including shots/corners history
     (predict_live.py dropped these — that was part of the skew).
@@ -203,6 +205,8 @@ def build_state_from_historical(clean_file: Path = CLEAN_FILE, on_row=None):
     """
     df = pd.read_csv(clean_file, low_memory=False)
     df["Date"] = pd.to_datetime(df["Date"])
+    if as_of is not None:
+        df = df[df["Date"] < pd.Timestamp(as_of)]
     df = df.sort_values(["Date", "League", "HomeTeam"]).reset_index(drop=True)
 
     elo: dict[str, float] = {}
