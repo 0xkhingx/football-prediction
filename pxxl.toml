@@ -1,10 +1,9 @@
 # Matchday Fate API (FastAPI) on Pxxl. The Next.js frontend in web/ deploys
 # separately on Vercel — this file scopes the API service to the repo root.
-# Pxxl reads pxxl.toml before building; baseDirectory "/" keeps the Docker
-# build context at the repo root so Dockerfile COPYs (requirements.txt,
-# api.py, src/, models/, data/) resolve. If the dashboard Base Directory is
-# set to web/ (auto-detected Next.js monorepo), the Docker build fails at
-# `COPY requirements.txt` with "no such file or directory".
+# Deploy this service from the GitHub source (repo + branch + commit), NOT
+# the Dockerfile-upload source: the upload ships only the Dockerfile with no
+# build context, so `COPY requirements.txt` fails with "no such file or
+# directory". Pxxl reads pxxl.toml from the deployment commit.
 [build]
 language = "python"
 framework = "fastapi"
