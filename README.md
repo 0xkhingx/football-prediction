@@ -117,7 +117,7 @@ Frontend (`web/`, Next.js 14 + TypeScript):
 cd web && npm install && npm run dev   # :3000, proxies to API_URL
 ```
 
-Deploy notes: set `API_URL` (web → API base) and `ALLOWED_ORIGINS` (API CORS allowlist, comma-separated) in the hosting env. After any refresh/retrain, either restart the API or `POST /reload` with `Authorization: Bearer $RELOAD_TOKEN`.
+Deploy notes: set `API_URL` (web → API base) and `ALLOWED_ORIGINS` (API CORS allowlist, comma-separated) in the hosting env. On Pxxl the API service's Base Directory must be the repo root (`/`, pinned in `pxxl.toml`) — scoping it to `web/` breaks the Docker build at `COPY requirements.txt`. After any refresh/retrain, either restart the API or `POST /reload` with `Authorization: Bearer $RELOAD_TOKEN`.
 
 ## Metrics
 

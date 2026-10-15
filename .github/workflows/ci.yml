@@ -43,3 +43,11 @@ jobs:
       - run: npm audit --audit-level=high || true
       - run: npm run typecheck
       - run: npm run build
+
+  docker:
+    # Validates the Pxxl/Render deploy artifact: the Dockerfile build context
+    # must be the repo root, otherwise `COPY requirements.txt` fails.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f Dockerfile -t matchday-api:ci .

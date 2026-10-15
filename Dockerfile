@@ -2,6 +2,9 @@
 # Processed data + prod model are committed, so the image needs no network
 # pulls and serves deterministically. Honors $PORT (PaaS-injected) with a
 # local/dev fallback.
+# BUILD CONTEXT MUST BE THE REPO ROOT (this file's directory): every COPY
+# below is relative to it. On Pxxl, Base Directory "/" (see pxxl.toml) —
+# scoping it to web/ breaks the build at `COPY requirements.txt`.
 FROM python:3.14-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
